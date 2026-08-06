@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>PINK VOCAB — Ultimate EdTech Edition</title>
+    <title>PINK VOCAB — Nền tảng học từ vựng đột phá</title>
     
-    <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -13,26 +13,23 @@
     <!-- FontAwesome 6.5 Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
-    <!-- External Libraries -->
+    <!-- Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <style>
         :root {
-            /* MODERN SAAS COLOR SYSTEM */
             --primary: #f43f5e;
             --primary-hover: #e11d48;
-            --primary-active: #be123c;
             --primary-light: #fff1f2;
-            --primary-glow: rgba(244, 63, 94, 0.22);
+            --primary-glow: rgba(244, 63, 94, 0.25);
             
             --secondary: #fb7185;
-            --accent: #fda4af;
             
-            --bg-body: #f8fafc;
+            --bg-body: #ffffff;
             --bg-card: #ffffff;
-            --bg-sidebar: #ffffff;
+            --bg-sidebar: #f8fafc;
             
             --text-main: #0f172a;
             --text-muted: #64748b;
@@ -42,245 +39,212 @@
             --border-strong: #e2e8f0;
             
             --success: #10b981;
-            --success-light: #ecfdf5;
             --danger: #ef4444;
-            --danger-light: #fef2f2;
             --warning: #f59e0b;
-            --warning-light: #fffbeb;
             
-            --shadow-sm: 0 2px 4px rgba(15, 23, 42, 0.04);
-            --shadow-md: 0 10px 25px -5px rgba(15, 23, 42, 0.05), 0 8px 10px -6px rgba(15, 23, 42, 0.01);
-            --shadow-lg: 0 20px 30px -10px rgba(244, 63, 94, 0.15);
+            --shadow-sm: 0 4px 6px rgba(15, 23, 42, 0.05);
+            --shadow-md: 0 10px 25px -5px rgba(15, 23, 42, 0.05);
+            --shadow-lg: 0 25px 50px -12px rgba(244, 63, 94, 0.2);
             
-            --radius-sm: 12px;
-            --radius-md: 18px;
-            --radius-lg: 28px;
-            --radius-xl: 36px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --radius-xl: 32px;
+            --radius-pill: 9999px;
             
-            --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         [data-theme="dark"] {
-            --bg-body: #090d16;
-            --bg-card: #111827;
-            --bg-sidebar: #0f172a;
-            
+            --bg-body: #020617;
+            --bg-card: #0f172a;
+            --bg-sidebar: #0b0f19;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
-            
             --border-light: #1e293b;
             --border-strong: #334155;
-            
-            --primary-light: rgba(244, 63, 94, 0.12);
             --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
-            --shadow-lg: 0 20px 30px -10px rgba(244, 63, 94, 0.25);
+            --shadow-lg: 0 25px 50px -12px rgba(244, 63, 94, 0.3);
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg-body); color: var(--text-main); margin: 0; padding: 0; display: flex; height: 100vh; overflow: hidden; transition: var(--transition); }
 
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg-body);
-            color: var(--text-main);
-            margin: 0; padding: 0;
-            display: flex; height: 100vh; overflow: hidden;
-            transition: background 0.3s ease, color 0.3s ease;
-        }
+        /* ================= MODE CONTROLLERS ================= */
+        body.is-landing #sidebar, body.is-landing .mobile-header, body.is-landing .mobile-nav { display: none !important; }
+        body.is-landing .main-content { padding: 0 !important; max-width: 100%; display: block; overflow-y: auto; overflow-x: hidden; }
 
-        /* ZEN MODE FOR FOCUS STUDY */
         body.zen-mode #sidebar { width: 0 !important; min-width: 0 !important; padding: 0 !important; opacity: 0; border: none; }
         body.zen-mode .mobile-header, body.zen-mode .mobile-nav { display: none !important; }
-        body.zen-mode .main-content { padding: 20px !important; }
+        body.zen-mode .main-content { padding: 20px !important; display: flex; align-items: center; justify-content: center; }
 
-        /* ====== SIDEBAR DẠNG PRO COLLAPSIBLE ====== */
+        /* ================= LANDING PAGE STYLES ================= */
+        .landing-nav {
+            position: fixed; top: 0; left: 0; width: 100%; padding: 20px 5%;
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            z-index: 1000; border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        [data-theme="dark"] .landing-nav { background: rgba(2, 6, 23, 0.8); border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .landing-logo { font-size: 22px; font-weight: 900; color: var(--primary); display: flex; align-items: center; gap: 10px; letter-spacing: -0.5px;}
+        
+        .hero-section {
+            min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center; padding: 120px 20px 60px 20px;
+            background: radial-gradient(circle at center top, var(--primary-light) 0%, var(--bg-body) 70%);
+            position: relative; overflow: hidden;
+        }
+        .hero-badge {
+            background: var(--primary-light); color: var(--primary); font-weight: 800; font-size: 13px;
+            padding: 8px 16px; border-radius: var(--radius-pill); margin-bottom: 24px; text-transform: uppercase; letter-spacing: 1px;
+            border: 1px solid rgba(244, 63, 94, 0.2);
+        }
+        .hero-title {
+            font-size: clamp(3rem, 6vw, 5rem); font-weight: 900; letter-spacing: -2px; line-height: 1.1; margin: 0 0 24px 0; max-width: 900px;
+        }
+        .hero-title span {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .hero-subtitle { font-size: 1.25rem; color: var(--text-muted); font-weight: 500; max-width: 600px; margin: 0 auto 40px auto; line-height: 1.6; }
+        
+        .hero-mockup {
+            margin-top: 60px; width: 100%; max-width: 900px; height: 400px;
+            background: var(--bg-card); border-radius: 24px 24px 0 0;
+            box-shadow: 0 30px 60px -15px var(--primary-glow);
+            border: 1px solid var(--border-strong); border-bottom: none;
+            display: flex; align-items: center; justify-content: center; position: relative;
+        }
+        .hero-mockup::before {
+            content: ''; position: absolute; top: 15px; left: 20px; width: 12px; height: 12px; border-radius: 50%;
+            background: #ef4444; box-shadow: 20px 0 0 #f59e0b, 40px 0 0 #10b981;
+        }
+
+        .features-section { padding: 100px 5%; background: var(--bg-body); }
+        .section-header { text-align: center; margin-bottom: 60px; }
+        .section-header h2 { font-size: 2.5rem; font-weight: 900; letter-spacing: -1px; margin: 0 0 16px 0; }
+        .section-header p { font-size: 1.1rem; color: var(--text-muted); max-width: 600px; margin: 0 auto; }
+        
+        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; }
+        .feature-card {
+            background: var(--bg-sidebar); border: 1px solid var(--border-light);
+            padding: 40px; border-radius: var(--radius-lg); transition: var(--transition);
+        }
+        .feature-card:hover { transform: translateY(-10px); box-shadow: var(--shadow-md); border-color: var(--primary-light); }
+        .feature-icon {
+            width: 60px; height: 60px; border-radius: 16px; background: var(--primary-light); color: var(--primary);
+            display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 24px;
+        }
+        .feature-card h3 { font-size: 1.5rem; font-weight: 800; margin: 0 0 12px 0; }
+        .feature-card p { color: var(--text-muted); line-height: 1.6; margin: 0; }
+
+        .cta-section {
+            padding: 100px 5%; text-align: center;
+            background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white;
+        }
+        .cta-section h2 { font-size: 3rem; font-weight: 900; letter-spacing: -1px; margin: 0 0 20px 0; }
+        .cta-section p { font-size: 1.2rem; opacity: 0.9; margin: 0 auto 40px auto; max-width: 600px; }
+
+        /* ================= APP LAYOUT (SIDEBAR & MAIN) ================= */
         #sidebar {
-            width: 280px; min-width: 280px;
-            background: var(--bg-sidebar);
-            border-right: 1px solid var(--border-light);
-            display: flex; flex-direction: column;
-            padding: 28px 20px; z-index: 90;
-            transition: var(--transition); position: relative;
+            width: 280px; min-width: 280px; background: var(--bg-sidebar); border-right: 1px solid var(--border-light);
+            display: flex; flex-direction: column; padding: 30px 24px; z-index: 90; transition: var(--transition);
         }
-
-        #sidebar.collapsed {
-            width: 88px; min-width: 88px; padding: 28px 14px;
-        }
-
-        .sidebar-toggle {
-            position: absolute; right: -14px; top: 32px;
-            width: 28px; height: 28px; border-radius: 50%;
-            background: var(--primary); color: var(--text-inverse);
-            border: 3px solid var(--bg-body); cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: var(--shadow-sm); transition: var(--transition);
-        }
-        .sidebar-toggle:hover { transform: scale(1.15); background: var(--primary-hover); }
-        #sidebar.collapsed .sidebar-toggle { transform: rotate(180deg); }
-        #sidebar.collapsed .sidebar-toggle:hover { transform: rotate(180deg) scale(1.15); }
-
-        .brand-logo {
-            display: flex; align-items: center; gap: 14px;
-            font-size: 20px; font-weight: 900; color: var(--primary);
-            margin-bottom: 32px; white-space: nowrap; overflow: hidden;
-        }
-        .brand-logo i { font-size: 26px; min-width: 32px; text-align: center; }
-
-        .user-widget {
-            background: var(--primary-light); border: 1px solid var(--border-light);
-            padding: 16px; border-radius: var(--radius-md); margin-bottom: 28px;
-            display: flex; flex-direction: column; gap: 8px; overflow: hidden; transition: var(--transition);
-        }
-        #sidebar.collapsed .user-widget { padding: 12px; align-items: center; }
-        #sidebar.collapsed .user-widget-info { display: none; }
-
-        .user-widget-info span { font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
-        .user-widget-info strong { font-size: 16px; font-weight: 900; color: var(--primary); display: block; }
-
-        .nav-section-title {
-            font-size: 11px; font-weight: 800; text-transform: uppercase;
-            letter-spacing: 1px; color: var(--text-muted); margin: 20px 0 10px 12px;
-            white-space: nowrap; transition: var(--transition);
-        }
-        #sidebar.collapsed .nav-section-title { opacity: 0; height: 0; margin: 0; }
-
+        .brand-logo-app { display: flex; align-items: center; gap: 12px; font-size: 22px; font-weight: 900; color: var(--primary); margin-bottom: 40px; }
+        
+        .nav-section-title { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin: 24px 0 12px 12px; }
         .nav-link {
-            display: flex; align-items: center; gap: 16px;
-            padding: 14px 16px; border-radius: var(--radius-md);
-            font-size: 15px; font-weight: 700; color: var(--text-muted);
-            cursor: pointer; transition: var(--transition); white-space: nowrap;
-            margin-bottom: 4px;
+            display: flex; align-items: center; gap: 16px; padding: 14px 18px; border-radius: var(--radius-md);
+            font-size: 15px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: var(--transition); margin-bottom: 4px;
         }
-        .nav-link i { font-size: 20px; min-width: 24px; text-align: center; }
+        .nav-link i { font-size: 20px; width: 24px; text-align: center; }
         .nav-link:hover { background: var(--primary-light); color: var(--primary); }
-        .nav-link.active { background: var(--primary); color: var(--text-inverse); box-shadow: var(--shadow-lg); }
+        .nav-link.active { background: var(--primary); color: var(--text-inverse); box-shadow: var(--shadow-md); }
 
-        #sidebar.collapsed .nav-link { justify-content: center; padding: 14px 0; }
-        #sidebar.collapsed .nav-link span { display: none; }
-
-        /* ====== MAIN CONTENT AREA ====== */
-        .main-content {
-            flex: 1; padding: 36px 48px; overflow-y: auto; overflow-x: hidden;
-            display: flex; flex-direction: column; scroll-behavior: smooth;
-        }
+        .main-content { flex: 1; padding: 40px 60px; overflow-y: auto; overflow-x: hidden; display: flex; flex-direction: column; scroll-behavior: smooth; }
         .container { max-width: 1200px; margin: 0 auto; width: 100%; }
 
-        .mobile-header, .mobile-nav { display: none; }
-
-        /* VIEWS & CARDS */
-        .view-section { display: none; animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .view-section { display: none; animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         .view-section.active { display: block; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; flex-wrap: wrap; gap: 16px; }
-        .page-title { font-size: 28px; font-weight: 900; letter-spacing: -0.5px; margin: 0; }
+        /* ================= COMPONENTS ================= */
+        .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 16px; }
+        .page-title { font-size: 32px; font-weight: 900; letter-spacing: -1px; margin: 0; }
 
-        .ui-card {
-            background: var(--bg-card); border-radius: var(--radius-lg);
-            border: 1px solid var(--border-light); padding: 28px;
-            box-shadow: var(--shadow-md); margin-bottom: 24px; transition: var(--transition);
-        }
-        .ui-card:hover { border-color: var(--border-strong); }
-
-        /* HERO BANNER */
-        .hero-card {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            border-radius: var(--radius-xl); padding: 36px 42px; color: var(--text-inverse);
-            display: flex; justify-content: space-between; align-items: center;
-            box-shadow: var(--shadow-lg); position: relative; overflow: hidden; margin-bottom: 28px;
-        }
-        .hero-card h1 { font-size: 32px; font-weight: 900; margin: 0 0 8px 0; letter-spacing: -0.5px; }
-        .hero-card p { margin: 0 0 20px 0; opacity: 0.9; font-size: 15px; font-weight: 500; }
-
-        /* BUTTONS */
         .btn {
-            padding: 12px 22px; border-radius: var(--radius-md); font-weight: 800; font-size: 14px;
-            border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 10px;
-            transition: var(--transition); font-family: inherit; text-decoration: none;
+            padding: 14px 28px; border-radius: var(--radius-pill); font-weight: 800; font-size: 15px; border: none; cursor: pointer;
+            display: inline-flex; align-items: center; justify-content: center; gap: 10px; transition: var(--transition); font-family: inherit;
         }
         .btn:active { transform: scale(0.96); }
         .btn-primary { background: var(--primary); color: var(--text-inverse); box-shadow: var(--shadow-lg); }
-        .btn-primary:hover { background: var(--primary-hover); transform: translateY(-2px); }
-        .btn-white { background: #ffffff; color: var(--primary); font-weight: 900; }
-        .btn-white:hover { background: var(--primary-light); transform: translateY(-2px); }
-        .btn-outline { background: var(--bg-card); border: 2px solid var(--border-strong); color: var(--text-main); }
+        .btn-primary:hover { background: var(--primary-hover); transform: translateY(-3px); box-shadow: 0 15px 30px -10px rgba(244, 63, 94, 0.4); }
+        .btn-white { background: #ffffff; color: var(--primary); box-shadow: var(--shadow-lg); }
+        .btn-white:hover { transform: translateY(-3px); }
+        .btn-outline { background: transparent; border: 2px solid var(--border-strong); color: var(--text-main); }
         .btn-outline:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
 
-        /* GRID BENTO */
-        .bento-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 28px; }
-        .stat-box { padding: 22px; border-radius: var(--radius-md); background: var(--bg-card); border: 1px solid var(--border-light); box-shadow: var(--shadow-sm); }
-        .stat-box label { font-size: 12px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
-        .stat-box h2 { font-size: 36px; font-weight: 900; color: var(--primary); margin: 6px 0 0 0; letter-spacing: -1px; }
+        .ui-card {
+            background: var(--bg-card); border-radius: var(--radius-lg); border: 1px solid var(--border-light);
+            padding: 32px; box-shadow: var(--shadow-sm); margin-bottom: 24px; transition: var(--transition);
+        }
+        .ui-card:hover { box-shadow: var(--shadow-md); border-color: var(--border-strong); }
 
-        /* ====== MEGA FLASHCARD SLIDER ====== */
-        .fc-container {
-            max-width: 800px; margin: 0 auto; height: 480px;
-            perspective: 1200px; position: relative; cursor: pointer;
-        }
-        .fc-card {
-            width: 100%; height: 100%; position: relative;
-            transform-style: preserve-3d; transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
+        .bento-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; margin-bottom: 32px; }
+        .stat-box { padding: 24px; border-radius: var(--radius-lg); background: var(--bg-card); border: 1px solid var(--border-light); box-shadow: var(--shadow-sm); }
+        .stat-box label { font-size: 12px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+        .stat-box h2 { font-size: 40px; font-weight: 900; color: var(--primary); margin: 8px 0 0 0; letter-spacing: -2px; }
+
+        /* ====== MEGA FLASHCARD ====== */
+        .fc-container { max-width: 800px; margin: 0 auto; height: 500px; perspective: 1500px; position: relative; cursor: pointer; }
+        .fc-card { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .fc-card.flipped { transform: rotateY(180deg); }
-        
         .fc-face {
             position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
-            background: var(--bg-card); border-radius: var(--radius-xl);
-            border: 2px solid var(--border-strong); box-shadow: var(--shadow-md);
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            padding: 40px; text-align: center;
+            background: var(--bg-card); border-radius: var(--radius-xl); border: 2px solid var(--border-strong);
+            box-shadow: var(--shadow-md); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 40px; text-align: center;
         }
         .fc-face.back { transform: rotateY(180deg); background: var(--primary-light); border-color: var(--primary); }
+        .fc-word { font-size: 64px; font-weight: 900; color: var(--primary); margin: 0 0 12px 0; letter-spacing: -2px; word-break: break-word; }
+        .fc-phonetic { font-family: 'JetBrains Mono', monospace; font-size: 22px; color: var(--text-muted); font-weight: 700; margin-bottom: 20px; }
+        .fc-meaning { font-size: 36px; font-weight: 800; color: var(--text-main); margin: 0 0 20px 0; }
 
-        .fc-word { font-size: 52px; font-weight: 900; color: var(--primary); margin: 0 0 12px 0; letter-spacing: -1px; word-break: break-word; }
-        .fc-phonetic { font-family: 'JetBrains Mono', monospace; font-size: 20px; color: var(--text-muted); font-weight: 700; margin-bottom: 16px; }
-        .fc-meaning { font-size: 32px; font-weight: 800; color: var(--text-main); margin: 0 0 16px 0; }
-        .fc-example { font-size: 16px; font-style: italic; color: var(--text-muted); line-height: 1.6; max-width: 80%; }
+        .filter-chips { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
+        .filter-chips::-webkit-scrollbar { display: none; }
 
-        .audio-btn {
-            position: absolute; top: 24px; right: 24px;
-            width: 44px; height: 44px; border-radius: 50%;
-            background: var(--primary-light); color: var(--primary);
-            border: none; cursor: pointer; display: flex; align-items: center; justify-content: center;
-            font-size: 18px; transition: var(--transition);
-        }
-        .audio-btn:hover { transform: scale(1.1); background: var(--primary); color: var(--text-inverse); }
-
-        /* LIST & PLAYLIST UI */
         .word-row {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 18px 24px; background: var(--bg-card); border-radius: var(--radius-md);
-            border: 1px solid var(--border-light); margin-bottom: 12px; transition: var(--transition);
-            flex-wrap: wrap; gap: 12px;
+            display: flex; justify-content: space-between; align-items: center; padding: 20px 28px;
+            background: var(--bg-card); border-radius: var(--radius-md); border: 1px solid var(--border-light);
+            margin-bottom: 16px; transition: var(--transition); flex-wrap: wrap; gap: 16px;
         }
-        .word-row:hover { transform: translateX(4px); border-color: var(--primary); box-shadow: var(--shadow-sm); }
-        .word-info strong { font-size: 17px; font-weight: 800; color: var(--primary); }
-        .word-info p { margin: 4px 0 0 0; font-size: 14px; font-weight: 600; color: var(--text-main); }
+        .word-row:hover { transform: translateX(6px); border-color: var(--primary); box-shadow: var(--shadow-sm); }
+        .word-info strong { font-size: 18px; font-weight: 800; color: var(--primary); }
+        .word-info p { margin: 6px 0 0 0; font-size: 15px; font-weight: 600; color: var(--text-main); }
 
-        /* GAMES / ARCADE TILES */
-        .arcade-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; max-width: 800px; margin: 0 auto; }
+        .arcade-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; max-width: 900px; margin: 0 auto; }
         .arcade-tile {
-            background: var(--bg-card); border: 2px solid var(--border-strong);
-            border-radius: var(--radius-md); padding: 20px 12px; text-align: center;
-            font-weight: 800; font-size: 15px; cursor: pointer; transition: var(--transition);
-            display: flex; align-items: center; justify-content: center; min-height: 80px;
+            background: var(--bg-card); border: 2px solid var(--border-strong); border-radius: var(--radius-md);
+            padding: 24px 16px; text-align: center; font-weight: 800; font-size: 16px; cursor: pointer; transition: var(--transition); display: flex; align-items: center; justify-content: center; min-height: 90px;
         }
-        .arcade-tile:hover { transform: translateY(-3px); border-color: var(--primary); color: var(--primary); }
+        .arcade-tile:hover { transform: translateY(-4px); border-color: var(--primary); color: var(--primary); box-shadow: var(--shadow-sm); }
         .arcade-tile.selected { background: var(--primary-light); border-color: var(--primary); color: var(--primary); }
         .arcade-tile.matched { opacity: 0; transform: scale(0.5); pointer-events: none; }
 
-        /* RESPONSIVE MOBILE NATIVE DESIGN */
+        /* MOBILE RESPONSIVE */
+        .mobile-header, .mobile-nav { display: none; }
         @media (max-width: 768px) {
+            body.is-landing .landing-nav { padding: 15px 20px; }
+            .hero-title { font-size: 2.5rem; }
+            .hero-mockup { height: 250px; }
+            .cta-section h2 { font-size: 2rem; }
+
             #sidebar { display: none !important; }
-            
             .mobile-header {
-                display: flex; position: fixed; top: 0; left: 0; right: 0; height: 60px;
+                display: flex; position: fixed; top: 0; left: 0; right: 0; height: 65px;
                 background: var(--bg-sidebar); border-bottom: 1px solid var(--border-light);
                 align-items: center; justify-content: space-between; padding: 0 20px; z-index: 100;
             }
-            .mobile-header .brand-logo { margin: 0; font-size: 18px; }
-            
             .mobile-nav {
-                display: flex; position: fixed; bottom: 0; left: 0; right: 0; height: 65px;
+                display: flex; position: fixed; bottom: 0; left: 0; right: 0; height: 70px;
                 background: var(--bg-sidebar); border-top: 1px solid var(--border-light);
                 z-index: 100; padding-bottom: env(safe-area-inset-bottom);
             }
@@ -288,138 +252,180 @@
                 flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
                 gap: 4px; color: var(--text-muted); font-size: 11px; font-weight: 700; cursor: pointer;
             }
-            .mobile-nav-item i { font-size: 20px; }
+            .mobile-nav-item i { font-size: 22px; }
             .mobile-nav-item.active { color: var(--primary); }
 
-            .main-content { padding: 80px 16px 85px 16px; height: 100vh; }
-            
-            .fc-container { height: 380px; }
-            .fc-word { font-size: 38px; }
-            .fc-meaning { font-size: 24px; }
-            
-            .hero-card { padding: 24px; flex-direction: column; text-align: center; }
-            .hero-card h1 { font-size: 24px; }
+            .main-content { padding: 85px 20px 90px 20px; }
+            .fc-container { height: 400px; }
+            .fc-word { font-size: 42px; }
+            .fc-meaning { font-size: 26px; }
         }
     </style>
 </head>
-<body>
+<body class="is-landing">
 
-    <!-- MOBILE TOP HEADER -->
-    <div class="mobile-header">
-        <div class="brand-logo"><i class="fa-solid fa-crown"></i> PINK VOCAB</div>
-        <button class="btn btn-outline" style="padding: 6px 12px; font-size: 12px;" onclick="toggleTheme()"><i class="fa-solid fa-moon"></i></button>
-    </div>
-
-    <!-- MOBILE BOTTOM NAVIGATION -->
-    <div class="mobile-nav">
-        <div class="mobile-nav-item active" onclick="nav('dashboard')"><i class="fa-solid fa-compass"></i><span>Tổng quan</span></div>
-        <div class="mobile-nav-item" onclick="nav('albums')"><i class="fa-solid fa-book-bookmark"></i><span>Album</span></div>
-        <div class="mobile-nav-item" onclick="nav('arcade')"><i class="fa-solid fa-gamepad"></i><span>Arcade</span></div>
-        <div class="mobile-nav-item" onclick="nav('settings')"><i class="fa-solid fa-gear"></i><span>Cài đặt</span></div>
-    </div>
-
-    <!-- DESKTOP COLLAPSIBLE SIDEBAR -->
-    <aside id="sidebar">
-        <button class="sidebar-toggle" onclick="toggleSidebar()"><i class="fa-solid fa-chevron-left"></i></button>
-
-        <div class="brand-logo">
-            <i class="fa-solid fa-crown"></i>
-            <span class="logo-text">PINK VOCAB</span>
-        </div>
-
-        <div class="user-widget">
-            <div class="user-widget-info">
-                <span>Cấp độ người dùng</span>
-                <strong id="user-level-text">Level 1</strong>
+    <!-- ================= LANDING PAGE VIEW ================= -->
+    <section id="view-landing" class="view-section active" style="padding: 0; height: 100vh; overflow-y: auto;">
+        
+        <header class="landing-nav">
+            <div class="landing-logo"><i class="fa-solid fa-crown"></i> PINK VOCAB</div>
+            <div style="display: flex; gap: 15px;">
+                <button class="btn btn-outline" style="padding: 10px 16px; border-radius: var(--radius-pill);" onclick="toggleTheme()"><i class="fa-solid fa-moon"></i></button>
+                <button class="btn btn-primary" style="padding: 10px 24px;" onclick="nav('dashboard')">Vào Không Gian Học</button>
             </div>
-            <div class="progress-bar" style="height: 6px;"><div class="progress-fill" id="level-bar" style="width: 0%;"></div></div>
-        </div>
+        </header>
 
-        <div class="nav-section-title">Khám phá</div>
-        <div class="nav-link active" data-nav="dashboard" onclick="nav('dashboard')"><i class="fa-solid fa-compass"></i><span>Tổng quan</span></div>
-        <div class="nav-link" data-nav="albums" onclick="nav('albums')"><i class="fa-solid fa-book-bookmark"></i><span>Kho Album</span></div>
+        <main>
+            <!-- Hero Section -->
+            <div class="hero-section">
+                <div class="hero-badge">Ứng dụng EdTech Thế Hệ Mới</div>
+                <h1 class="hero-title">Làm chủ từ vựng.<br><span>Đột phá tư duy.</span></h1>
+                <p class="hero-subtitle">Trải nghiệm nền tảng học tập phong cách SaaS chuyên nghiệp. Flashcard 3D thông minh, game hóa và đồng bộ mượt mà không cần cài đặt.</p>
+                <div style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;">
+                    <button class="btn btn-primary" style="padding: 18px 36px; font-size: 18px;" onclick="nav('dashboard')">Trải Nghiệm Ngay <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+                
+                <div class="hero-mockup">
+                    <h1 style="font-size: 4rem; color: var(--primary); font-weight: 900; letter-spacing: -2px;">Hologram <span style="font-size: 2rem; color: var(--text-muted); font-family: monospace;">[/ˈhɑːləɡræm/]</span></h1>
+                </div>
+            </div>
 
-        <div class="nav-section-title">Luyện tập</div>
-        <div class="nav-link" data-nav="arcade" onclick="nav('arcade')"><i class="fa-solid fa-gamepad"></i><span>Arcade Zone</span></div>
+            <!-- Features Section -->
+            <div class="features-section">
+                <div class="section-header">
+                    <h2>Tính năng nổi bật</h2>
+                    <p>Mọi thứ bạn cần để đưa vốn từ vựng lên một tầm cao mới, được gói gọn trong một giao diện tinh tế.</p>
+                </div>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fa-solid fa-layer-group"></i></div>
+                        <h3>Mega Flashcard 3D</h3>
+                        <p>Thẻ lật khổ lớn siêu thực kết hợp thuật toán lặp lại ngắt quãng (SRS) giúp bạn ghi nhớ sâu và lâu hơn. Hỗ trợ phím tắt và phát âm chuẩn.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fa-solid fa-gamepad"></i></div>
+                        <h3>Arcade Zone</h3>
+                        <p>Biến việc ôn tập nhàm chán thành các trò chơi giải trí đầy áp lực thời gian như Nối Từ Tốc Độ và Sinh Tồn Trắc Nghiệm.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fa-solid fa-robot"></i></div>
+                        <h3>AI & Import Dễ Dàng</h3>
+                        <p>Nhập hàng ngàn từ vựng trong tích tắc bằng file Excel/Word hoặc dán trực tiếp kết quả tạo từ ChatGPT/Gemini một cách tự động.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA Section -->
+            <div class="cta-section">
+                <h2>Sẵn sàng bứt phá?</h2>
+                <p>Không cần đăng ký rườm rà. Dữ liệu được lưu trữ an toàn ngay trên thiết bị của bạn.</p>
+                <button class="btn btn-white" style="padding: 18px 40px; font-size: 18px; border-radius: var(--radius-pill);" onclick="nav('dashboard')">Khởi Động Ngay Bây Giờ</button>
+            </div>
+        </main>
+    </section>
+
+
+    <!-- ================= APP WORKSPACE ================= -->
+
+    <!-- Mobile Header & Nav -->
+    <div class="mobile-header">
+        <div class="brand-logo" style="margin: 0;"><i class="fa-solid fa-crown"></i> PINK VOCAB</div>
+        <button class="btn btn-outline" style="padding: 6px 12px; border: none;" onclick="toggleTheme()"><i class="fa-solid fa-moon"></i></button>
+    </div>
+    <div class="mobile-nav">
+        <div class="mobile-nav-item active" data-nav="dashboard" onclick="nav('dashboard')"><i class="fa-solid fa-compass"></i><span>Tổng quan</span></div>
+        <div class="mobile-nav-item" data-nav="albums" onclick="nav('albums')"><i class="fa-solid fa-book-bookmark"></i><span>Thư viện</span></div>
+        <div class="mobile-nav-item" data-nav="arcade" onclick="nav('arcade')"><i class="fa-solid fa-gamepad"></i><span>Trò chơi</span></div>
+        <div class="mobile-nav-item" data-nav="settings" onclick="nav('settings')"><i class="fa-solid fa-gear"></i><span>Cài đặt</span></div>
+    </div>
+
+    <!-- Desktop Sidebar -->
+    <aside id="sidebar">
+        <div class="brand-logo-app"><i class="fa-solid fa-crown"></i> <span>PINK VOCAB</span></div>
+        
+        <div class="nav-section-title">Không gian chính</div>
+        <div class="nav-link active" data-nav="dashboard" onclick="nav('dashboard')"><i class="fa-solid fa-compass"></i> <span>Bảng điều khiển</span></div>
+        <div class="nav-link" data-nav="albums" onclick="nav('albums')"><i class="fa-solid fa-book-bookmark"></i> <span>Kho Album</span></div>
+
+        <div class="nav-section-title">Giải trí</div>
+        <div class="nav-link" data-nav="arcade" onclick="nav('arcade')"><i class="fa-solid fa-gamepad"></i> <span>Arcade Zone</span></div>
 
         <div class="nav-section-title">Hệ thống</div>
-        <div class="nav-link" data-nav="settings" onclick="nav('settings')"><i class="fa-solid fa-gear"></i><span>Cài đặt Dữ liệu</span></div>
+        <div class="nav-link" data-nav="settings" onclick="nav('settings')"><i class="fa-solid fa-gear"></i> <span>Quản lý dữ liệu</span></div>
 
         <div style="margin-top: auto; padding-top: 16px; border-top: 1px solid var(--border-light);">
-            <div class="nav-link" onclick="toggleTheme()"><i class="fa-solid fa-moon" id="theme-icon"></i><span id="theme-text">Giao diện tối</span></div>
+            <div class="nav-link" onclick="toggleTheme()"><i class="fa-solid fa-moon"></i> <span>Đổi giao diện</span></div>
         </div>
     </aside>
 
-    <!-- MAIN WORKSPACE -->
     <main class="main-content">
         <div class="container">
             
-            <!-- VIEW: DASHBOARD -->
-            <section id="view-dashboard" class="view-section active">
-                <div class="hero-card">
-                    <div>
-                        <h1 id="greeting-title">Chào bạn! 💖</h1>
-                        <p>Giữ vững chuỗi <strong id="streak-banner">1</strong> ngày học liên tục để chinh phục từ vựng mỗi ngày.</p>
-                        <button class="btn btn-white" onclick="nav('albums')"><i class="fa-solid fa-play"></i> Bắt đầu ngay</button>
-                    </div>
-                    <i class="fa-solid fa-fire-flame-curved" style="font-size: 100px; opacity: 0.25;"></i>
+            <!-- DASHBOARD -->
+            <section id="view-dashboard" class="view-section">
+                <div class="page-header">
+                    <h1 class="page-title">Chào mừng trở lại! 👋</h1>
+                    <span style="background: var(--primary-light); color: var(--primary); padding: 8px 16px; border-radius: var(--radius-pill); font-weight: 800; font-size: 14px;"><i class="fa-solid fa-fire"></i> Chuỗi: 1 ngày</span>
                 </div>
-
+                
                 <div class="bento-grid">
                     <div class="stat-box">
-                        <label>Tổng Album</label>
+                        <label>Bộ sưu tập</label>
                         <h2 id="dash-total-albums">0</h2>
                     </div>
                     <div class="stat-box">
-                        <label>Tổng Từ Vựng</label>
+                        <label>Vốn từ vựng</label>
                         <h2 id="dash-total-words">0</h2>
                     </div>
                     <div class="stat-box">
-                        <label>Thành Thạo (Master)</label>
+                        <label>Tỷ lệ Master</label>
                         <h2 id="dash-master-rate" style="color: var(--success);">0%</h2>
                     </div>
                 </div>
 
-                <div class="page-header">
-                    <h3 style="font-size: 20px; font-weight: 800; margin: 0;">Album gần đây</h3>
-                    <button class="btn btn-outline" style="padding: 8px 16px; font-size: 13px;" onclick="nav('albums')">Xem tất cả</button>
+                <div class="page-header" style="margin-top: 40px;">
+                    <h3 style="font-size: 22px; font-weight: 800; margin: 0;">Album gần đây</h3>
+                    <button class="btn btn-outline" onclick="nav('albums')">Đi tới thư viện</button>
                 </div>
                 <div class="bento-grid" id="dash-recent-albums"></div>
             </section>
 
-            <!-- VIEW: ALBUMS LIST -->
+            <!-- ALBUMS LIST -->
             <section id="view-albums" class="view-section">
                 <div class="page-header">
                     <h2 class="page-title">Thư viện Album</h2>
-                    <button class="btn btn-primary" onclick="createNewAlbum()"><i class="fa-solid fa-plus"></i> Tạo Album Mới</button>
+                    <button class="btn btn-primary" onclick="createNewAlbum()"><i class="fa-solid fa-plus"></i> Tạo Album</button>
                 </div>
                 <div class="bento-grid" id="albums-list-container"></div>
             </section>
 
-            <!-- VIEW: SINGLE ALBUM DETAIL -->
+            <!-- SINGLE ALBUM DETAIL -->
             <section id="view-single-album" class="view-section">
-                <button class="btn btn-outline" style="margin-bottom: 20px;" onclick="nav('albums')"><i class="fa-solid fa-arrow-left"></i> Quay lại</button>
+                <button class="btn btn-outline" style="margin-bottom: 24px;" onclick="nav('albums')"><i class="fa-solid fa-arrow-left"></i> Quay lại thư viện</button>
 
-                <div class="ui-card" style="background: var(--primary-light); border-color: var(--primary);">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 12px;">
-                        <h2 id="current-album-name" class="page-title" style="color: var(--primary);">Tên Album</h2>
-                        <button class="btn btn-outline" style="color: var(--danger); border-color: var(--danger);" onclick="deleteCurrentAlbum()"><i class="fa-solid fa-trash"></i> Xóa Album</button>
+                <div class="ui-card" style="background: var(--primary-light); border-color: rgba(244, 63, 94, 0.2);">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; flex-wrap: wrap; gap: 16px;">
+                        <div>
+                            <h2 id="current-album-name" class="page-title" style="color: var(--primary); margin-bottom: 8px;">Tên Album</h2>
+                            <div id="album-stats-summary" style="font-size: 14px; font-weight: 700; color: var(--text-muted); display: flex; gap: 16px;"></div>
+                        </div>
+                        <button class="btn btn-outline" style="color: var(--danger); border-color: var(--danger-light); background: #ffffff;" onclick="deleteCurrentAlbum()"><i class="fa-solid fa-trash"></i></button>
                     </div>
-                    <div style="display: flex; gap: 12px; width: 100%;">
-                        <button class="btn btn-primary" style="flex: 1;" onclick="startStudy('flashcard')"><i class="fa-solid fa-layer-group"></i> Học Flashcard</button>
-                        <button class="btn btn-outline" onclick="startStudy('typing')"><i class="fa-solid fa-keyboard"></i> Gõ từ</button>
+                    <div style="display: flex; gap: 16px; width: 100%; flex-wrap: wrap;">
+                        <button class="btn btn-primary" style="flex: 1; padding: 16px; font-size: 16px;" onclick="startStudy('flashcard')"><i class="fa-solid fa-layer-group"></i> Luyện tập Flashcard</button>
+                        <button class="btn btn-outline" style="background: #ffffff; padding: 16px;" onclick="startStudy('typing')"><i class="fa-solid fa-keyboard"></i> Gõ từ</button>
                     </div>
                 </div>
 
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
-                    <div style="display: flex; gap: 8px;" id="filter-chips">
-                        <button class="btn btn-outline active" onclick="setFilter('all', this)">Tất cả</button>
-                        <button class="btn btn-outline" onclick="setFilter('review', this)">🔴 Cần ôn</button>
-                        <button class="btn btn-outline" onclick="setFilter('master', this)">🟢 Đã Master</button>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px;">
+                    <div class="filter-chips" id="filter-chips">
+                        <button class="btn btn-outline active" style="border-radius: var(--radius-pill);" onclick="setFilter('all', this)">Tất cả thẻ</button>
+                        <button class="btn btn-outline" style="border-radius: var(--radius-pill);" onclick="setFilter('review', this)">🔴 Yếu / Cần ôn</button>
+                        <button class="btn btn-outline" style="border-radius: var(--radius-pill);" onclick="setFilter('master', this)">🟢 Đã Master</button>
                     </div>
-                    <div style="display: flex; gap: 8px;">
-                        <button class="btn btn-outline" onclick="switchTab('import')"><i class="fa-solid fa-file-import"></i> Nạp File</button>
-                        <button class="btn btn-outline" onclick="switchTab('ai')"><i class="fa-solid fa-robot"></i> AI Import</button>
+                    <div style="display: flex; gap: 12px;">
+                        <button class="btn btn-outline" style="border-radius: var(--radius-pill);" onclick="switchTab('import')"><i class="fa-solid fa-file-import"></i> Nhập File</button>
+                        <button class="btn btn-outline" style="border-radius: var(--radius-pill);" onclick="switchTab('ai')"><i class="fa-solid fa-robot"></i> Import AI</button>
                     </div>
                 </div>
 
@@ -427,41 +433,47 @@
                     <div id="words-playlist-container"></div>
                 </div>
 
+                <!-- IMPORT TABS -->
                 <div id="tab-import" style="display: none;" class="ui-card">
-                    <div style="border: 2px dashed var(--primary); padding: 40px; text-align: center; border-radius: var(--radius-md); cursor: pointer;" onclick="document.getElementById('file-input').click()">
-                        <i class="fa-solid fa-file-excel" style="font-size: 40px; color: var(--primary); margin-bottom: 12px;"></i>
-                        <h4 style="margin: 0 0 8px 0;">Tải lên file Excel (.xlsx) hoặc Word (.docx)</h4>
-                        <p style="margin: 0; font-size: 13px; color: var(--text-muted);">Cấu trúc: Từ vựng | Phiên âm | Nghĩa | Ví dụ</p>
+                    <div style="border: 2px dashed var(--primary); padding: 50px 20px; text-align: center; border-radius: var(--radius-md); cursor: pointer; background: var(--bg-body);" onclick="document.getElementById('file-input').click()">
+                        <i class="fa-solid fa-cloud-arrow-up" style="font-size: 48px; color: var(--primary); margin-bottom: 16px;"></i>
+                        <h3 style="margin: 0 0 8px 0; font-size: 20px;">Tải lên Excel (.xlsx) / Word (.docx)</h3>
+                        <p style="margin: 0; font-size: 14px; color: var(--text-muted);">Cột 1: Từ | Cột 2: Phiên âm | Cột 3: Nghĩa | Cột 4: Ví dụ</p>
                         <input type="file" id="file-input" style="display: none;" accept=".xlsx, .xls, .docx" onchange="handleFileUpload(event)">
                     </div>
-                    <button class="btn btn-outline" style="margin-top: 16px; width: 100%;" onclick="switchTab('list')">Hủy</button>
+                    <button class="btn btn-outline" style="margin-top: 16px; width: 100%;" onclick="switchTab('list')">Hủy bỏ</button>
                 </div>
 
                 <div id="tab-ai" style="display: none;" class="ui-card">
-                    <h4 style="margin-top: 0;">Copy lệnh gửi ChatGPT/Gemini:</h4>
-                    <div style="background: var(--bg-body); padding: 12px; border-radius: var(--radius-sm); font-family: 'JetBrains Mono'; font-size: 12px; margin-bottom: 12px; color: var(--primary);">Format: Từ vựng | Phiên âm | Dịch nghĩa | Ví dụ</div>
-                    <textarea id="ai-input" style="width: 100%; height: 120px; padding: 12px; border-radius: var(--radius-sm); border: 1px solid var(--border-strong); background: var(--bg-body); color: var(--text-main); font-family: inherit;" placeholder="Dán kết quả từ AI vào đây..."></textarea>
-                    <div style="display: flex; gap: 8px; margin-top: 12px;">
+                    <h3 style="margin-top: 0;">Lệnh AI (ChatGPT/Gemini)</h3>
+                    <div style="background: var(--bg-body); padding: 16px; border-radius: var(--radius-sm); font-family: 'JetBrains Mono'; font-size: 13px; margin-bottom: 16px; border: 1px solid var(--border-light); color: var(--primary);">Format text: Từ vựng | Phiên âm | Dịch nghĩa | Ví dụ</div>
+                    <textarea id="ai-input" style="width: 100%; height: 160px; padding: 16px; border-radius: var(--radius-md); border: 2px solid var(--border-strong); background: var(--bg-body); color: var(--text-main); font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; outline: none; resize: vertical;" placeholder="Dán văn bản AI xuất ra vào đây..."></textarea>
+                    <div style="display: flex; gap: 12px; margin-top: 16px;">
                         <button class="btn btn-primary" style="flex: 1;" onclick="processAIText()">Lưu dữ liệu</button>
                         <button class="btn btn-outline" onclick="switchTab('list')">Hủy</button>
                     </div>
                 </div>
             </section>
 
-            <!-- VIEW: FLASHCARD STUDY (ZEN MODE) -->
+            <!-- STUDY ROOM: FLASHCARD -->
             <section id="view-study-flashcard" class="view-section">
                 <div class="page-header">
-                    <button class="btn btn-outline" onclick="nav('single-album')"><i class="fa-solid fa-xmark"></i> Thoát</button>
-                    <span style="font-weight: 800; font-size: 16px;" id="fc-progress-text">1 / 10</span>
+                    <button class="btn btn-outline" onclick="nav('single-album')"><i class="fa-solid fa-arrow-left"></i> Thoát</button>
+                    <div style="display: flex; align-items: center; gap: 16px;">
+                        <span style="font-weight: 900; font-size: 18px;" id="fc-progress-text">1 / 10</span>
+                        <span id="study-card-type" style="padding: 6px 12px; border-radius: var(--radius-pill); font-size: 12px; font-weight: 800; background: var(--danger-light); color: var(--danger); text-transform: uppercase;">🔴 Cần ôn</span>
+                    </div>
                 </div>
 
                 <div class="fc-container" onclick="flipCard()">
                     <div class="fc-card" id="fc-card-element">
+                        <!-- MẶT TRƯỚC -->
                         <div class="fc-face">
                             <button class="audio-btn" onclick="speakCurrentWord(event)"><i class="fa-solid fa-volume-high"></i></button>
                             <h1 class="fc-word" id="fc-word">Word</h1>
-                            <p style="font-size: 14px; color: var(--text-muted); font-weight: 700; margin-top: auto;"><i class="fa-solid fa-hand-pointer"></i> Nhấp hoặc bấm [Space] để lật</p>
+                            <p style="font-size: 15px; color: var(--text-muted); font-weight: 700; margin-top: auto; text-transform: uppercase; letter-spacing: 1px;"><i class="fa-solid fa-rotate"></i> Click hoặc [Space] để lật</p>
                         </div>
+                        <!-- MẶT SAU -->
                         <div class="fc-face back">
                             <div class="fc-phonetic" id="fc-phonetic">/phonetic/</div>
                             <h2 class="fc-meaning" id="fc-meaning">Nghĩa của từ</h2>
@@ -470,87 +482,92 @@
                     </div>
                 </div>
 
-                <div style="display: flex; gap: 16px; max-width: 600px; margin: 32px auto 0 auto;">
-                    <button class="btn btn-outline" style="flex: 1; border-color: var(--danger); color: var(--danger); padding: 16px;" onclick="markCard(false)"><i class="fa-solid fa-xmark"></i> Chưa thuộc [←]</button>
-                    <button class="btn btn-primary" style="flex: 1; background: var(--success); padding: 16px;" onclick="markCard(true)"><i class="fa-solid fa-check"></i> Đã thuộc [→]</button>
+                <div style="display: flex; gap: 20px; max-width: 600px; margin: 40px auto 0 auto;">
+                    <button class="btn btn-outline" style="flex: 1; border-color: var(--danger); color: var(--danger); padding: 18px; font-size: 16px;" onclick="markCard(false)"><i class="fa-solid fa-xmark"></i> Quên [←]</button>
+                    <button class="btn btn-primary" style="flex: 1; background: var(--success); box-shadow: 0 10px 25px rgba(16,185,129,0.3); padding: 18px; font-size: 16px;" onclick="markCard(true)"><i class="fa-solid fa-check"></i> Đã Thuộc [→]</button>
                 </div>
             </section>
-
-            <!-- VIEW: TYPING STUDY -->
+            
+            <!-- STUDY ROOM: TYPING -->
             <section id="view-study-typing" class="view-section">
                 <div class="page-header">
-                    <button class="btn btn-outline" onclick="nav('single-album')"><i class="fa-solid fa-xmark"></i> Thoát</button>
-                    <span style="font-weight: 800;" id="type-progress-text">1 / 10</span>
+                    <button class="btn btn-outline" onclick="nav('single-album')"><i class="fa-solid fa-arrow-left"></i> Thoát</button>
+                    <span style="font-weight: 900; font-size: 18px;" id="type-progress-text">1 / 10</span>
                 </div>
-                <div class="ui-card" style="max-width: 600px; margin: 0 auto; text-align: center; padding: 40px 24px;">
-                    <h2 style="font-size: 28px; margin: 0 0 8px 0; color: var(--primary);" id="type-meaning">Nghĩa</h2>
-                    <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 24px;" id="type-hint">Gợi ý</p>
-                    <input type="text" id="type-input" style="width: 100%; padding: 16px; font-size: 18px; text-align: center; border-radius: var(--radius-md); border: 2px solid var(--border-strong); outline: none; background: var(--bg-body); color: var(--text-main); font-weight: 800;" placeholder="Gõ từ tiếng Anh..." onkeypress="handleTypingKey(event)">
-                    <p id="type-feedback" style="height: 24px; margin-top: 12px; font-weight: 800; font-size: 15px;"></p>
-                    <button class="btn btn-outline" style="width: 100%; margin-top: 16px;" onclick="skipTyping()">Bỏ qua</button>
+                <div class="ui-card" style="max-width: 650px; margin: 0 auto; text-align: center; padding: 50px 30px;">
+                    <h2 style="font-size: 32px; margin: 0 0 12px 0; color: var(--primary);" id="type-meaning">Nghĩa của từ</h2>
+                    <p style="color: var(--text-muted); font-size: 16px; margin-bottom: 32px; font-family: 'JetBrains Mono';" id="type-hint">Gợi ý</p>
+                    <input type="text" id="type-input" style="width: 100%; padding: 20px; font-size: 20px; text-align: center; border-radius: var(--radius-md); border: 2px solid var(--border-strong); outline: none; background: var(--bg-body); color: var(--text-main); font-weight: 800; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);" placeholder="Gõ từ vựng tiếng Anh..." onkeypress="handleTypingKey(event)">
+                    <p id="type-feedback" style="height: 28px; margin-top: 16px; font-weight: 800; font-size: 16px;"></p>
+                    <button class="btn btn-outline" style="width: 100%; margin-top: 24px; padding: 16px;" onclick="skipTyping()">Bỏ qua từ này</button>
                 </div>
             </section>
 
-            <!-- VIEW: ARCADE ZONE -->
+            <!-- ARCADE HUB -->
             <section id="view-arcade" class="view-section">
                 <div class="page-header"><h2 class="page-title">Arcade Zone</h2></div>
                 <div class="bento-grid">
-                    <div class="ui-card" style="cursor: pointer;" onclick="startArcade('match')">
-                        <h3 style="color: var(--primary); margin-top: 0;"><i class="fa-solid fa-bolt"></i> Nối từ tốc độ</h3>
-                        <p style="color: var(--text-muted); font-size: 14px; margin: 0;">Ghép cặp từ vựng và nghĩa chính xác trong thời gian ngắn nhất.</p>
+                    <div class="ui-card" style="cursor: pointer; border: 2px solid var(--primary); background: var(--primary-light);" onclick="startArcade('match')">
+                        <h3 style="color: var(--primary); margin-top: 0; font-size: 24px;"><i class="fa-solid fa-bolt"></i> Speed Match</h3>
+                        <p style="color: var(--text-main); font-size: 15px; margin: 0; line-height: 1.5;">Phản xạ nhanh: Ghép cặp từ vựng và nghĩa trong thời gian ngắn nhất.</p>
                     </div>
-                    <div class="ui-card" style="cursor: pointer;" onclick="startArcade('quiz')">
-                        <h3 style="color: var(--warning); margin-top: 0;"><i class="fa-solid fa-clock"></i> Sinh tồn (Quiz)</h3>
-                        <p style="color: var(--text-muted); font-size: 14px; margin: 0;">Trắc nghiệm áp lực đếm ngược thời gian toàn hệ thống.</p>
+                    <div class="ui-card" style="cursor: pointer; border: 2px solid var(--warning); background: var(--warning-light);" onclick="startArcade('quiz')">
+                        <h3 style="color: var(--warning); margin-top: 0; font-size: 24px;"><i class="fa-solid fa-clock"></i> Survival Quiz</h3>
+                        <p style="color: var(--text-main); font-size: 15px; margin: 0; line-height: 1.5;">Áp lực sinh tồn: Trắc nghiệm liên tục với bộ đếm ngược khắc nghiệt.</p>
                     </div>
                 </div>
             </section>
 
-            <!-- VIEW: GAME MATCH -->
+            <!-- ARCADE: MATCH -->
             <section id="view-game-match" class="view-section">
                 <div class="page-header">
-                    <button class="btn btn-outline" onclick="nav('arcade')"><i class="fa-solid fa-xmark"></i> Thoát</button>
-                    <span style="font-weight: 800; color: var(--primary);">Speed Match</span>
+                    <button class="btn btn-outline" onclick="nav('arcade')"><i class="fa-solid fa-arrow-left"></i> Thoát</button>
+                    <span style="font-weight: 900; color: var(--primary); font-size: 20px; text-transform: uppercase; letter-spacing: 1px;"><i class="fa-solid fa-bolt"></i> Nối từ tốc độ</span>
                 </div>
                 <div class="arcade-grid" id="match-grid"></div>
             </section>
 
-            <!-- VIEW: GAME QUIZ -->
+            <!-- ARCADE: QUIZ -->
             <section id="view-game-quiz" class="view-section">
                 <div class="page-header">
-                    <button class="btn btn-outline" onclick="nav('arcade')"><i class="fa-solid fa-xmark"></i> Thoát</button>
-                    <span style="font-weight: 800; color: var(--primary);" id="quiz-score">0 XP</span>
+                    <button class="btn btn-outline" onclick="nav('arcade')"><i class="fa-solid fa-arrow-left"></i> Thoát</button>
+                    <span style="font-weight: 900; color: var(--primary); font-size: 24px;" id="quiz-score">0 Điểm</span>
                 </div>
-                <div class="quiz-box">
-                    <div class="timer-bar-bg"><div class="timer-bar-fill" id="timer-bar"></div></div>
-                    <h1 style="font-size: 36px; margin: 0 0 24px 0;" id="quiz-target-word">Word</h1>
+                <div class="ui-card" style="max-width: 700px; margin: 0 auto; text-align: center; padding: 40px 30px;">
+                    <div style="width: 100%; height: 12px; background: var(--border-strong); border-radius: 6px; margin-bottom: 30px; overflow: hidden;">
+                        <div id="timer-bar" style="height: 100%; background: var(--warning); width: 100%; transition: width 0.1s linear;"></div>
+                    </div>
+                    <h3 style="color: var(--text-muted); margin: 0; font-weight: 800; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Chọn nghĩa đúng:</h3>
+                    <h1 style="font-size: 48px; color: var(--text-main); margin: 16px 0 40px 0; font-weight: 900; letter-spacing: -1px;" id="quiz-target-word">Word</h1>
                     <div class="arcade-grid" style="grid-template-columns: 1fr 1fr;" id="quiz-options"></div>
                 </div>
             </section>
 
-            <!-- VIEW: SETTINGS -->
+            <!-- SETTINGS -->
             <section id="view-settings" class="view-section">
-                <div class="page-header"><h2 class="page-title">Cài đặt Dữ liệu</h2></div>
-                <div class="ui-card">
-                    <h3 style="margin-top: 0;"><i class="fa-solid fa-download"></i> Sao lưu (Backup)</h3>
-                    <p style="color: var(--text-muted); font-size: 14px;">Tải file dữ liệu `.json` để lưu trữ cá nhân.</p>
-                    <button class="btn btn-primary" onclick="exportBackup()">Tải bản sao lưu</button>
-                </div>
-                <div class="ui-card" style="border-color: var(--danger-light);">
-                    <h3 style="margin-top: 0; color: var(--danger);"><i class="fa-solid fa-upload"></i> Phục hồi (Restore)</h3>
-                    <p style="color: var(--text-muted); font-size: 14px;">Ghi đè dữ liệu bằng file sao lưu `.json` của bạn.</p>
-                    <input type="file" id="file-restore" style="display: none;" accept=".json" onchange="importBackup(event)">
-                    <button class="btn btn-outline" style="color: var(--danger); border-color: var(--danger);" onclick="document.getElementById('file-restore').click()">Chọn file Restore</button>
+                <div class="page-header"><h2 class="page-title">Quản lý Dữ liệu</h2></div>
+                <div class="bento-grid">
+                    <div class="ui-card">
+                        <h3 style="margin-top: 0; font-size: 20px;"><i class="fa-solid fa-download"></i> Sao lưu (Backup)</h3>
+                        <p style="color: var(--text-muted); font-size: 15px; margin-bottom: 24px;">Tải dữ liệu học tập dưới định dạng JSON để lưu trữ an toàn trên thiết bị.</p>
+                        <button class="btn btn-primary" style="width: 100%;" onclick="exportBackup()">Tải bản sao lưu</button>
+                    </div>
+                    <div class="ui-card" style="border-color: var(--danger-light); background: var(--danger-light);">
+                        <h3 style="margin-top: 0; color: var(--danger); font-size: 20px;"><i class="fa-solid fa-upload"></i> Phục hồi (Restore)</h3>
+                        <p style="color: var(--text-muted); font-size: 15px; margin-bottom: 24px;">Tải lên file JSON để khôi phục. <strong>Lưu ý: Dữ liệu hiện tại sẽ bị ghi đè.</strong></p>
+                        <input type="file" id="file-restore" style="display: none;" accept=".json" onchange="importBackup(event)">
+                        <button class="btn btn-outline" style="width: 100%; color: var(--danger); border-color: var(--danger); background: #ffffff;" onclick="document.getElementById('file-restore').click()">Chọn file Restore</button>
+                    </div>
                 </div>
             </section>
 
         </div>
     </main>
 
-    <!-- SYSTEM SCRIPT ENGINE -->
+    <!-- CORE LOGIC JAVASCRIPT -->
     <script>
-        const STORAGE_KEY = 'vocabHubMasterData';
-        let appData = { albums: [], xp: 0, streak: 1, lastLogin: "", sidebarCollapsed: false };
+        const STORAGE_KEY = 'vocabHub_SaaS_Data';
+        let appData = { albums: [], hasSeenLanding: false };
         let activeAlbumId = null;
         let activeFilter = 'all';
         let studyQueue = [];
@@ -558,34 +575,28 @@
 
         window.onload = () => {
             const saved = localStorage.getItem(STORAGE_KEY);
-            if (saved) {
-                try { appData = JSON.parse(saved); } catch(e) {}
+            if (saved) { try { appData = JSON.parse(saved); } catch(e) {} }
+            
+            // Xử lý luồng Landing Page
+            if (!appData.hasSeenLanding) {
+                nav('landing');
+            } else {
+                nav('dashboard');
             }
-            if (appData.sidebarCollapsed) {
-                document.getElementById('sidebar').classList.add('collapsed');
-            }
+            
             updateDashboard();
-            updateLevel();
             setupKeyboardShortcuts();
         };
 
         function saveData() { localStorage.setItem(STORAGE_KEY, JSON.stringify(appData)); }
 
-        function toggleSidebar() {
-            const sb = document.getElementById('sidebar');
-            sb.classList.toggle('collapsed');
-            appData.sidebarCollapsed = sb.classList.contains('collapsed');
-            saveData();
-        }
-
         function toggleTheme() {
             const html = document.documentElement;
             const isDark = html.getAttribute('data-theme') === 'dark';
             html.setAttribute('data-theme', isDark ? 'light' : 'dark');
-            document.getElementById('theme-icon').className = isDark ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
-            document.getElementById('theme-text').innerText = isDark ? 'Giao diện tối' : 'Giao diện sáng';
         }
 
+        // ================= ROUTING CHÍNH =================
         function nav(viewName) {
             document.querySelectorAll('.nav-link, .mobile-nav-item').forEach(el => el.classList.remove('active'));
             document.querySelectorAll(`[data-nav="${viewName}"]`).forEach(el => el.classList.add('active'));
@@ -594,10 +605,19 @@
             const targetView = document.getElementById(`view-${viewName}`);
             if (targetView) targetView.classList.add('active');
 
-            if (['study-flashcard', 'study-typing', 'game-match', 'game-quiz'].includes(viewName)) {
-                document.body.classList.add('zen-mode');
+            const body = document.body;
+            body.classList.remove('is-landing', 'zen-mode');
+
+            if (viewName === 'landing') {
+                body.classList.add('is-landing');
+            } else if (['study-flashcard', 'study-typing', 'game-match', 'game-quiz'].includes(viewName)) {
+                body.classList.add('zen-mode');
             } else {
-                document.body.classList.remove('zen-mode');
+                // Nếu người dùng vào dashboard/app, đánh dấu đã xem landing
+                if (!appData.hasSeenLanding) {
+                    appData.hasSeenLanding = true;
+                    saveData();
+                }
             }
 
             if (viewName === 'dashboard') updateDashboard();
@@ -605,25 +625,11 @@
             if (viewName === 'single-album') renderSingleAlbum();
         }
 
-        function updateLevel() {
-            const level = Math.floor((appData.xp || 0) / 100) + 1;
-            document.getElementById('user-level-text').innerText = `Level ${level}`;
-            document.getElementById('level-bar').style.width = `${(appData.xp % 100)}%`;
-        }
-
-        function addXP(val) {
-            appData.xp = (appData.xp || 0) + val;
-            saveData();
-            updateLevel();
-        }
-
         function updateDashboard() {
             let totalWords = 0; let masterWords = 0;
             appData.albums.forEach(alb => {
                 totalWords += alb.words.length;
-                alb.words.forEach(w => {
-                    if ((w.correctCount || 0) >= 3) masterWords++;
-                });
+                alb.words.forEach(w => { if ((w.correctCount || 0) >= 3) masterWords++; });
             });
 
             document.getElementById('dash-total-albums').innerText = appData.albums.length;
@@ -634,26 +640,27 @@
             recentContainer.innerHTML = '';
             appData.albums.slice(-3).reverse().forEach(alb => {
                 recentContainer.innerHTML += `
-                    <div class="stat-box" style="cursor:pointer;" onclick="openAlbum('${alb.id}')">
+                    <div class="stat-box" style="cursor:pointer; padding: 20px;" onclick="openAlbum('${alb.id}')">
                         <strong style="font-size: 16px; color: var(--primary);">${alb.name}</strong>
-                        <p style="margin-top: 4px; font-size: 13px; color: var(--text-muted);">${alb.words.length} từ vựng</p>
+                        <p style="margin: 6px 0 0 0; font-size: 13px; font-weight: 700; color: var(--text-muted);">${alb.words.length} từ vựng</p>
                     </div>
                 `;
             });
         }
 
+        // ================= ALBUM MANAGEMENT =================
         function renderAlbumsList() {
             const container = document.getElementById('albums-list-container');
             container.innerHTML = '';
             if (appData.albums.length === 0) {
-                container.innerHTML = `<p style="color:var(--text-muted);">Chưa có album nào. Bấm nút phía trên để tạo mới!</p>`;
+                container.innerHTML = `<div style="grid-column: 1/-1; padding: 40px; text-align: center; border: 2px dashed var(--border-strong); border-radius: var(--radius-lg); color: var(--text-muted); font-weight: 600;">Chưa có thư mục nào. Nhấn "Tạo Album" để bắt đầu!</div>`;
                 return;
             }
             appData.albums.forEach(alb => {
                 container.innerHTML += `
-                    <div class="ui-card" style="cursor:pointer; margin: 0;" onclick="openAlbum('${alb.id}')">
-                        <h3 style="margin: 0 0 8px 0; color: var(--primary);">${alb.name}</h3>
-                        <span style="font-size: 13px; font-weight: 700; color: var(--text-muted);">${alb.words.length} từ vựng</span>
+                    <div class="ui-card" style="cursor:pointer; margin: 0; padding: 24px;" onclick="openAlbum('${alb.id}')">
+                        <h3 style="margin: 0 0 8px 0; color: var(--text-main); font-size: 20px;">${alb.name}</h3>
+                        <span style="font-size: 14px; font-weight: 700; color: var(--text-muted);">${alb.words.length} thẻ ghi nhớ</span>
                     </div>
                 `;
             });
@@ -667,13 +674,10 @@
             }
         }
 
-        function openAlbum(id) {
-            activeAlbumId = id;
-            nav('single-album');
-        }
+        function openAlbum(id) { activeAlbumId = id; activeFilter = 'all'; setFilterUI(); nav('single-album'); }
 
         function deleteCurrentAlbum() {
-            if (confirm("Bạn chắc chắn muốn xóa Album này?")) {
+            if (confirm("Hành động này không thể hoàn tác. Xóa Album này?")) {
                 appData.albums = appData.albums.filter(a => a.id !== activeAlbumId);
                 saveData(); nav('albums');
             }
@@ -688,61 +692,101 @@
             container.innerHTML = '';
 
             let words = album.words;
-            if (activeFilter === 'review') words = words.filter(w => (w.correctCount || 0) < 3);
-            if (activeFilter === 'master') words = words.filter(w => (w.correctCount || 0) >= 3);
+            let masterCount = 0; let reviewCount = 0;
+            
+            album.words.forEach(w => {
+                let attempts = (w.correctCount || 0) + (w.wrongCount || 0);
+                let rate = attempts === 0 ? 0 : ((w.correctCount || 0) / attempts);
+                if (attempts >= 3 && rate >= 0.8) masterCount++;
+                else reviewCount++;
+            });
+
+            document.getElementById('album-stats-summary').innerHTML = `
+                <span><i class="fa-solid fa-list"></i> ${words.length} Từ</span>
+                <span style="color:var(--success);"><i class="fa-solid fa-check-circle"></i> ${masterCount} Master</span>
+                <span style="color:var(--danger);"><i class="fa-solid fa-rotate-right"></i> ${reviewCount} Cần ôn</span>
+            `;
+
+            if (activeFilter === 'review') words = words.filter(w => { let a=(w.correctCount||0)+(w.wrongCount||0); return a===0 || (w.correctCount||0)/a < 0.8 || a < 3; });
+            if (activeFilter === 'master') words = words.filter(w => { let a=(w.correctCount||0)+(w.wrongCount||0); return a>=3 && (w.correctCount||0)/a >= 0.8; });
 
             if (words.length === 0) {
-                container.innerHTML = `<p style="text-align:center; color:var(--text-muted); padding: 20px;">Không có từ vựng nào.</p>`;
+                container.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding: 40px; border: 1px dashed var(--border-strong); border-radius: var(--radius-md);">Không có từ vựng nào trong mục này.</div>`;
                 return;
             }
 
-            words.forEach((w, idx) => {
+            words.forEach(w => {
+                let actualIndex = album.words.indexOf(w);
+                let a = (w.correctCount||0)+(w.wrongCount||0);
+                let r = a === 0 ? "Mới" : Math.round(((w.correctCount||0)/a)*100) + "%";
+                let color = a === 0 ? 'var(--text-muted)' : (r==="100%" || r>="80%" ? 'var(--success)' : 'var(--danger)');
+
                 container.innerHTML += `
                     <div class="word-row">
                         <div class="word-info">
-                            <strong>${w.word}</strong> <span style="font-family:'JetBrains Mono'; font-size:13px; color:var(--text-muted);">${w.phonetic ? '['+w.phonetic+']' : ''}</span>
+                            <strong>${w.word}</strong> <span style="font-family:'JetBrains Mono'; font-size:14px; color:var(--text-muted); margin-left: 8px;">${w.phonetic ? '['+w.phonetic+']' : ''}</span>
                             <p>${w.meaning}</p>
                         </div>
-                        <button class="btn btn-outline" style="padding: 6px 10px; color: var(--danger);" onclick="deleteWord(${idx})"><i class="fa-solid fa-trash"></i></button>
+                        <div style="display:flex; align-items:center; gap: 16px;">
+                            <span style="font-size: 13px; font-weight: 800; color: ${color}; background: var(--bg-body); padding: 6px 12px; border-radius: var(--radius-pill); border: 1px solid var(--border-light);">${r}</span>
+                            <button class="btn btn-outline" style="padding: 8px 12px; color: var(--danger); border-color: transparent;" onclick="deleteWord(${actualIndex})"><i class="fa-solid fa-trash"></i></button>
+                        </div>
                     </div>
                 `;
             });
         }
 
         function setFilter(type, btn) {
-            activeFilter = type;
-            document.querySelectorAll('#filter-chips .btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            renderSingleAlbum();
+            activeFilter = type; setFilterUI(); renderSingleAlbum();
+        }
+        function setFilterUI() {
+            document.querySelectorAll('#filter-chips .btn').forEach(b => {
+                b.classList.remove('active');
+                if ((activeFilter === 'all' && b.innerText.includes('Tất cả')) ||
+                    (activeFilter === 'review' && b.innerText.includes('Cần ôn')) ||
+                    (activeFilter === 'master' && b.innerText.includes('Master'))) {
+                    b.classList.add('active');
+                }
+            });
         }
 
         function switchTab(tab) {
-            ['list', 'import', 'ai'].forEach(t => document.getElementById(`tab-${t}`).style.display = 'none');
+            ['word-list', 'import', 'ai'].forEach(t => document.getElementById(`tab-${t}`).style.display = 'none');
             document.getElementById(`tab-${tab}`).style.display = 'block';
+            document.getElementById('filter-chips').style.display = tab === 'word-list' ? 'flex' : 'none';
         }
 
         function deleteWord(idx) {
-            const album = appData.albums.find(a => a.id === activeAlbumId);
-            album.words.splice(idx, 1);
-            saveData(); renderSingleAlbum();
+            if(confirm("Xóa thẻ từ này?")) {
+                const album = appData.albums.find(a => a.id === activeAlbumId);
+                album.words.splice(idx, 1); saveData(); renderSingleAlbum();
+            }
         }
 
-        /* ====== TTS VOICE SYNTHESIS ====== */
+        // ================= TTS WEB SPEECH =================
         function speakCurrentWord(e) {
             if (e) e.stopPropagation();
             const word = studyQueue[studyIndex]?.word;
             if (word && 'speechSynthesis' in window) {
-                const utterance = new SpeechSynthesisUtterance(word);
-                utterance.lang = 'en-US';
-                speechSynthesis.speak(utterance);
+                const u = new SpeechSynthesisUtterance(word);
+                u.lang = 'en-US'; speechSynthesis.speak(u);
             }
         }
 
-        /* ====== STUDY ENGINE ====== */
+        // ================= STUDY ENGINE =================
         function startStudy(mode) {
             const album = appData.albums.find(a => a.id === activeAlbumId);
-            if (!album || album.words.length === 0) return alert("Album trống!");
-            studyQueue = [...album.words].sort(() => 0.5 - Math.random());
+            if (!album || album.words.length === 0) return alert("Album chưa có từ vựng!");
+            
+            // Ưu tiên từ yếu
+            let weak = []; let strong = [];
+            album.words.forEach(w => {
+                let a = (w.correctCount||0)+(w.wrongCount||0);
+                if (a===0 || (w.correctCount||0)/a < 0.8) { w._t = 'weak'; weak.push(w); }
+                else { w._t = 'strong'; strong.push(w); }
+            });
+            weak.sort(()=>0.5-Math.random()); strong.sort(()=>0.5-Math.random());
+            studyQueue = [...weak, ...strong];
             studyIndex = 0;
 
             if (mode === 'flashcard') { nav('study-flashcard'); loadFlashcard(); }
@@ -751,7 +795,8 @@
 
         function loadFlashcard() {
             if (studyIndex >= studyQueue.length) {
-                confetti(); addXP(30); alert("Hoàn thành session!"); nav('single-album'); return;
+                confetti({particleCount: 150, spread: 100, colors: ['#f43f5e', '#fb7185']});
+                alert("Hoàn thành bài ôn tập!"); nav('single-album'); return;
             }
             document.getElementById('fc-card-element').classList.remove('flipped');
             const w = studyQueue[studyIndex];
@@ -760,17 +805,28 @@
             document.getElementById('fc-meaning').innerText = w.meaning;
             document.getElementById('fc-example').innerText = w.example ? `"${w.example}"` : '';
             document.getElementById('fc-progress-text').innerText = `${studyIndex + 1} / ${studyQueue.length}`;
+            
+            const badge = document.getElementById('study-card-type');
+            badge.style.background = w._t === 'weak' ? 'var(--danger-light)' : 'var(--success-light)';
+            badge.style.color = w._t === 'weak' ? 'var(--danger)' : 'var(--success)';
+            badge.innerText = w._t === 'weak' ? '🔴 Cần ôn' : '🟢 Tốt';
         }
 
         function flipCard() { document.getElementById('fc-card-element').classList.toggle('flipped'); }
 
         function markCard(known) {
             const w = studyQueue[studyIndex];
-            if (known) { w.correctCount = (w.correctCount || 0) + 1; addXP(5); }
+            if (known) { w.correctCount = (w.correctCount || 0) + 1; }
             else { w.wrongCount = (w.wrongCount || 0) + 1; }
             saveData();
-            studyIndex++;
-            loadFlashcard();
+            
+            document.getElementById('fc-card-element').style.transform = known ? 'translateX(100vw) rotate(15deg)' : 'translateX(-100vw) rotate(-15deg)';
+            setTimeout(() => {
+                document.getElementById('fc-card-element').style.transition = 'none';
+                document.getElementById('fc-card-element').style.transform = '';
+                studyIndex++; loadFlashcard();
+                setTimeout(() => { document.getElementById('fc-card-element').style.transition = 'transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)'; }, 50);
+            }, 300);
         }
 
         function setupKeyboardShortcuts() {
@@ -784,12 +840,11 @@
             });
         }
 
-        /* ====== TYPING ENGINE ====== */
         function loadTyping() {
-            if (studyIndex >= studyQueue.length) { confetti(); addXP(30); alert("Hoàn thành session!"); nav('single-album'); return; }
+            if (studyIndex >= studyQueue.length) { confetti(); alert("Hoàn thành gõ từ!"); nav('single-album'); return; }
             const w = studyQueue[studyIndex];
             document.getElementById('type-meaning').innerText = w.meaning;
-            document.getElementById('type-hint').innerText = w.phonetic ? `Gợi ý: [${w.phonetic}]` : '';
+            document.getElementById('type-hint').innerText = w.phonetic ? `Phiên âm: [${w.phonetic}]` : '';
             document.getElementById('type-progress-text').innerText = `${studyIndex + 1} / ${studyQueue.length}`;
             const inp = document.getElementById('type-input'); inp.value = ''; inp.disabled = false; inp.focus();
             document.getElementById('type-feedback').innerText = '';
@@ -800,21 +855,22 @@
                 const w = studyQueue[studyIndex];
                 const val = document.getElementById('type-input').value.trim().toLowerCase();
                 if (val === w.word.toLowerCase()) {
-                    addXP(10);
-                    document.getElementById('type-feedback').innerHTML = `<span style="color:var(--success)">🎉 Chính xác! (+10 XP)</span>`;
+                    w.correctCount = (w.correctCount || 0) + 1; saveData();
+                    document.getElementById('type-feedback').innerHTML = `<span style="color:var(--success)">🎉 Chính xác!</span>`;
                     document.getElementById('type-input').disabled = true;
                     setTimeout(() => { studyIndex++; loadTyping(); }, 600);
                 } else {
-                    document.getElementById('type-feedback').innerHTML = `<span style="color:var(--danger)">❌ Sai rồi! Đáp án: ${w.word}</span>`;
+                    w.wrongCount = (w.wrongCount || 0) + 1; saveData();
+                    document.getElementById('type-feedback').innerHTML = `<span style="color:var(--danger)">❌ Sai! Đáp án: ${w.word}</span>`;
                 }
             }
         }
         function skipTyping() { studyIndex++; loadTyping(); }
 
-        /* ====== ARCADE GAMES ====== */
+        // ================= ARCADE GAMES =================
         function startArcade(type) {
             let allWords = []; appData.albums.forEach(a => allWords.push(...a.words));
-            if (allWords.length < 4) return alert("Cần ít nhất 4 từ vựng trong hệ thống!");
+            if (allWords.length < 4) return alert("Cần tối thiểu 4 từ vựng trong hệ thống!");
             studyQueue = allWords;
             if (type === 'match') { nav('game-match'); startMatchGame(); }
             if (type === 'quiz') { nav('game-quiz'); startQuizGame(); }
@@ -840,9 +896,13 @@
                     } else {
                         if (matchSelected.it.id === it.id && matchSelected.it.type !== it.type) {
                             matchSelected.tile.classList.add('matched'); tile.classList.add('matched');
-                            addXP(5);
+                            if(document.querySelectorAll('.arcade-tile:not(.matched)').length === 0) {
+                                confetti(); setTimeout(() => {alert("Tốc độ tuyệt vời!"); nav('arcade');}, 500);
+                            }
                         } else {
                             matchSelected.tile.classList.remove('selected');
+                            tile.style.borderColor = 'var(--danger)';
+                            setTimeout(() => { tile.style.borderColor = ''; }, 300);
                         }
                         matchSelected = null;
                     }
@@ -854,7 +914,7 @@
         let quizTimer = null; let quizScore = 0; let timeLeft = 30;
         function startQuizGame() {
             quizScore = 0; timeLeft = 30;
-            document.getElementById('quiz-score').innerText = '0 XP';
+            document.getElementById('quiz-score').innerText = '0 Điểm';
             nextQuizQuestion();
             clearInterval(quizTimer);
             quizTimer = setInterval(() => {
@@ -862,7 +922,7 @@
                 document.getElementById('timer-bar').style.width = (timeLeft / 30 * 100) + '%';
                 if (timeLeft <= 0) {
                     clearInterval(quizTimer); confetti();
-                    alert(`Kết thúc! Bạn thu về ${quizScore} XP`); nav('arcade');
+                    alert(`Hết giờ! Tổng điểm: ${quizScore}`); nav('arcade');
                 }
             }, 100);
         }
@@ -883,21 +943,21 @@
                 btn.onclick = () => {
                     if (opt === target.meaning) {
                         quizScore += 10; timeLeft = Math.min(30, timeLeft + 2);
-                        document.getElementById('quiz-score').innerText = `${quizScore} XP`;
+                        document.getElementById('quiz-score').innerText = `${quizScore} Điểm`;
                         nextQuizQuestion();
                     } else {
                         timeLeft = Math.max(0, timeLeft - 4);
-                        btn.style.borderColor = 'var(--danger)';
+                        btn.style.borderColor = 'var(--danger)'; btn.style.color = 'var(--danger)';
                     }
                 };
                 grid.appendChild(btn);
             });
         }
 
-        /* IMPORT / EXPORT */
+        // ================= IMPORT / EXPORT =================
         function exportBackup() {
             const blob = new Blob([JSON.stringify(appData)], { type: "application/json" });
-            const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `PinkVocab_Backup.json`;
+            const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `PinkVocab_Data.json`;
             a.click();
         }
 
@@ -907,8 +967,8 @@
             reader.onload = (ev) => {
                 try {
                     appData = JSON.parse(ev.target.result); saveData();
-                    alert("Phục hồi thành công!"); location.reload();
-                } catch(err) { alert("Lỗi đọc file backup!"); }
+                    alert("Khôi phục thành công!"); location.reload();
+                } catch(err) { alert("File không hợp lệ!"); }
             };
             reader.readAsText(file);
         }
@@ -917,13 +977,15 @@
             const txt = document.getElementById('ai-input').value.trim();
             if (!txt) return;
             const album = appData.albums.find(a => a.id === activeAlbumId);
+            let added = 0;
             txt.split('\n').forEach(line => {
                 const p = line.split('|');
                 if (p.length >= 2) {
                     album.words.push({ word: p[0].trim(), phonetic: p[1]?.trim() || '', meaning: p[2]?.trim() || '', example: p[3]?.trim() || '' });
+                    added++;
                 }
             });
-            saveData(); switchTab('list'); renderSingleAlbum();
+            saveData(); alert(`Đã thêm ${added} từ!`); switchTab('word-list'); renderSingleAlbum();
         }
 
         function handleFileUpload(e) {
@@ -933,10 +995,11 @@
             reader.onload = (ev) => {
                 const workbook = XLSX.read(new Uint8Array(ev.target.result), { type: 'array' });
                 const rows = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]], { header: 1 });
+                let count = 0;
                 rows.forEach(r => {
-                    if (r[0]) album.words.push({ word: r[0].toString().trim(), phonetic: r[1] || '', meaning: r[2] || '', example: r[3] || '' });
+                    if (r[0]) { album.words.push({ word: r[0].toString().trim(), phonetic: r[1] || '', meaning: r[2] || '', example: r[3] || '' }); count++; }
                 });
-                saveData(); switchTab('list'); renderSingleAlbum();
+                saveData(); alert(`Đã nạp ${count} từ!`); switchTab('word-list'); renderSingleAlbum();
             };
             reader.readAsArrayBuffer(file);
         }
