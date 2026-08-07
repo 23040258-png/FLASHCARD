@@ -389,7 +389,7 @@
                     <p style="margin: 0 0 20px 0; opacity: 0.95; font-size: 16px;">Giữ vững chuỗi <strong id="streak-banner">1</strong> ngày học liên tục để đạt hiệu suất cao nhất.</p>
                     <div style="display:flex; gap:12px; flex-wrap:wrap;">
                         <button class="btn" style="background: #fff; color: var(--primary); font-weight: 900;" onclick="nav('albums')"><i class="fa-solid fa-play"></i> Học tiếp ngay</button>
-                        <button class="btn btn-outline" style="border-color:rgba(255,255,255,0.4); color:#fff;" onclick="nav('landing')"><i class="fa-solid fa-cube"></i> Xem Giới Thiệu 3D</button>
+                        <button class="btn btn-outline" style="border-color:rgba(255,255,255,0.6); color:#fff; background:rgba(0,0,0,0.15);" onclick="nav('landing')"><i class="fa-solid fa-cube"></i> Xem Giới Thiệu 3D</button>
                     </div>
                     <i class="fa-solid fa-fire-flame-curved" style="position: absolute; right: -10px; bottom: -30px; font-size: 130px; opacity: 0.15; pointer-events: none;"></i>
                 </div>
@@ -423,7 +423,10 @@
                             <h2 id="current-album-name" class="page-title" style="color: var(--primary); margin-bottom: 4px;">Tên Album</h2>
                             <span id="album-total-count" style="font-size: 14px; font-weight: 700; color: var(--text-muted);">0 từ vựng</span>
                         </div>
-                        <button class="btn btn-outline" style="color: var(--danger); border-color: var(--danger);" onclick="deleteCurrentAlbum()"><i class="fa-solid fa-trash"></i> Xóa Album</button>
+                        <div style="display: flex; gap: 8px;">
+                            <button class="btn btn-outline" style="color: var(--warning); border-color: var(--warning);" onclick="removeDuplicates()" title="Lọc và xóa từ vựng bị trùng lặp"><i class="fa-solid fa-broom"></i> Dọn từ trùng</button>
+                            <button class="btn btn-outline" style="color: var(--danger); border-color: var(--danger);" onclick="deleteCurrentAlbum()"><i class="fa-solid fa-trash"></i> Xóa Album</button>
+                        </div>
                     </div>
                     <div style="display: flex; gap: 12px; width: 100%; flex-wrap: wrap;">
                         <button class="btn btn-primary" style="flex: 1;" onclick="startStudy('flashcard')"><i class="fa-solid fa-layer-group"></i> Luyện Flashcard</button>
@@ -742,6 +745,29 @@
             }
         }
 
+        /* DỌN DẸP TỪ TRÙNG LẶP */
+        function removeDuplicates() {
+            const album = appData.albums.find(a => a.id === activeAlbumId);
+            if (!album) return;
+            const originalLength = album.words.length;
+            const uniqueMap = new Map();
+            album.words.forEach(w => {
+                const key = w.word.toLowerCase().trim();
+                if (!uniqueMap.has(key)) {
+                    uniqueMap.set(key, w);
+                }
+            });
+            album.words = Array.from(uniqueMap.values());
+            saveData();
+            renderSingleAlbum(1);
+            const removedCount = originalLength - album.words.length;
+            if (removedCount > 0) {
+                alert(`✨ Đã dọn dẹp và xóa thành công ${removedCount} từ vựng bị trùng lặp!`);
+            } else {
+                alert("✨ Album của bạn rất sạch sẽ, không có từ nào bị trùng lặp!");
+            }
+        }
+
         /* RENDER SINGLE ALBUM WITH 20-ITEMS PAGINATION & FULL INFO */
         function renderSingleAlbum(page = 1) {
             currentPage = page;
@@ -765,6 +791,9 @@
             }
 
             const totalPages = Math.ceil(album.words.length / ITEMS_PER_PAGE);
+            if (currentPage > totalPages) currentPage = totalPages;
+            if (currentPage < 1) currentPage = 1;
+
             const startIdx = (currentPage - 1) * ITEMS_PER_PAGE;
             const currentWords = album.words.slice(startIdx, startIdx + ITEMS_PER_PAGE);
 
