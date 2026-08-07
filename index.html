@@ -77,18 +77,11 @@
 
         /* MODES */
         body.is-landing #sidebar, body.is-landing .mobile-header, body.is-landing .mobile-nav { display: none !important; }
-        body.is-landing .main-content { padding: 0 !important; max-width: 100%; display: block; overflow-y: auto; }
+        body.is-landing .main-content { padding: 0 !important; max-width: 100%; display: block; overflow-y: hidden; }
 
         body.zen-mode #sidebar { width: 0 !important; min-width: 0 !important; padding: 0 !important; opacity: 0; border: none; }
         body.zen-mode .mobile-header, body.zen-mode .mobile-nav { display: none !important; }
-        
-        /* FIX ZEN MODE SCROLLING & PADDING FOR GAMES */
-        body.zen-mode .main-content { 
-            padding: 80px 20px 140px 20px !important; 
-            display: block; 
-            overflow-y: auto; 
-            height: 100vh;
-        }
+        body.zen-mode .main-content { padding: 80px 20px 140px 20px !important; display: block; overflow-y: auto; height: 100vh; }
 
         /* FLOATING EXIT BUTTON FOR GAMES */
         .btn-exit-game {
@@ -103,27 +96,56 @@
         [data-theme="dark"] .btn-exit-game { background: rgba(15, 23, 42, 0.85); }
         .btn-exit-game:hover { background: var(--danger); color: white; transform: scale(1.05); }
 
-        /* ================= 3D KINETIC LANDING PAGE ================= */
+        /* ================= 3D KINETIC LANDING PAGE (CINEMATIC ENTRY) ================= */
         .landing-container {
-            min-height: 100vh; perspective: 1200px; overflow-x: hidden;
-            background: radial-gradient(circle at 50% 20%, rgba(244,63,94,0.12) 0%, transparent 60%), var(--bg-body);
+            min-height: 100vh; perspective: 1200px; overflow: hidden; position: relative;
+            background: radial-gradient(circle at 50% 50%, rgba(244,63,94,0.08) 0%, var(--bg-body) 80%);
         }
+        
+        /* Cinematic Particles */
+        .ambient-particles { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+        .particle { position: absolute; border-radius: 50%; opacity: 0.4; filter: blur(40px); animation: floatParticle 15s infinite ease-in-out alternate; }
+        @keyframes floatParticle {
+            0% { transform: translateY(0px) scale(1); }
+            100% { transform: translateY(-100px) scale(1.2); }
+        }
+
         .landing-nav {
             position: fixed; top: 0; left: 0; width: 100%; padding: 20px 6%;
             display: flex; justify-content: space-between; align-items: center;
-            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(16px);
-            z-index: 1000; border-bottom: 1px solid var(--border-light);
+            background: transparent; z-index: 1000; transition: opacity 0.5s;
         }
-        [data-theme="dark"] .landing-nav { background: rgba(2, 6, 23, 0.85); }
-        .kinetic-hero { min-height: 90vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 140px 20px 80px 20px; position: relative; }
-        .kinetic-title { font-size: clamp(3rem, 7vw, 5.5rem); font-weight: 900; letter-spacing: -2.5px; line-height: 1.05; margin: 0 0 24px 0; color: var(--text-main); }
+
+        .kinetic-hero {
+            min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center; padding: 0 20px; position: relative; z-index: 10;
+        }
+        
+        .cinematic-text-group { transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+        .kinetic-title { font-size: clamp(3.5rem, 8vw, 6rem); font-weight: 900; letter-spacing: -2.5px; line-height: 1.05; margin: 0 0 20px 0; color: var(--text-main); }
         .kinetic-title span { background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 15px 25px var(--primary-glow)); }
-        .kinetic-subtitle { font-size: 1.2rem; color: var(--text-muted); font-weight: 500; max-width: 650px; margin: 0 auto 40px auto; line-height: 1.6; }
-        .scene-3d { width: 100%; max-width: 750px; height: 360px; margin: 50px auto 0 auto; position: relative; transform-style: preserve-3d; transition: transform 0.1s ease-out; }
-        .cube-3d { width: 100%; height: 100%; background: var(--bg-card); border-radius: var(--radius-xl); border: 2px solid var(--border-strong); box-shadow: var(--shadow-lg); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; transform: translateZ(50px); }
-        .kinetic-features { padding: 100px 6%; max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
-        .feature-box-3d { background: var(--bg-card); border: 1px solid var(--border-light); padding: 40px; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); transition: var(--transition); transform-style: preserve-3d; }
-        .feature-box-3d:hover { transform: translateY(-8px) rotateX(3deg) rotateY(-3deg); box-shadow: var(--shadow-md); border-color: var(--primary); }
+        .kinetic-subtitle { font-size: 1.2rem; color: var(--text-muted); font-weight: 500; max-width: 600px; margin: 0 auto 40px auto; line-height: 1.6; }
+
+        /* The Hologram Cube */
+        .scene-3d {
+            width: 100%; max-width: 600px; height: 320px; margin: 40px auto 0 auto;
+            position: relative; transform-style: preserve-3d; transition: transform 0.1s ease-out;
+            will-change: transform, opacity;
+        }
+        .cube-3d {
+            width: 100%; height: 100%; background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-radius: var(--radius-xl); border: 2px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 25px 50px -12px rgba(244, 63, 94, 0.3), inset 0 0 20px rgba(255,255,255,0.5);
+            display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px;
+            transform: translateZ(50px);
+        }
+        [data-theme="dark"] .cube-3d { background: rgba(15, 23, 42, 0.6); border-color: rgba(255, 255, 255, 0.05); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(255,255,255,0.02); }
+        
+        .cube-3d::before {
+            content: ''; position: absolute; inset: -4px; border-radius: calc(var(--radius-xl) + 4px);
+            background: linear-gradient(135deg, var(--primary), transparent, var(--secondary));
+            z-index: -1; opacity: 0.5; filter: blur(12px);
+        }
 
         /* ================= APP WORKSPACE ================= */
         #sidebar {
@@ -270,12 +292,13 @@
             .mobile-nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: var(--text-muted); font-size: 11px; font-weight: 700; cursor: pointer; }
             .mobile-nav-item.active { color: var(--primary); }
             .main-content { padding: 80px 16px 85px 16px; }
-            body.zen-mode .main-content { padding: 80px 16px 100px 16px !important; } /* Make room for sticky bank on mobile */
+            body.zen-mode .main-content { padding: 80px 16px 100px 16px !important; }
             .fc-container { height: 380px; }
             .quiz-grid { grid-template-columns: 1fr; }
             .context-word-bank { padding: 12px; justify-content: flex-start; }
             .context-chip { font-size: 14px; padding: 10px 16px; white-space: nowrap; }
             .btn-exit-game { top: 15px; left: 15px; padding: 8px 16px; font-size: 13px; }
+            .kinetic-title { font-size: 3rem; }
         }
     </style>
 </head>
@@ -314,26 +337,35 @@
     <main class="main-content">
         <div class="container">
             
-            <!-- 3D KINETIC LANDING PAGE -->
+            <!-- 3D KINETIC LANDING PAGE (CINEMATIC ENTRY) -->
             <section id="view-landing" class="view-section" style="padding:0;">
                 <div class="landing-container">
-                    <header class="landing-nav">
+                    
+                    <!-- Ambient Light Particles -->
+                    <div class="ambient-particles">
+                        <div class="particle" style="width:300px; height:300px; background:var(--primary); top:10%; left:20%; animation-duration:12s;"></div>
+                        <div class="particle" style="width:400px; height:400px; background:var(--secondary); top:60%; right:10%; animation-duration:18s; animation-delay:-5s;"></div>
+                        <div class="particle" style="width:200px; height:200px; background:var(--warning); bottom:10%; left:40%; animation-duration:15s; animation-delay:-2s;"></div>
+                    </div>
+
+                    <header class="landing-nav" id="cinematic-nav">
                         <div class="brand-logo" style="margin:0;"><i class="fa-solid fa-crown"></i> PINK VOCAB</div>
-                        <div style="display: flex; gap: 12px;">
-                            <button class="btn btn-outline" style="padding: 10px 16px;" onclick="toggleTheme()"><i class="fa-solid fa-moon"></i></button>
-                            <button class="btn btn-primary" onclick="nav('dashboard')">Vào Ứng Dụng</button>
-                        </div>
+                        <button class="btn btn-outline" style="padding: 10px 16px;" onclick="toggleTheme()"><i class="fa-solid fa-moon"></i></button>
                     </header>
+
                     <div class="kinetic-hero">
-                        <div style="background:var(--primary-light); color:var(--primary); padding:6px 16px; border-radius:var(--radius-pill); font-weight:800; font-size:12px; margin-bottom:20px; text-transform:uppercase; letter-spacing:1px;">VIP Gamified EdTech Experience</div>
-                        <h1 class="kinetic-title">Học từ vựng đỉnh cao<br><span>Chuẩn phong cách Game.</span></h1>
-                        <p class="kinetic-subtitle">Nền tảng học tập cá nhân hóa. Phân trang thông minh, Minigame gây nghiện theo từng chủ đề và bảo toàn dữ liệu vĩnh viễn.</p>
-                        <button class="btn btn-primary" style="padding: 16px 36px; font-size: 16px;" onclick="nav('dashboard')">Bắt Đầu Học Ngay <i class="fa-solid fa-play"></i></button>
+                        <div class="cinematic-text-group" id="cinematic-text">
+                            <div style="background:var(--primary-light); color:var(--primary); padding:6px 16px; border-radius:var(--radius-pill); font-weight:800; font-size:12px; margin-bottom:20px; display:inline-block; text-transform:uppercase; letter-spacing:1px; box-shadow:0 4px 15px var(--primary-glow);">VIP Gamified EdTech</div>
+                            <h1 class="kinetic-title">Học từ vựng đỉnh cao<br><span>Kết nối không gian 3D.</span></h1>
+                            <p class="kinetic-subtitle">Nền tảng học tập thế hệ mới. Trải nghiệm gamification nhập vai, phân trang thông minh và bảo toàn dữ liệu vĩnh viễn.</p>
+                            <button class="btn btn-primary btn-enter-app" style="padding: 18px 40px; font-size: 18px; border-radius:var(--radius-pill);" onclick="enterAppCinematic()">Khởi Động Hệ Thống <i class="fa-solid fa-rocket" style="margin-left:8px;"></i></button>
+                        </div>
+                        
                         <div class="scene-3d" id="scene3d">
                             <div class="cube-3d">
-                                <h2 style="font-size: 40px; color: var(--primary); margin: 0 0 10px 0; font-weight:900;">Gamification</h2>
-                                <p style="font-family:'JetBrains Mono'; color:var(--text-muted); font-size:18px; margin:0 0 15px 0;">[/ˌɡeɪ.mə.fəˈkeɪ.ʃən/]</p>
-                                <p style="font-style:italic; color:var(--text-main); font-size:16px; margin:0;">"Sự kết hợp hoàn hảo giữa thiết kế Game và Giáo dục."</p>
+                                <i class="fa-solid fa-layer-group" style="font-size:48px; color:var(--primary); margin-bottom:20px; filter:drop-shadow(0 10px 15px var(--primary-glow));"></i>
+                                <h2 style="font-size: 36px; color: var(--text-main); margin: 0 0 10px 0; font-weight:900;">Hologram</h2>
+                                <p style="font-family:'JetBrains Mono'; color:var(--text-muted); font-size:18px; margin:0;">Vượt khỏi giới hạn phẳng 2D.</p>
                             </div>
                         </div>
                     </div>
@@ -341,13 +373,13 @@
             </section>
 
             <!-- DASHBOARD -->
-            <section id="view-dashboard" class="view-section active">
+            <section id="view-dashboard" class="view-section">
                 <div class="ui-card" style="background: linear-gradient(135deg, var(--primary), var(--secondary)); color: #fff; border: none; padding: 36px 40px; position: relative; overflow: hidden;">
                     <h1 style="font-size: 32px; font-weight: 900; margin: 0 0 8px 0;">Chào bạn! 💖</h1>
                     <p style="margin: 0 0 20px 0; opacity: 0.95; font-size: 16px;">Giữ vững chuỗi <strong id="streak-banner">1</strong> ngày học liên tục để đạt hiệu suất cao nhất.</p>
                     <div style="display:flex; gap:12px; flex-wrap:wrap;">
                         <button class="btn" style="background: #fff; color: var(--primary); font-weight: 900;" onclick="nav('albums')"><i class="fa-solid fa-play"></i> Chọn Album Học</button>
-                        <button class="btn btn-outline" style="border-color:rgba(255,255,255,0.6); color:#fff; background:rgba(0,0,0,0.15);" onclick="nav('landing')"><i class="fa-solid fa-cube"></i> Xem Giới Thiệu 3D</button>
+                        <button class="btn btn-outline" style="border-color:rgba(255,255,255,0.6); color:#fff; background:rgba(0,0,0,0.15);" onclick="nav('landing')"><i class="fa-solid fa-cube"></i> Ra Màn Hình 3D</button>
                     </div>
                     <i class="fa-solid fa-fire-flame-curved" style="position: absolute; right: -10px; bottom: -30px; font-size: 130px; opacity: 0.15; pointer-events: none;"></i>
                 </div>
@@ -528,6 +560,7 @@
         const ITEMS_PER_PAGE = 20;
         let studyQueue = [];
         let studyIndex = 0;
+        let isCinematicZooming = false; // Ngăn tương tác chuột khi đang chuyển cảnh
 
         window.onload = () => {
             const oldKeys = ['vocabHubMasterData', 'vocabHubMasterDataVIP', 'vocabHub_SaaS_Data'];
@@ -551,7 +584,8 @@
             const sBanner = document.getElementById('streak-banner');
             if (sBanner) sBanner.innerText = appData.streak || 1;
             
-            if (appData.albums.length === 0 && !appData._visited) { nav('landing'); } else { nav('dashboard'); }
+            // LUÔN LUÔN BẮT ĐẦU BẰNG MÀN HÌNH CHÀO SÂN 3D (CINEMATIC FIRST IMPRESSION)
+            nav('landing');
 
             updateDashboard();
             updateLevel();
@@ -565,10 +599,48 @@
             const scene = document.getElementById('scene3d');
             if (!scene) return;
             document.addEventListener('mousemove', (e) => {
+                if (isCinematicZooming) return; // Khoá di chuột khi đang nhảy không gian
                 const x = (window.innerWidth / 2 - e.pageX) / 25;
                 const y = (window.innerHeight / 2 - e.pageY) / 25;
-                scene.style.transform = `rotateX(${y}deg) rotateY(${-x}deg)`;
+                scene.style.transform = `rotateX(${y}deg) rotateY(${-x}deg) translateZ(50px)`;
             });
+        }
+
+        /* CINEMATIC TRANSITION (WARP SPEED) */
+        function enterAppCinematic() {
+            isCinematicZooming = true;
+            const scene = document.getElementById('scene3d');
+            const textGroup = document.getElementById('cinematic-text');
+            const navGroup = document.getElementById('cinematic-nav');
+            
+            // 1. Mờ chữ và Nav
+            if(textGroup) textGroup.style.opacity = '0';
+            if(textGroup) textGroup.style.transform = 'translateY(-20px)';
+            if(navGroup) navGroup.style.opacity = '0';
+            
+            // 2. Kích hoạt bước nhảy không gian (Phóng to khối Hologram)
+            scene.style.transition = 'transform 1.2s cubic-bezier(0.75, 0, 0.25, 1), opacity 0.8s ease-in 0.3s';
+            scene.style.transform = 'translateZ(1000px) scale(15)';
+            scene.style.opacity = '0';
+            
+            // 3. Chuyển view sang Dashboard và Reset trạng thái
+            setTimeout(() => {
+                nav('dashboard');
+                
+                // Phục hồi lại scene để lần sau xem không bị lỗi
+                setTimeout(() => {
+                    scene.style.transition = 'none';
+                    scene.style.transform = 'translateZ(50px) scale(1)';
+                    scene.style.opacity = '1';
+                    if(textGroup) { textGroup.style.opacity = '1'; textGroup.style.transform = 'translateY(0)'; }
+                    if(navGroup) navGroup.style.opacity = '1';
+                    // Đợi transition none apply xong thì trả lại transition cũ
+                    setTimeout(() => {
+                        scene.style.transition = 'transform 0.1s ease-out';
+                        isCinematicZooming = false;
+                    }, 50);
+                }, 50);
+            }, 1100);
         }
 
         function toggleSidebar() {
@@ -604,7 +676,6 @@
             } else if (viewName.startsWith('study-') || viewName.startsWith('game-')) {
                 body.classList.add('zen-mode');
             } else {
-                appData._visited = true;
                 saveData();
             }
 
@@ -614,12 +685,9 @@
         }
 
         function exitGame() {
-            // Dọn dẹp các bộ đếm giờ nếu đang chơi dở
             clearInterval(quizTimer);
             if (confirm("Thoát và lưu lại tiến trình học hiện tại?")) {
                 nav('single-album');
-            } else {
-                // Tiếp tục bộ đếm nếu cancel (tùy logic game, ở đây quiz sẽ tạm thời mất xíu giây)
             }
         }
 
@@ -959,7 +1027,7 @@
                         document.getElementById('quiz-score').innerText = `${quizScore} XP`;
                         nextQuizQuestion();
                     } else {
-                        timeLeft = Math.max(0, timeLeft - 5); // Phạt nặng khi sai
+                        timeLeft = Math.max(0, timeLeft - 5); 
                         btn.classList.add('error');
                         setTimeout(() => btn.classList.remove('error'), 400);
                     }
@@ -974,7 +1042,7 @@
         function startContextGame() {
             let validWords = studyQueue.filter(w => w.example && w.example.toLowerCase().includes(w.word.toLowerCase()));
             if (validWords.length < 5) validWords = studyQueue.filter(w => w.example);
-            if (validWords.length < 5) { alert("Cần ít nhất 5 câu ví dụ trong Album để chơi tính năng này!"); return nav('single-album'); }
+            if (validWords.length < 5) { alert("Cần ít nhất 5 câu ví dụ trong Album để chơi Context Match!"); return nav('single-album'); }
 
             let gameWords = [...validWords].sort(() => 0.5 - Math.random()).slice(0, 5);
             ctxCompletedCount = 0; ctxSelectedWord = null;
@@ -984,7 +1052,6 @@
             
             let shuffledWords = [...gameWords].sort(() => 0.5 - Math.random());
 
-            // Build Sentences
             let boardHtml = '';
             gameWords.forEach((item, idx) => {
                 let sentenceWithBlank = item.example.replace(new RegExp(item.word, 'gi'), `<span class="context-blank" id="ctx-blank-${idx}" onclick="fillContextBlank('${item.word}', ${idx})">Bấm để điền</span>`);
@@ -997,7 +1064,6 @@
             });
             board.innerHTML = boardHtml;
 
-            // Build Sticky Word Bank
             let bankHtml = '';
             shuffledWords.forEach((item, idx) => {
                 bankHtml += `<div class="context-chip" id="ctx-chip-${idx}" onclick="selectContextWord('${item.word}', this)">${item.word}</div>`;
