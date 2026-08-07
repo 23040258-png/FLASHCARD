@@ -77,13 +77,24 @@
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; scroll-behavior: smooth; }
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg-body); color: var(--text-main); margin: 0; padding: 0; display: flex; height: 100vh; overflow: hidden; transition: background-color 0.3s, color 0.3s; }
 
-        /* MODES */
+        /* MODES & SCROLL FIXES */
         body.is-landing #sidebar, body.is-landing .mobile-header, body.is-landing .mobile-nav { display: none !important; }
         body.is-landing .main-content { padding: 0 !important; max-width: 100%; display: block; overflow-y: auto; overflow-x: hidden; scroll-behavior: smooth; }
 
         body.zen-mode #sidebar { width: 0 !important; min-width: 0 !important; padding: 0 !important; opacity: 0; border: none; }
         body.zen-mode .mobile-header, body.zen-mode .mobile-nav { display: none !important; }
         body.zen-mode .main-content { padding: 80px 20px 140px 20px !important; display: block; overflow-y: auto; height: 100vh; }
+
+        /* FIXED SCROLLING FOR DASHBOARD */
+        .main-content { 
+            flex: 1; 
+            padding: 36px 48px; 
+            display: flex; 
+            flex-direction: column; 
+            overflow-y: auto; /* ĐÃ FIX: Cho phép cuộn lên xuống bình thường */
+            overflow-x: hidden; 
+            scroll-behavior: smooth; 
+        }
 
         /* SCROLL REVEAL ANIMATIONS */
         .reveal-up { opacity: 0; transform: translateY(40px); transition: 0.8s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform, opacity; }
@@ -107,9 +118,9 @@
             position: relative; width: 100%; min-height: 100vh;
             background: radial-gradient(1000px circle at var(--mouse-x) var(--mouse-y), rgba(244, 63, 94, 0.08), transparent 50%), var(--bg-body);
             overflow-x: hidden; transition: transform 1.2s cubic-bezier(0.75, 0, 0.25, 1), opacity 0.8s ease;
+            transform-origin: center top;
         }
         
-        /* Ambient Particles Layer */
         .ambient-particles { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: 0; pointer-events: none; }
         .particle { position: absolute; border-radius: 50%; opacity: 0.4; filter: blur(40px); animation: floatParticle 15s infinite ease-in-out alternate; }
         @keyframes floatParticle { 0% { transform: translateY(0px) scale(1); } 100% { transform: translateY(-100px) scale(1.2); } }
@@ -128,12 +139,34 @@
             min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
             text-align: center; padding: 140px 20px 80px 20px; position: relative; z-index: 10;
         }
+        .cinematic-text-group { transition: opacity 0.6s ease, transform 0.6s ease; display: flex; flex-direction: column; align-items: center; }
         .kinetic-title { font-size: clamp(3rem, 8vw, 6rem); font-weight: 900; letter-spacing: -2.5px; line-height: 1.05; margin: 0 0 20px 0; color: var(--text-main); }
         .kinetic-title span { background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 15px 25px var(--primary-glow)); }
-        .kinetic-subtitle { font-size: 1.25rem; color: var(--text-muted); font-weight: 500; max-width: 600px; margin: 0 auto 40px auto; line-height: 1.6; }
+        .kinetic-subtitle { font-size: 1.25rem; color: var(--text-muted); font-weight: 500; max-width: 600px; margin: 0 auto 30px auto; line-height: 1.6; }
+
+        /* GIANT ENTER BUTTON (ĐÃ THÊM VÀ LÀM NỔI BẬT) */
+        .btn-giant-enter {
+            margin-bottom: 40px; padding: 20px 50px; font-size: 22px; font-weight: 900;
+            border-radius: var(--radius-pill); background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white; border: none; cursor: pointer;
+            box-shadow: 0 15px 35px var(--primary-glow), inset 0 0 20px rgba(255,255,255,0.3);
+            display: flex; align-items: center; gap: 15px; z-index: 20;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: giantPulse 2s infinite; letter-spacing: 0.5px;
+        }
+        .btn-giant-enter:hover {
+            transform: scale(1.1) translateY(-5px);
+            box-shadow: 0 25px 50px var(--primary-glow), inset 0 0 20px rgba(255,255,255,0.6);
+            animation: none;
+        }
+        @keyframes giantPulse {
+            0% { transform: scale(1); box-shadow: 0 15px 35px var(--primary-glow); }
+            50% { transform: scale(1.05); box-shadow: 0 25px 60px rgba(244, 63, 94, 0.6); }
+            100% { transform: scale(1); box-shadow: 0 15px 35px var(--primary-glow); }
+        }
 
         .scene-3d {
-            width: 100%; max-width: 500px; height: 320px; margin: 20px auto 0 auto;
+            width: 100%; max-width: 500px; height: 320px; margin: 0 auto;
             position: relative; transform-style: preserve-3d; transition: transform 0.1s ease-out;
             will-change: transform; animation: floatIdle 6s ease-in-out infinite;
         }
@@ -181,7 +214,7 @@
         .portal-cube { width: 120px; height: 120px; border-radius: 30px; background: linear-gradient(135deg, var(--primary), var(--secondary)); display: flex; align-items: center; justify-content: center; color: white; font-size: 40px; margin: 0 auto 40px auto; box-shadow: 0 20px 40px var(--primary-glow); animation: pulsePortal 2s infinite; }
         @keyframes pulsePortal { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(244, 63, 94, 0.4); } 70% { transform: scale(1.05); box-shadow: 0 0 0 30px rgba(244, 63, 94, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(244, 63, 94, 0); } }
 
-        /* ================= APP WORKSPACE (DASHBOARD & GAMES) ================= */
+        /* ================= APP WORKSPACE ================= */
         #sidebar { width: 280px; min-width: 280px; background: var(--bg-sidebar); border-right: 1px solid var(--border-light); display: flex; flex-direction: column; padding: 28px 20px; z-index: 90; transition: var(--transition); position: relative; }
         #sidebar.collapsed { width: 84px; min-width: 84px; padding: 28px 14px; }
         .sidebar-toggle { position: absolute; right: -14px; top: 32px; width: 28px; height: 28px; border-radius: 50%; background: var(--primary); color: var(--text-inverse); border: 3px solid var(--bg-body); cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-sm); transition: var(--transition); }
@@ -202,7 +235,6 @@
         #sidebar.collapsed .nav-link { justify-content: center; padding: 14px 0; }
         #sidebar.collapsed .nav-link span { display: none; }
 
-        .main-content { flex: 1; padding: 36px 48px; display: flex; flex-direction: column; }
         .container { max-width: 1200px; margin: 0 auto; width: 100%; }
         .mobile-header, .mobile-nav { display: none; }
 
@@ -296,11 +328,11 @@
             .main-content { padding: 80px 16px 85px 16px; }
             body.zen-mode .main-content { padding: 80px 16px 100px 16px !important; }
             
-            /* Bento adjustments */
             .bento-layout { grid-template-columns: 1fr; }
             .bento-large, .bento-medium { grid-column: span 1; }
             .stats-grid { gap: 30px; }
             .kinetic-title { font-size: 3rem; }
+            .btn-giant-enter { padding: 16px 36px; font-size: 18px; width: 100%; justify-content: center; }
             
             .quiz-grid { grid-template-columns: 1fr; }
             .context-word-bank { padding: 12px; justify-content: flex-start; }
@@ -362,11 +394,19 @@
                         </div>
                     </header>
 
-                    <!-- SECTION 1: THE HOOK -->
+                    <!-- SECTION 1: THE HOOK & GIANT ENTER BUTTON -->
                     <div class="landing-hero">
-                        <div style="background:var(--primary-light); color:var(--primary); padding:6px 16px; border-radius:var(--radius-pill); font-weight:800; font-size:12px; margin-bottom:20px; display:inline-block; text-transform:uppercase; letter-spacing:1px; box-shadow:0 4px 15px var(--primary-glow);">VIP EdTech Experience</div>
-                        <h1 class="kinetic-title">Học từ vựng đỉnh cao<br><span>Kết nối không gian 3D.</span></h1>
-                        <p class="kinetic-subtitle">Nền tảng học tập thế hệ mới. Trải nghiệm gamification nhập vai, phân trang thông minh và bảo toàn dữ liệu vĩnh viễn.</p>
+                        <div class="cinematic-text-group" id="cinematic-text">
+                            <div style="background:var(--primary-light); color:var(--primary); padding:6px 16px; border-radius:var(--radius-pill); font-weight:800; font-size:12px; margin-bottom:20px; display:inline-block; text-transform:uppercase; letter-spacing:1px; box-shadow:0 4px 15px var(--primary-glow);">VIP EdTech Experience</div>
+                            <h1 class="kinetic-title">Học từ vựng đỉnh cao<br><span>Kết nối không gian 3D.</span></h1>
+                            <p class="kinetic-subtitle">Nền tảng học tập thế hệ mới. Trải nghiệm gamification nhập vai, phân trang thông minh và bảo toàn dữ liệu vĩnh viễn.</p>
+                            
+                            <!-- ĐÃ THÊM: NÚT VÀO APP KHỔNG LỒ NỔI BẬT Ở TRÊN ĐẦU -->
+                            <button class="btn-giant-enter" onclick="enterAppCinematic()">
+                                <span>VÀO ỨNG DỤNG NGAY</span>
+                                <i class="fa-solid fa-rocket"></i>
+                            </button>
+                        </div>
                         
                         <div class="scene-3d" id="scene3d">
                             <div class="cube-3d">
@@ -432,7 +472,7 @@
                 </div>
             </section>
 
-            <!-- ================= APP DASHBOARD ================= -->
+            <!-- ================= APP DASHBOARD & CONTENT ================= -->
             <div class="container" style="max-width: 1200px; padding: 0 20px;">
                 <section id="view-dashboard" class="view-section">
                     <div class="ui-card" style="background: linear-gradient(135deg, var(--primary), var(--secondary)); color: #fff; border: none; padding: 36px 40px; position: relative; overflow: hidden;">
@@ -590,7 +630,6 @@
                     </div>
                     <div style="max-width: 800px; margin: 0 auto; padding-bottom: 100px;" id="context-sentences-board"></div>
                     
-                    <!-- STICKY WORD BANK AT BOTTOM -->
                     <div class="context-word-bank" id="context-word-bank"></div>
                 </section>
 
@@ -647,7 +686,7 @@
             const sBanner = document.getElementById('streak-banner');
             if (sBanner) sBanner.innerText = appData.streak || 1;
             
-            // LUÔN MỞ LANDING PAGE 3D SCROLLYTELLING ĐẦU TIÊN
+            // MẶC ĐỊNH MỞ LANDING PAGE 
             nav('landing');
 
             updateDashboard();
@@ -674,15 +713,12 @@
             const scene = document.getElementById('scene3d');
             const scrollContainer = document.getElementById('main-scroll-area');
 
-            // 1. Desktop Mouse Tracking (Glow + Parallax)
             if (!isMobile) {
                 scrollContainer.addEventListener('mousemove', (e) => {
                     if (isCinematicZooming) return;
-                    // Glow bám chuột
                     document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
                     document.documentElement.style.setProperty('--mouse-y', `${e.clientY + scrollContainer.scrollTop}px`);
                     
-                    // Cube xoay theo chuột
                     if(scene) {
                         const x = (window.innerWidth / 2 - e.pageX) / 25;
                         const y = (window.innerHeight / 2 - e.pageY) / 25;
@@ -691,12 +727,11 @@
                 });
             }
 
-            // 2. Mobile Gyroscope Parallax
             if (isMobile && window.DeviceOrientationEvent) {
                 window.addEventListener('deviceorientation', (e) => {
                     if (isCinematicZooming || !scene) return;
-                    let gamma = e.gamma; // Trái/Phải
-                    let beta = e.beta;   // Lên/Xuống
+                    let gamma = e.gamma; 
+                    let beta = e.beta;   
                     let x = Math.min(Math.max(gamma, -45), 45) / 2;
                     let y = (Math.min(Math.max(beta, 0), 90) - 45) / 2;
                     scene.style.transform = `rotateX(${-y}deg) rotateY(${x}deg) translateZ(50px)`;
@@ -708,29 +743,32 @@
         function enterAppCinematic() {
             isCinematicZooming = true;
             const wrapper = document.getElementById('landing-wrapper');
+            const scrollArea = document.getElementById('main-scroll-area');
             
-            // Xóa scroll mượt để nhảy khung hình không bị trượt
-            document.getElementById('main-scroll-area').style.scrollBehavior = 'auto';
-            document.getElementById('main-scroll-area').scrollTop = 0;
+            scrollArea.style.scrollBehavior = 'auto';
+            scrollArea.scrollTop = 0;
 
-            // Hiệu ứng phóng to toàn bộ wrapper vào vô tận
             if(wrapper) {
+                const textGrp = document.getElementById('cinematic-text');
+                if(textGrp) textGrp.style.opacity = '0';
+                wrapper.style.transformOrigin = 'center center';
                 wrapper.style.transform = 'scale(15) translateZ(1000px)';
                 wrapper.style.opacity = '0';
             }
             
             setTimeout(() => {
                 nav('dashboard');
-                // Phục hồi lại trạng thái cho lần xem sau
                 setTimeout(() => {
                     if(wrapper) {
                         wrapper.style.transition = 'none';
                         wrapper.style.transform = 'scale(1) translateZ(0)';
                         wrapper.style.opacity = '1';
+                        const textGrp = document.getElementById('cinematic-text');
+                        if(textGrp) textGrp.style.opacity = '1';
                     }
                     setTimeout(() => {
                         if(wrapper) wrapper.style.transition = 'transform 1.2s cubic-bezier(0.75, 0, 0.25, 1), opacity 0.8s ease';
-                        document.getElementById('main-scroll-area').style.scrollBehavior = 'smooth';
+                        scrollArea.style.scrollBehavior = 'smooth';
                         isCinematicZooming = false;
                     }, 50);
                 }, 50);
@@ -969,7 +1007,6 @@
             }
         }
 
-        /* ALBUM-SCOPED GAMES ENTRY */
         function startStudy(mode) {
             const album = appData.albums.find(a => a.id === activeAlbumId);
             if (!album || album.words.length === 0) return alert("Album trống! Hãy thêm từ vựng.");
