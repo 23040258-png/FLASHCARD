@@ -38,7 +38,9 @@
             --border-strong: #e2e8f0;
             
             --success: #10b981;
+            --success-light: #ecfdf5;
             --danger: #ef4444;
+            --danger-light: #fef2f2;
             --warning: #f59e0b;
             
             --shadow-sm: 0 4px 6px -1px rgba(15, 23, 42, 0.04);
@@ -248,21 +250,28 @@
         }
         .audio-btn:hover { transform: scale(1.15); background: var(--primary); color: var(--text-inverse); }
 
-        /* ARCADE */
+        /* GAMIFICATION ARCADE STYLES */
         .arcade-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; max-width: 800px; margin: 0 auto; }
         .arcade-tile {
             background: var(--bg-card); border: 2px solid var(--border-strong); border-radius: var(--radius-md);
-            padding: 20px 12px; text-align: center; font-weight: 800; font-size: 15px; cursor: pointer; transition: var(--transition);
-            display: flex; align-items: center; justify-content: center; min-height: 80px; user-select: none;
+            padding: 20px 12px; text-align: center; font-weight: 800; font-size: 16px; cursor: pointer; transition: var(--transition);
+            display: flex; align-items: center; justify-content: center; min-height: 85px; user-select: none;
+            box-shadow: var(--shadow-sm);
         }
-        .arcade-tile:hover { transform: translateY(-3px); border-color: var(--primary); color: var(--primary); }
-        .arcade-tile.selected { background: var(--primary-light); border-color: var(--primary); color: var(--primary); }
-        .arcade-tile.matched { opacity: 0; transform: scale(0.5); pointer-events: none; }
+        .arcade-tile:hover { transform: translateY(-4px) scale(1.02); border-color: var(--primary); color: var(--primary); box-shadow: var(--shadow-md); }
+        .arcade-tile.selected { background: var(--primary-light); border-color: var(--primary); color: var(--primary); box-shadow: 0 0 15px var(--primary-glow); }
+        .arcade-tile.matched { opacity: 0; transform: scale(0.4) rotate(15deg); pointer-events: none; }
+        .arcade-tile.error { border-color: var(--danger); color: var(--danger); animation: shake 0.3s ease-in-out; }
 
-        /* CONTEXT MATCH STYLES */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-6px); }
+            75% { transform: translateX(6px); }
+        }
+
         .context-blank {
-            display: inline-block; min-width: 100px; border-bottom: 2px dashed var(--primary);
-            padding: 0 8px; color: var(--primary); font-weight: 800; text-align: center;
+            display: inline-block; min-width: 110px; border-bottom: 3px dashed var(--primary);
+            padding: 0 10px; color: var(--primary); font-weight: 900; text-align: center; background: var(--primary-light); border-radius: 6px;
         }
 
         /* MOBILE RESPONSIVE */
@@ -303,7 +312,7 @@
     <div class="mobile-nav">
         <div class="mobile-nav-item active" onclick="nav('dashboard')"><i class="fa-solid fa-compass"></i><span>Tổng quan</span></div>
         <div class="mobile-nav-item" onclick="nav('albums')"><i class="fa-solid fa-book-bookmark"></i><span>Album</span></div>
-        <div class="mobile-nav-item" onclick="nav('arcade')"><i class="fa-solid fa-gamepad"></i><span>Arcade</span></div>
+        <div class="mobile-nav-item" onclick="nav('arcade')"><i class="fa-solid fa-gamepad"></i><span>Trò chơi</span></div>
         <div class="mobile-nav-item" onclick="nav('settings')"><i class="fa-solid fa-gear"></i><span>Cài đặt</span></div>
     </div>
 
@@ -419,7 +428,7 @@
                 <div class="bento-grid" id="albums-list-container"></div>
             </section>
 
-            <!-- SINGLE ALBUM DETAIL -->
+            <!-- SINGLE ALBUM DETAIL (WITH INTEGRATED ARCADE GAMES) -->
             <section id="view-single-album" class="view-section">
                 <button class="btn btn-outline" style="margin-bottom: 20px;" onclick="nav('albums')"><i class="fa-solid fa-arrow-left"></i> Quay lại thư viện</button>
 
@@ -430,16 +439,24 @@
                             <span id="album-total-count" style="font-size: 14px; font-weight: 700; color: var(--text-muted);">0 từ vựng</span>
                         </div>
                         <div style="display: flex; gap: 8px;">
-                            <button class="btn btn-outline" style="color: var(--warning); border-color: var(--warning);" onclick="removeDuplicates()" title="Lọc và xóa từ vựng bị trùng lặp"><i class="fa-solid fa-broom"></i> Dọn từ trùng</button>
+                            <button class="btn btn-outline" style="color: var(--warning); border-color: var(--warning);" onclick="removeDuplicates()" title="Dọn từ vựng trùng lặp"><i class="fa-solid fa-broom"></i> Dọn từ trùng</button>
                             <button class="btn btn-outline" style="color: var(--danger); border-color: var(--danger);" onclick="deleteCurrentAlbum()"><i class="fa-solid fa-trash"></i> Xóa Album</button>
                         </div>
                     </div>
-                    <div style="display: flex; gap: 12px; width: 100%; flex-wrap: wrap;">
-                        <button class="btn btn-primary" style="flex: 1;" onclick="startStudy('flashcard')"><i class="fa-solid fa-layer-group"></i> Luyện Flashcard</button>
-                        <button class="btn btn-outline" onclick="startStudy('typing')"><i class="fa-solid fa-keyboard"></i> Gõ từ</button>
-                        <button class="btn btn-outline" onclick="switchTab('import')"><i class="fa-solid fa-file-import"></i> Nạp File</button>
-                        <button class="btn btn-outline" onclick="switchTab('ai')"><i class="fa-solid fa-robot"></i> AI Import</button>
+                    
+                    <!-- ACTION HUB FOR SPECIFIC ALBUM -->
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-top: 20px;">
+                        <button class="btn btn-primary" onclick="startStudy('flashcard')"><i class="fa-solid fa-layer-group"></i> Flashcard</button>
+                        <button class="btn btn-outline" style="background:#fff;" onclick="startStudy('typing')"><i class="fa-solid fa-keyboard"></i> Gõ từ</button>
+                        <button class="btn btn-outline" style="background:#fff; color:var(--primary); border-color:var(--primary);" onclick="startAlbumArcade('match')"><i class="fa-solid fa-bolt"></i> Speed Match</button>
+                        <button class="btn btn-outline" style="background:#fff; color:var(--success); border-color:var(--success);" onclick="startAlbumArcade('context')"><i class="fa-solid fa-puzzle-piece"></i> Context Match</button>
                     </div>
+                </div>
+
+                <div style="display: flex; gap: 12px; margin-bottom: 24px;">
+                    <button class="btn btn-outline" style="border-radius: var(--radius-pill);" onclick="switchTab('word-list')"><i class="fa-solid fa-list"></i> Danh sách từ</button>
+                    <button class="btn btn-outline" style="border-radius: var(--radius-pill);" onclick="switchTab('import')"><i class="fa-solid fa-file-import"></i> Nạp File</button>
+                    <button class="btn btn-outline" style="border-radius: var(--radius-pill);" onclick="switchTab('ai')"><i class="fa-solid fa-robot"></i> AI Import</button>
                 </div>
 
                 <!-- Tab: Word List with Arrow Pagination -->
@@ -459,7 +476,7 @@
                     <button class="btn btn-outline" style="margin-top: 16px; width: 100%;" onclick="switchTab('word-list')">Quay lại danh sách</button>
                 </div>
 
-                <!-- Tab: AI Import with Copy Button -->
+                <!-- Tab: AI Import -->
                 <div id="tab-ai" style="display: none;" class="ui-card">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                         <h4 style="margin: 0;">Copy lệnh gửi ChatGPT / Gemini:</h4>
@@ -470,7 +487,7 @@
                     <textarea id="ai-input" style="width: 100%; height: 120px; padding: 12px; border-radius: var(--radius-sm); border: 1px solid var(--border-strong); background: var(--bg-body); color: var(--text-main); font-family: inherit; outline:none;" placeholder="Dán kết quả từ AI vào đây..."></textarea>
                     <div style="display: flex; gap: 8px; margin-top: 12px;">
                         <button class="btn btn-primary" style="flex: 1;" onclick="processAIText()">Lưu dữ liệu</button>
-                        <button class="btn btn-outline" style="switchTab('word-list')">Hủy</button>
+                        <button class="btn btn-outline" onclick="switchTab('word-list')">Hủy</button>
                     </div>
                 </div>
             </section>
@@ -518,54 +535,29 @@
                 </div>
             </section>
 
-            <!-- ARCADE ZONE -->
+            <!-- ARCADE ZONE (GLOBAL HUB) -->
             <section id="view-arcade" class="view-section">
                 <div class="page-header"><h2 class="page-title">Arcade Zone</h2></div>
-                <div class="bento-grid">
-                    <div class="ui-card" style="cursor: pointer;" onclick="startArcade('match')">
-                        <h3 style="color: var(--primary); margin-top: 0;"><i class="fa-solid fa-bolt"></i> Nối từ tốc độ</h3>
-                        <p style="color: var(--text-muted); font-size: 14px; margin: 0;">Ghép cặp từ vựng và nghĩa chính xác trong thời gian ngắn nhất.</p>
-                    </div>
-                    <div class="ui-card" style="cursor: pointer;" onclick="startArcade('quiz')">
-                        <h3 style="color: var(--warning); margin-top: 0;"><i class="fa-solid fa-clock"></i> Sinh tồn (Quiz)</h3>
-                        <p style="color: var(--text-muted); font-size: 14px; margin: 0;">Trắc nghiệm áp lực đếm ngược thời gian toàn hệ thống.</p>
-                    </div>
-                    <div class="ui-card" style="cursor: pointer;" onclick="startArcade('context')">
-                        <h3 style="color: var(--success); margin-top: 0;"><i class="fa-solid fa-puzzle-piece"></i> Context Match (5+5)</h3>
-                        <p style="color: var(--text-muted); font-size: 14px; margin: 0;">Chọn từ vựng điền vào 5 câu ví dụ hoàn chỉnh theo ngữ cảnh.</p>
-                    </div>
+                <div class="ui-card" style="background: var(--primary-light); border-color: var(--primary);">
+                    <h3 style="margin-top:0; color:var(--primary);">💡 Mẹo chơi:</h3>
+                    <p style="color:var(--text-main); margin:0; font-weight:600;">Hãy mở một <strong>Album cụ thể</strong> trong thư viện và bấm trực tiếp vào các nút trò chơi ở đó để ôn tập trọng tâm theo đúng bộ từ vựng bạn muốn!</p>
                 </div>
             </section>
 
-            <!-- GAME: MATCH -->
+            <!-- GAME: MATCH (WITH EXIT BUTTON & HUD) -->
             <section id="view-game-match" class="view-section">
                 <div class="page-header">
-                    <button class="btn btn-outline" onclick="nav('arcade')"><i class="fa-solid fa-xmark"></i> Thoát</button>
-                    <span style="font-weight: 800; color: var(--primary);">Speed Match</span>
+                    <button class="btn btn-outline" style="color:var(--danger); border-color:var(--danger);" onclick="exitGame()"><i class="fa-solid fa-xmark"></i> Thoát game</button>
+                    <span style="font-weight: 900; color: var(--primary); font-size: 18px;"><i class="fa-solid fa-bolt"></i> Speed Match</span>
                 </div>
                 <div class="arcade-grid" id="match-grid"></div>
             </section>
 
-            <!-- GAME: QUIZ -->
-            <section id="view-game-quiz" class="view-section">
-                <div class="page-header">
-                    <button class="btn btn-outline" onclick="nav('arcade')"><i class="fa-solid fa-xmark"></i> Thoát</button>
-                    <span style="font-weight: 800; color: var(--primary);" id="quiz-score">0 XP</span>
-                </div>
-                <div class="ui-card" style="max-width: 600px; margin: 0 auto; text-align: center;">
-                    <div style="width: 100%; height: 10px; background: var(--border-strong); border-radius: 5px; margin-bottom: 24px; overflow: hidden;">
-                        <div id="timer-bar" style="height: 100%; background: var(--warning); width: 100%; transition: width 0.1s linear;"></div>
-                    </div>
-                    <h1 style="font-size: 32px; margin: 0 0 24px 0;" id="quiz-target-word">Word</h1>
-                    <div class="arcade-grid" style="grid-template-columns: 1fr 1fr;" id="quiz-options"></div>
-                </div>
-            </section>
-
-            <!-- GAME: CONTEXT MATCH (5+5) -->
+            <!-- GAME: CONTEXT MATCH (5+5 WITH EXIT BUTTON) -->
             <section id="view-game-context" class="view-section">
                 <div class="page-header">
-                    <button class="btn btn-outline" onclick="nav('arcade')"><i class="fa-solid fa-xmark"></i> Thoát</button>
-                    <span style="font-weight: 800; color: var(--success);" id="context-score">0 / 5 Hoàn thành</span>
+                    <button class="btn btn-outline" style="color:var(--danger); border-color:var(--danger);" onclick="exitGame()"><i class="fa-solid fa-xmark"></i> Thoát game</button>
+                    <span style="font-weight: 900; color: var(--success); font-size: 18px;" id="context-score">0 / 5 Hoàn thành</span>
                 </div>
                 <div style="max-width: 750px; margin: 0 auto;" id="context-game-board"></div>
             </section>
@@ -675,7 +667,7 @@
 
             if (viewName === 'landing') {
                 body.classList.add('is-landing');
-            } else if (['study-flashcard', 'study-typing', 'game-match', 'game-quiz', 'game-context'].includes(viewName)) {
+            } else if (['study-flashcard', 'study-typing', 'game-match', 'game-context'].includes(viewName)) {
                 body.classList.add('zen-mode');
             } else {
                 appData._visited = true;
@@ -685,6 +677,12 @@
             if (viewName === 'dashboard') updateDashboard();
             if (viewName === 'albums') renderAlbumsList();
             if (viewName === 'single-album') renderSingleAlbum(1);
+        }
+
+        function exitGame() {
+            if (confirm("Bạn muốn dừng trận đấu này và trở về album?")) {
+                nav('single-album');
+            }
         }
 
         function updateLevel() {
@@ -952,17 +950,17 @@
         }
         function skipTyping() { studyIndex++; loadTyping(); }
 
-        /* ARCADE HUB */
-        function startArcade(type) {
-            let allWords = []; appData.albums.forEach(a => allWords.push(...a.words));
-            if (allWords.length < 5) return alert("Hệ thống cần ít nhất 5 từ vựng để kích hoạt Arcade!");
-            studyQueue = allWords;
+        /* ALBUM SCOPED ARCADE GAMES */
+        function startAlbumArcade(type) {
+            const album = appData.albums.find(a => a.id === activeAlbumId);
+            if (!album || album.words.length < 4) return alert("Album cần tối thiểu 4 từ vựng để chơi minigame!");
+            studyQueue = album.words;
+
             if (type === 'match') { nav('game-match'); startMatchGame(); }
-            if (type === 'quiz') { nav('game-quiz'); startQuizGame(); }
             if (type === 'context') { nav('game-context'); startContextGame(); }
         }
 
-        /* 1. SPEED MATCH */
+        /* 1. SPEED MATCH (SCOPED) */
         let matchSelected = null;
         function startMatchGame() {
             const words = [...studyQueue].sort(() => 0.5 - Math.random()).slice(0, 6);
@@ -985,8 +983,15 @@
                         if (matchSelected.it.id === it.id && matchSelected.it.type !== it.type) {
                             matchSelected.tile.classList.add('matched'); tile.classList.add('matched');
                             addXP(5);
+                            if(document.querySelectorAll('#match-grid .arcade-tile:not(.matched)').length === 0) {
+                                confetti({ particleCount: 150, spread: 100 });
+                                addXP(30);
+                                setTimeout(() => { alert("🎉 Hoàn thành Speed Match xuất sắc! (+30 XP)"); nav('single-album'); }, 400);
+                            }
                         } else {
                             matchSelected.tile.classList.remove('selected');
+                            tile.classList.add('error');
+                            setTimeout(() => tile.classList.remove('error'), 300);
                         }
                         matchSelected = null;
                     }
@@ -995,66 +1000,16 @@
             });
         }
 
-        /* 2. SURVIVAL QUIZ */
-        let quizTimer = null; let quizScore = 0; let timeLeft = 30;
-        function startQuizGame() {
-            quizScore = 0; timeLeft = 30;
-            const qScore = document.getElementById('quiz-score');
-            if(qScore) qScore.innerText = '0 XP';
-            nextQuizQuestion();
-            clearInterval(quizTimer);
-            quizTimer = setInterval(() => {
-                timeLeft -= 0.1;
-                const tBar = document.getElementById('timer-bar');
-                if(tBar) tBar.style.width = (timeLeft / 30 * 100) + '%';
-                if (timeLeft <= 0) {
-                    clearInterval(quizTimer); confetti();
-                    alert(`Kết thúc! Bạn thu về ${quizScore} XP`); nav('arcade');
-                }
-            }, 100);
-        }
-
-        function nextQuizQuestion() {
-            const target = studyQueue[Math.floor(Math.random() * studyQueue.length)];
-            const qTarget = document.getElementById('quiz-target-word');
-            if(qTarget) qTarget.innerText = target.word;
-            let options = [target.meaning];
-            while (options.length < 4) {
-                let rand = studyQueue[Math.floor(Math.random() * studyQueue.length)].meaning;
-                if (!options.includes(rand)) options.push(rand);
-            }
-            options.sort(() => 0.5 - Math.random());
-            const grid = document.getElementById('quiz-options'); if(!grid) return;
-            grid.innerHTML = '';
-            options.forEach(opt => {
-                const btn = document.createElement('div');
-                btn.className = 'arcade-tile'; btn.innerText = opt;
-                btn.onclick = () => {
-                    if (opt === target.meaning) {
-                        quizScore += 10; timeLeft = Math.min(30, timeLeft + 2);
-                        const qScore = document.getElementById('quiz-score');
-                        if(qScore) qScore.innerText = `${quizScore} XP`;
-                        nextQuizQuestion();
-                    } else {
-                        timeLeft = Math.max(0, timeLeft - 4);
-                        btn.style.borderColor = 'var(--danger)';
-                    }
-                };
-                grid.appendChild(btn);
-            });
-        }
-
-        /* 3. CONTEXT MATCH (5 WORDS + 5 SENTENCES) */
+        /* 2. CONTEXT MATCH (5 WORDS + 5 SENTENCES SCOPED) */
         let contextSelectedWord = null;
         let contextCompletedCount = 0;
 
         function startContextGame() {
-            // Lọc ra các từ có câu ví dụ
             let validWords = studyQueue.filter(w => w.example && w.example.toLowerCase().includes(w.word.toLowerCase()));
-            if (validWords.length < 5) validWords = studyQueue.filter(w => w.example); // Fallback nếu từ không xuất hiện trong câu
+            if (validWords.length < 5) validWords = studyQueue.filter(w => w.example);
             if (validWords.length < 5) {
-                alert("Cần ít nhất 5 từ vựng có chứa câu ví dụ trong hệ thống để chơi Context Match!");
-                return nav('arcade');
+                alert("Album cần ít nhất 5 từ vựng có chứa câu ví dụ để chơi Context Match!");
+                return nav('single-album');
             }
 
             let gameWords = [...validWords].sort(() => 0.5 - Math.random()).slice(0, 5);
@@ -1069,13 +1024,12 @@
             let html = `
                 <div class="ui-card" style="margin-bottom:24px;">
                     <h3 style="margin-top:0; color:var(--primary);">🎯 Hướng dẫn:</h3>
-                    <p style="color:var(--text-muted); margin-bottom:0;">Chọn một từ vựng ở phía dưới, sau đó bấm vào ô trống tương ứng trong câu ví dụ.</p>
+                    <p style="color:var(--text-muted); margin-bottom:0;">Chọn từ vựng ở kho phía dưới, sau đó bấm vào ô trống tương ứng trong câu ví dụ.</p>
                 </div>
                 <div style="display:flex; flex-direction:column; gap:16px; margin-bottom:24px;">
             `;
 
             gameWords.forEach((item, idx) => {
-                // Tạo khoảng trống cho câu ví dụ
                 let sentenceWithBlank = item.example.replace(new RegExp(item.word, 'gi'), `<span class="context-blank" id="blank-${idx}" onclick="fillContextBlank('${item.word}', ${idx})">_______</span>`);
                 html += `
                     <div class="ui-card" style="margin:0; padding:20px; display:flex; flex-direction:column; gap:8px;">
@@ -1124,7 +1078,7 @@
                     addXP(50);
                     setTimeout(() => {
                         alert("🎉 Xuất sắc! Bạn đã hoàn thành thử thách Context Match (+50 XP)");
-                        nav('arcade');
+                        nav('single-album');
                     }, 500);
                 }
             } else {
