@@ -84,10 +84,10 @@
         .landing-nav {
             position: fixed; top: 0; left: 0; width: 100%; padding: 20px 6%;
             display: flex; justify-content: space-between; align-items: center;
-            background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
             z-index: 1000; border-bottom: 1px solid var(--border-light);
         }
-        [data-theme="dark"] .landing-nav { background: rgba(2, 6, 23, 0.7); }
+        [data-theme="dark"] .landing-nav { background: rgba(2, 6, 23, 0.85); }
 
         .kinetic-hero {
             min-height: 90vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -95,6 +95,7 @@
         }
         .kinetic-title {
             font-size: clamp(3rem, 7vw, 5.5rem); font-weight: 900; letter-spacing: -2.5px; line-height: 1.05; margin: 0 0 24px 0; max-width: 950px;
+            color: var(--text-main);
         }
         .kinetic-title span {
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
@@ -364,17 +365,17 @@
                     <div class="kinetic-features">
                         <div class="feature-box-3d">
                             <i class="fa-solid fa-layer-group" style="font-size:32px; color:var(--primary); margin-bottom:20px;"></i>
-                            <h3 style="margin:0 0 10px 0; font-size:20px; font-weight:800;">Phân Trang Thông Minh</h3>
+                            <h3 style="margin:0 0 10px 0; font-size:20px; font-weight:800; color:var(--text-main);">Phân Trang Thông Minh</h3>
                             <p style="color:var(--text-muted); margin:0; line-height:1.6;">Mỗi album chia thành các trang 20 từ gọn gàng, hiển thị đầy đủ thông tin từ vựng, phiên âm và ví dụ.</p>
                         </div>
                         <div class="feature-box-3d">
                             <i class="fa-solid fa-shield-halved" style="font-size:32px; color:var(--primary); margin-bottom:20px;"></i>
-                            <h3 style="margin:0 0 10px 0; font-size:20px; font-weight:800;">Bảo Toàn Dữ Liệu 100%</h3>
+                            <h3 style="margin:0 0 10px 0; font-size:20px; font-weight:800; color:var(--text-main);">Bảo Toàn Dữ Liệu 100%</h3>
                             <p style="color:var(--text-muted); margin:0; line-height:1.6;">Cơ chế lưu trữ độc lập qua Key định danh vĩnh viễn, không bao giờ lo mất dữ liệu học tập khi cập nhật.</p>
                         </div>
                         <div class="feature-box-3d">
                             <i class="fa-solid fa-robot" style="font-size:32px; color:var(--primary); margin-bottom:20px;"></i>
-                            <h3 style="margin:0 0 10px 0; font-size:20px; font-weight:800;">Tích Hợp AI Nhanh Chóng</h3>
+                            <h3 style="margin:0 0 10px 0; font-size:20px; font-weight:800; color:var(--text-main);">Tích Hợp AI Nhanh Chóng</h3>
                             <p style="color:var(--text-muted); margin:0; line-height:1.6;">Dễ dàng sao chép prompt chuẩn và nạp dữ liệu hàng loạt từ ChatGPT, Gemini hoặc file Excel.</p>
                         </div>
                     </div>
@@ -446,7 +447,7 @@
                         <p style="margin: 0; font-size: 13px; color: var(--text-muted);">Cấu trúc: Từ vựng | Phiên âm | Nghĩa | Ví dụ</p>
                         <input type="file" id="file-input" style="display: none;" accept=".xlsx, .xls, .docx" onchange="handleFileUpload(event)">
                     </div>
-                    <button class="btn btn-outline" style="margin-top: 16px; width: 100%;" onclick="switchTab('list')">Quay lại danh sách</button>
+                    <button class="btn btn-outline" style="margin-top: 16px; width: 100%;" onclick="switchTab('word-list')">Quay lại danh sách</button>
                 </div>
 
                 <!-- Tab: AI Import with Copy Button -->
@@ -460,7 +461,7 @@
                     <textarea id="ai-input" style="width: 100%; height: 120px; padding: 12px; border-radius: var(--radius-sm); border: 1px solid var(--border-strong); background: var(--bg-body); color: var(--text-main); font-family: inherit; outline:none;" placeholder="Dán kết quả từ AI vào đây..."></textarea>
                     <div style="display: flex; gap: 8px; margin-top: 12px;">
                         <button class="btn btn-primary" style="flex: 1;" onclick="processAIText()">Lưu dữ liệu</button>
-                        <button class="btn btn-outline" onclick="switchTab('list')">Hủy</button>
+                        <button class="btn btn-outline" onclick="switchTab('word-list')">Hủy</button>
                     </div>
                 </div>
             </section>
@@ -577,7 +578,6 @@
         let studyIndex = 0;
 
         window.onload = () => {
-            // Tự động tương thích và gom dữ liệu từ các key cũ nếu có
             const oldKeys = ['vocabHubMasterData', 'vocabHubMasterDataVIP', 'vocabHub_SaaS_Data'];
             let saved = localStorage.getItem(STORAGE_KEY);
             if (!saved) {
@@ -596,9 +596,9 @@
                 appData.lastLogin = today;
                 saveData();
             }
-            document.getElementById('streak-banner').innerText = appData.streak || 1;
+            const sBanner = document.getElementById('streak-banner');
+            if (sBanner) sBanner.innerText = appData.streak || 1;
             
-            // Nếu chưa có album nào hoặc dữ liệu trống, ưu tiên mở landing 3D, ngược lại vào thẳng dashboard
             if (appData.albums.length === 0 && !appData._visited) {
                 nav('landing');
             } else {
@@ -613,7 +613,6 @@
 
         function saveData() { localStorage.setItem(STORAGE_KEY, JSON.stringify(appData)); }
 
-        // 3D Mouse Move Kinetic Effect
         function init3DEffects() {
             const scene = document.getElementById('scene3d');
             if (!scene) return;
