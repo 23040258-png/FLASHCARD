@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>PINK VOCAB — The Pink Rebellion</title>
+    <title>PINK VOCAB — The Master Terminal</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -215,9 +215,15 @@
         .album-card h3 { margin: 0 0 8px 0; color: var(--text-main); font-size: 26px; font-weight: 900; letter-spacing: -0.5px; line-height: 1.2; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         .gold-album h3 { color: var(--gold); }
         .album-card p { margin: 0; font-size: 14px; font-weight: 700; color: var(--text-muted); display: flex; align-items: center; gap: 6px; }
-        .mastery-track { width: 100%; height: 8px; background: var(--border-light); border-radius: 4px; margin-top: 20px; overflow: hidden; position: relative; z-index: 2; }
-        .mastery-fill { height: 100%; background: var(--primary); border-radius: 4px; transition: width 0.5s ease-out; }
-        .gold-album .mastery-fill { background: var(--gold); }
+        
+        /* 3-Color Stacked Mastery Track */
+        .mastery-track-stacked { width: 100%; height: 10px; background: var(--border-light); border-radius: 5px; margin-top: 20px; overflow: hidden; position: relative; z-index: 2; display: flex; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); }
+        .m-segment { height: 100%; transition: width 0.5s ease-out; }
+        .seg-new { background: var(--border-strong); }
+        .seg-learning { background: var(--warning); }
+        .seg-master { background: var(--success); }
+        .gold-album .seg-master { background: var(--gold); }
+
         .album-watermark { position: absolute; right: -20px; bottom: -20px; font-size: 120px; opacity: 0.04; color: var(--text-main); z-index: 1; transform: rotate(-15deg); pointer-events: none; transition: 0.3s; }
         .album-card:hover .album-watermark { transform: rotate(0deg) scale(1.1); opacity: 0.08; color: var(--primary); }
         .gold-album .album-watermark { color: var(--gold); opacity: 0.1; }
@@ -239,14 +245,13 @@
         .ui-card { background: var(--bg-card); border-radius: var(--radius-lg); border: 1px solid var(--border-light); padding: 28px; box-shadow: var(--shadow-sm); margin-bottom: 24px; transition: var(--transition); }
         .ui-card:hover { border-color: var(--border-strong); box-shadow: var(--shadow-md); }
 
-        /* WORD ROW & INLINE EDITING & MASTERY TAGS */
+        /* WORD ROW & MASTERY TAGS */
         .word-card-detailed { background: var(--bg-card); border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 22px 26px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; transition: var(--transition); box-shadow: var(--shadow-sm); }
         .word-card-detailed:hover { border-color: var(--primary); transform: translateX(4px); box-shadow: var(--shadow-md); }
         .word-main-info { flex: 1; width: 100%; }
         .word-main-info .top-line { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 6px; }
         .word-main-info h3 { font-size: 20px; font-weight: 900; color: var(--primary); margin: 0; }
         
-        /* THE MASTERY TAGS */
         .word-mastery-tag { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 800; padding: 4px 8px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
         .tag-learning { background: var(--warning); color: white; }
         .tag-mastered { background: var(--success); color: white; box-shadow: 0 0 10px rgba(16,185,129,0.3); }
@@ -265,7 +270,6 @@
         .page-control-btn:hover:not(:disabled) { background: var(--primary-light); border-color: var(--primary); color: var(--primary); }
         .page-control-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
-        /* MANUAL INPUT FORM */
         .manual-input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
         .manual-field label { display: block; font-size: 13px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.5px; }
 
@@ -586,19 +590,19 @@
                         </div>
                     </div>
                     
-                    <h4 style="margin:0; color:var(--text-main); font-size:16px; font-weight: 800; display:flex; align-items:center; gap:8px;"><i class="fa-solid fa-crosshairs" style="color:var(--primary);"></i> Chế độ Huấn luyện</h4>
+                    <h4 style="margin:0; color:var(--text-main); font-size:16px; font-weight: 800; display:flex; align-items:center; gap:8px;"><i class="fa-solid fa-crosshairs" style="color:var(--primary);"></i> Chế độ Huấn luyện (Smart Queue 10:5)</h4>
                     
                     <div class="lobby-grid">
                         <div class="lobby-card c-flash" onclick="startStudy('flashcard')">
                             <div class="lobby-card-icon"><i class="fa-solid fa-layer-group"></i></div>
                             <h4>Lật Thẻ 3D</h4>
-                            <p>Ôn tập cơ bản. Vuốt thẻ sang 2 bên để phân loại đã thuộc/chưa thuộc.</p>
+                            <p>Ôn tập chuẩn quy tắc 10:5. Vuốt trái chưa thuộc, vuốt phải đã thuộc.</p>
                             <div class="lobby-action-text">Bắt đầu <i class="fa-solid fa-arrow-right"></i></div>
                         </div>
                         <div class="lobby-card c-type" onclick="startStudy('typing')">
                             <div class="lobby-card-icon"><i class="fa-solid fa-keyboard"></i></div>
                             <h4>Typing Dojo</h4>
-                            <p>Luyện gõ nhớ mặt chữ. Cẩn thận, sai 1 nhịp là rung nát màn hình!</p>
+                            <p>Luyện gõ nhớ mặt chữ theo thuật toán Smart Queue. Sai là rung màn hình!</p>
                             <div class="lobby-action-text">Bắt đầu <i class="fa-solid fa-arrow-right"></i></div>
                         </div>
                         <div class="lobby-card c-speed" onclick="startAlbumGame('match')">
@@ -690,7 +694,7 @@
             <section id="view-study-flashcard" class="view-section">
                 <button class="btn-exit-game" onclick="exitGame()"><i class="fa-solid fa-arrow-left"></i> Rời phòng</button>
                 <div class="game-hud">
-                    <h2 class="game-title-text"><i class="fa-solid fa-layer-group" style="color:var(--primary);"></i> Lật Thẻ 3D</h2>
+                    <h2 class="game-title-text"><i class="fa-solid fa-layer-group" style="color:var(--primary);"></i> Lật Thẻ 3D (Smart Queue 10:5)</h2>
                     <div class="game-score-badge" id="fc-progress-text" style="margin-top:10px;">1 / 10</div>
                 </div>
                 <div class="fc-container" onclick="flipCard()">
@@ -717,7 +721,7 @@
             <section id="view-study-typing" class="view-section">
                 <button class="btn-exit-game" onclick="exitGame()"><i class="fa-solid fa-arrow-left"></i> Rời phòng</button>
                 <div class="game-hud">
-                    <h2 class="game-title-text"><i class="fa-solid fa-keyboard" style="color:var(--text-main);"></i> Typing Dojo</h2>
+                    <h2 class="game-title-text"><i class="fa-solid fa-keyboard" style="color:var(--text-main);"></i> Typing Dojo (Smart Queue 10:5)</h2>
                     <div class="game-score-badge" id="type-progress-text" style="margin-top:10px;">1 / 10</div>
                 </div>
                 
@@ -808,27 +812,22 @@
             'act-2': "Cay mấy app thu phí đắt vl 💸. Tiền đó quét mã MoMo đi ăn bún chả sướng hơn =)))",
             'act-3': "Đồ free nhưng bao mượt! Vừa luyện từ, vừa luyện múa phím chuẩn bị mốt làm sếp nha 😎",
             'act-4': "Đến cửa rồi! Bấm cái nút bự chà bá trên kia để khởi động hệ thống nào 🚀",
-            'dashboard': "Giữ vững chuỗi streak nha người đẹp, rớt 1 ngày là tui dỗi đó 💅",
-            'albums': "Kho tàng cúp Vàng đang chờ! Cày 100% để thẻ hóa Vàng nha ✨",
+            'dashboard': "Hi my Bro! Chuỗi streak đang cháy kìa, rớt 1 ngày là tui dỗi đó 💅",
+            'albums': "Kho tàng cúp Vàng đang chờ! Nhìn mấy huy hiệu Master xanh mướt kìa ✨",
             'game-lobby': "Giao diện xịn xò chưa? Thích luyện múa phím hay chém thẻ bài chọn đi nha 🎮",
-            'flashcard-start': "Lật thẻ đi nào! Vuốt trái vuốt phải dứt khoát vô cho đã tay.",
-            'typing-start': "Khởi động ngón tay đi! Gõ sai là tui cho nổ màn hình ráng chịu nha 🔥",
+            'flashcard-start': "Smart Queue 10:5 đang chạy! Ôn từ mới xong là phải check lại từ cũ liền nha.",
+            'typing-start': "Khởi động ngón tay đi! Gõ sai rớt hạng Vương Miện ráng chịu nha 🔥",
             'quiz-start': "Game sinh tồn nha! Áp lực thời gian cuống lên là mất điểm ráng chịu 😈",
             'manual-start': "Thích tự gõ tay cho nhớ lâu hả? Nhập từ cẩn thận vô form tui đợi nha 💅",
             'word-added': "Thêm từ thành công! Chăm chỉ zị xứng đáng 10 điểm không có nhưng 💯",
-            'word-edit': "Gõ sai chính tả hả má? Sửa lẹ đi tui làm ngơ cho lần này 😂"
+            'word-edit': "Gõ sai chính tả hả Bro? Sửa lẹ đi tui làm ngơ cho lần này 😂",
+            'demoted': "Ối dồi ôi! Từ này Master rồi mà làm sai hả? Rớt hạng Vương Miện về lại hàng chờ nha! 😈"
         };
         const easterEggs = [
             "Đang học mà chọc gì đó? Tập trung làm bài đi kìa!",
             "Web tui tự code đó, mượt chưa? Cho xin 1 lời khen nha 💅",
             "Chọc nữa tui thu phí bây giờ (đùa thôi hihi) 😂"
         ];
-
-        // Friday Night Context Check
-        const d = new Date();
-        if (d.getDay() === 5 && d.getHours() >= 19) {
-            mascotTexts['act-1'] = "Tối thứ Sáu không diện đồ oversize đi cháy phố mà ngồi cày từ vựng hả? Chăm zị má 💅";
-        }
 
         function setMascotMood(mood) {
             const avatar = document.getElementById('mascot-avatar-img'); const img = document.getElementById('mascot-face');
@@ -854,7 +853,7 @@
 
         function pokeMascot() {
             const bubble = document.getElementById('mascot-bubble');
-            if(bubble.classList.contains('collapsed')) { bubble.classList.remove('collapsed'); typeMascotText(mascotTexts[currentSectionId] || "Học đi má!"); return; }
+            if(bubble.classList.contains('collapsed')) { bubble.classList.remove('collapsed'); typeMascotText(mascotTexts[currentSectionId] || "Học đi Bro!"); return; }
             typeMascotText(easterEggs[Math.floor(Math.random() * easterEggs.length)], false); setMascotMood('angry');
             clearTimeout(collapseTimeout); collapseTimeout = setTimeout(() => { triggerMascot(currentSectionId); }, 4000);
         }
@@ -877,6 +876,10 @@
             if (saved) { try { appData = JSON.parse(saved); } catch(e) {} }
             if (appData.sidebarCollapsed) { document.getElementById('sidebar').classList.add('collapsed'); }
             
+            appData.albums.forEach(alb => {
+                alb.words.forEach(w => { if (w.correctCount === undefined) w.correctCount = 0; if (w.wrongCount === undefined) w.wrongCount = 0; });
+            });
+
             const today = new Date().toDateString();
             if (appData.lastLogin !== today) { if (appData.lastLogin) appData.streak = (appData.streak || 0) + 1; appData.lastLogin = today; saveData(); }
             const sBanner = document.getElementById('streak-banner'); if (sBanner) sBanner.innerText = appData.streak || 1;
@@ -963,24 +966,96 @@
 
         function addXP(val) { window.lastXPAdded = val; appData.xp = (appData.xp || 0) + val; saveData(); updateLevel(); }
 
+        /* -------------------------------------------------------------
+           SMART QUEUE 10:5 ALGORITHM & BREAKDOWN TRACKING
+           ------------------------------------------------------------- */
+        function generateSmartQueue(rawWords) {
+            // Khay 1: Chưa thuộc hoặc đang cày (correctCount < 3)
+            let learningPool = rawWords.filter(w => (w.correctCount || 0) < 3);
+            // Khay 2: Đã Master (correctCount >= 3)
+            let masterPool = rawWords.filter(w => (w.correctCount || 0) >= 3);
+
+            // Xáo trộn ngẫu nhiên cả 2 khay
+            learningPool.sort(() => 0.5 - Math.random());
+            masterPool.sort(() => 0.5 - Math.random());
+
+            let queue = [];
+            let lIndex = 0;
+            let mIndex = 0;
+
+            if (learningPool.length === 0) {
+                // Nếu tất cả đều master, cho ôn lại tất cả
+                return masterPool;
+            }
+
+            while (lIndex < learningPool.length) {
+                // Lấy 10 từ học tập (hoặc số từ còn lại nếu ít hơn 10)
+                let chunk = learningPool.slice(lIndex, lIndex + 10);
+                lIndex += chunk.length;
+                queue.push(...chunk);
+
+                // Lấy 5 từ kiểm tra (ưu tiên từ Master, nếu không đủ lấy chính các từ vừa học bổ sung)
+                let reviewCount = 5;
+                let reviews = [];
+                
+                while (reviewCount > 0 && masterPool.length > 0 && mIndex < masterPool.length) {
+                    reviews.push(masterPool[mIndex]);
+                    mIndex++;
+                    reviewCount--;
+                }
+
+                // Nếu thiếu Master, bốc ngược lại từ chính cái chunk vừa học để recall tức thi (Hướng 2)
+                while (reviewCount > 0 && chunk.length > 0) {
+                    let fallbackWord = chunk[Math.floor(Math.random() * chunk.length)];
+                    reviews.push(fallbackWord);
+                    reviewCount--;
+                }
+
+                queue.push(...reviews);
+            }
+
+            return queue;
+        }
+
         function updateDashboard() {
             let totalWords = 0; let masterWords = 0;
-            appData.albums.forEach(alb => { totalWords += alb.words.length; alb.words.forEach(w => { if ((w.correctCount || 0) >= 3) masterWords++; }); });
-            const tAlb = document.getElementById('dash-total-albums'); const tWor = document.getElementById('dash-total-words'); const mRat = document.getElementById('dash-master-rate');
-            if (tAlb) tAlb.innerText = appData.albums.length; if (tWor) tWor.innerText = totalWords; if (mRat) mRat.innerText = totalWords ? Math.round((masterWords / totalWords) * 100) + '%' : '0%';
+            appData.albums.forEach(alb => { 
+                totalWords += alb.words.length; 
+                alb.words.forEach(w => { if ((w.correctCount || 0) >= 3) masterWords++; }); 
+            });
+            const tAlb = document.getElementById('dash-total-albums'); 
+            const tWor = document.getElementById('dash-total-words'); 
+            const mRat = document.getElementById('dash-master-rate');
+            if (tAlb) tAlb.innerText = appData.albums.length; 
+            if (tWor) tWor.innerText = totalWords; 
+            if (mRat) mRat.innerText = totalWords ? Math.round((masterWords / totalWords) * 100) + '%' : '0%';
+            
             const recentContainer = document.getElementById('dash-recent-albums');
             if (recentContainer) {
                 recentContainer.innerHTML = '';
                 appData.albums.slice(-3).reverse().forEach(alb => {
-                    const total = alb.words.length; const mastered = alb.words.filter(w => (w.correctCount || 0) >= 3).length;
-                    const percent = total === 0 ? 0 : Math.round((mastered / total) * 100);
+                    const total = alb.words.length; 
+                    const mastered = alb.words.filter(w => (w.correctCount || 0) >= 3).length;
+                    const learning = alb.words.filter(w => (w.correctCount || 0) > 0 && (w.correctCount || 0) < 3).length;
+                    const brandNew = total - mastered - learning;
+                    
+                    const pMaster = total === 0 ? 0 : (mastered / total) * 100;
+                    const pLearn = total === 0 ? 0 : (learning / total) * 100;
+                    const pNew = total === 0 ? 0 : (brandNew / total) * 100;
+                    const percentOverall = Math.round(pMaster);
+                    const isGold = percentOverall === 100 && total > 0;
+
                     recentContainer.innerHTML += `
-                        <div class="album-card ${percent === 100 && total > 0 ? 'gold-album' : ''}" onclick="openAlbum('${alb.id}')">
+                        <div class="album-card ${isGold ? 'gold-album' : ''}" onclick="openAlbum('${alb.id}')">
                             <div class="album-title-group">
                                 <h3>${alb.name}</h3>
-                                <p><i class="fa-solid fa-layer-group"></i> ${total} từ &bull; Master: ${percent}%</p>
+                                <p><i class="fa-solid fa-layer-group"></i> ${total} từ &bull; Master: ${percentOverall}%</p>
                             </div>
-                            <div class="mastery-track"><div class="mastery-fill" style="width:${percent}%"></div></div>
+                            <div class="mastery-track-stacked">
+                                <div class="m-segment seg-new" style="width:${pNew}%" title="Mới: ${brandNew}"></div>
+                                <div class="m-segment seg-learning" style="width:${pLearn}%" title="Đang cày: ${learning}"></div>
+                                <div class="m-segment seg-master" style="width:${pMaster}%" title="Master: ${mastered}"></div>
+                            </div>
                             <i class="fa-solid fa-crown album-watermark"></i>
                         </div>
                     `;
@@ -988,24 +1063,39 @@
             }
         }
 
-        /* ALBUM TROPHY ROOM RENDERING */
+        /* ALBUM TROPHY ROOM RENDERING WITH 3-COLOR TRACK */
         function renderAlbumsList() {
             const container = document.getElementById('albums-list-container'); if (!container) return; container.innerHTML = '';
             container.innerHTML = `<div class="ghost-card" onclick="createNewAlbum()"><i class="fa-solid fa-plus"></i><h3>Tạo Album Mới</h3></div>`;
+            
             appData.albums.forEach(alb => {
-                const total = alb.words.length; const mastered = alb.words.filter(w => (w.correctCount || 0) >= 3).length;
-                const percent = total === 0 ? 0 : Math.round((mastered / total) * 100); const isGold = percent === 100 && total > 0;
+                const total = alb.words.length; 
+                const mastered = alb.words.filter(w => (w.correctCount || 0) >= 3).length;
+                const learning = alb.words.filter(w => (w.correctCount || 0) > 0 && (w.correctCount || 0) < 3).length;
+                const brandNew = total - mastered - learning;
+                
+                const pMaster = total === 0 ? 0 : (mastered / total) * 100;
+                const pLearn = total === 0 ? 0 : (learning / total) * 100;
+                const pNew = total === 0 ? 0 : (brandNew / total) * 100;
+                const percentOverall = Math.round(pMaster);
+                const isGold = percentOverall === 100 && total > 0;
+
                 container.innerHTML += `
                     <div class="album-card ${isGold ? 'gold-album' : ''}" onclick="openAlbum('${alb.id}')">
                         <div class="album-title-group">
                             <h3>${alb.name}</h3>
                             <p><i class="fa-solid fa-layer-group"></i> ${total} từ vựng &bull; Master: ${mastered}/${total}</p>
                         </div>
-                        <div class="mastery-track"><div class="mastery-fill" style="width:${percent}%"></div></div>
+                        <div class="mastery-track-stacked">
+                            <div class="m-segment seg-new" style="width:${pNew}%" title="Mới: ${brandNew}"></div>
+                            <div class="m-segment seg-learning" style="width:${pLearn}%" title="Đang cày: ${learning}"></div>
+                            <div class="m-segment seg-master" style="width:${pMaster}%" title="Master: ${mastered}"></div>
+                        </div>
                         <i class="fa-solid fa-crown album-watermark"></i>
                     </div>
                 `;
             });
+
             if(!isMobile) {
                 document.querySelectorAll('.album-card:not(.ghost-card)').forEach(card => {
                     card.addEventListener('mousemove', e => {
@@ -1050,7 +1140,6 @@
             currentWords.forEach((w, idx) => {
                 const absoluteIdx = startIdx + idx;
                 
-                // INLINE EDIT MODE
                 if (editingIndex === absoluteIdx) {
                     container.innerHTML += `
                         <div class="word-card-detailed" style="border-color: var(--warning); box-shadow: 0 0 0 2px var(--gold-glow);">
@@ -1066,20 +1155,18 @@
                             </div>
                         </div>
                     `;
-                } 
-                // NORMAL DISPLAY MODE WITH MASTERY TAG
-                else {
+                } else {
                     let phoneticStr = w.phonetic ? `[${w.phonetic}]` : ''; 
                     let exampleStr = w.example ? `<div class="example"><i class="fa-solid fa-quote-left" style="margin-right: 6px; color:var(--primary);"></i>${w.example}</div>` : '';
                     
                     let cc = w.correctCount || 0;
                     let masteryTag = '';
                     if (cc >= 3) {
-                        masteryTag = `<span class="word-mastery-tag tag-mastered"><i class="fa-solid fa-crown"></i> Master</span>`;
+                        masteryTag = `<span class="word-mastery-tag tag-mastered"><i class="fa-solid fa-crown"></i> Master (${cc}/3)</span>`;
                     } else if (cc > 0) {
                         masteryTag = `<span class="word-mastery-tag tag-learning"><i class="fa-solid fa-fire"></i> Đang cày (${cc}/3)</span>`;
                     } else {
-                        masteryTag = `<span class="word-mastery-tag tag-new">Mới</span>`;
+                        masteryTag = `<span class="word-mastery-tag tag-new">Mới (0/3)</span>`;
                     }
 
                     container.innerHTML += `
@@ -1133,62 +1220,144 @@
             if(tab === 'manual') triggerMascot('manual-start');
         }
 
-        /* ---------------------------------
-           MANUAL WORD INPUT
-           --------------------------------- */
         function addWordManual() {
             const wordInput = document.getElementById('manual-word');
             const phoInput = document.getElementById('manual-phonetic');
             const meanInput = document.getElementById('manual-meaning');
             const exInput = document.getElementById('manual-example');
             
-            const w = wordInput.value.trim();
-            const p = phoInput.value.trim();
-            const m = meanInput.value.trim();
-            const e = exInput.value.trim();
-
-            if(!w || !m) {
-                triggerMascot("Chưa nhập đủ Từ và Nghĩa kìa má! Tập trung xíu đê 😿", 'angry');
-                return;
-            }
+            const w = wordInput.value.trim(); const p = phoInput.value.trim(); const m = meanInput.value.trim(); const e = exInput.value.trim();
+            if(!w || !m) { triggerMascot("Chưa nhập đủ Từ và Nghĩa kìa Bro! Tập trung xíu đê 😿", 'angry'); return; }
 
             const album = appData.albums.find(a => a.id === activeAlbumId);
             album.words.push({ word: w, phonetic: p, meaning: m, example: e, correctCount: 0, wrongCount: 0 });
             
-            // Clear inputs for next word
-            wordInput.value = ''; phoInput.value = ''; meanInput.value = ''; exInput.value = '';
-            wordInput.focus(); 
-            
-            saveData();
-            document.getElementById('album-total-count').innerHTML = `<i class="fa-solid fa-database"></i> ${album.words.length} từ vựng`;
+            wordInput.value = ''; phoInput.value = ''; meanInput.value = ''; exInput.value = ''; wordInput.focus(); 
+            saveData(); document.getElementById('album-total-count').innerHTML = `<i class="fa-solid fa-database"></i> ${album.words.length} từ vựng`;
             triggerMascot('word-added', 'gold');
         }
 
-        /* OTHER TABS LOGIC */
         function copyAiPrompt() { const box = document.getElementById('ai-prompt-box'); if (box) { navigator.clipboard.writeText(box.innerText); alert("Đã sao chép Prompt vào clipboard!"); } }
         function processAIText() { const txt = document.getElementById('ai-input').value.trim(); if (!txt) return; const album = appData.albums.find(a => a.id === activeAlbumId); txt.split('\n').forEach(line => { const p = line.split('|'); if (p.length >= 2) { album.words.push({ word: p[0].trim(), phonetic: p[1]?.trim() || '', meaning: p[2]?.trim() || '', example: p[3]?.trim() || '', correctCount: 0, wrongCount: 0 }); }}); document.getElementById('ai-input').value = ''; saveData(); switchTab('word-list'); renderSingleAlbum(1); triggerMascot('word-added', 'gold'); }
         function handleFileUpload(e) { const file = e.target.files[0]; if (!file) return; const album = appData.albums.find(a => a.id === activeAlbumId); const reader = new FileReader(); reader.onload = (ev) => { const wb = XLSX.read(new Uint8Array(ev.target.result), { type: 'array' }); const rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { header: 1 }); rows.forEach(r => { if (r[0]) album.words.push({ word: r[0].toString().trim(), phonetic: r[1] || '', meaning: r[2] || '', example: r[3] || '', correctCount: 0, wrongCount: 0 }); }); saveData(); switchTab('word-list'); renderSingleAlbum(1); triggerMascot('word-added', 'gold'); }; reader.readAsArrayBuffer(file); }
         function speakCurrentWord(e) { if (e) e.stopPropagation(); const word = studyQueue[studyIndex]?.word; if (word && 'speechSynthesis' in window) { const utterance = new SpeechSynthesisUtterance(word); utterance.lang = 'en-US'; speechSynthesis.speak(utterance); } }
 
-        /* GAMES LAUNCHERS */
-        function startStudy(mode) { const album = appData.albums.find(a => a.id === activeAlbumId); if (!album || album.words.length === 0) return alert("Album trống! Hãy thêm từ vựng."); studyQueue = [...album.words].sort(() => 0.5 - Math.random()); studyIndex = 0; if (mode === 'flashcard') { nav('study-flashcard'); triggerMascot('flashcard-start'); loadFlashcard(); } if (mode === 'typing') { nav('study-typing'); triggerMascot('typing-start'); typingCombo = 0; loadTyping(); } }
-        function startAlbumGame(type) { const album = appData.albums.find(a => a.id === activeAlbumId); if (!album || album.words.length < 4) return alert("Cần tối thiểu 4 từ vựng trong Album này để kích hoạt Game!"); studyQueue = [...album.words]; if (type === 'match') { nav('game-match'); startMatchGame(); } if (type === 'quiz') { nav('game-quiz'); triggerMascot('quiz-start'); startQuizGame(); } if (type === 'context') { nav('game-context'); startContextGame(); } }
+        /* GAMES LAUNCHERS (USING SMART QUEUE 10:5) */
+        function startStudy(mode) { 
+            const album = appData.albums.find(a => a.id === activeAlbumId); 
+            if (!album || album.words.length === 0) return alert("Album trống! Hãy thêm từ vựng."); 
+            
+            // Kích hoạt thuật toán Smart Queue 10:5
+            studyQueue = generateSmartQueue(album.words);
+            studyIndex = 0; 
+            
+            if (mode === 'flashcard') { nav('study-flashcard'); triggerMascot('flashcard-start'); loadFlashcard(); } 
+            if (mode === 'typing') { nav('study-typing'); triggerMascot('typing-start'); typingCombo = 0; loadTyping(); } 
+        }
 
-        /* 1. FLASHCARD (SWIPE PHYSICS) */
-        function loadFlashcard() { if (studyIndex >= studyQueue.length) { confetti(); addXP(30); alert("Hoàn thành session học! (+30 XP)"); return nav('single-album'); } const card = document.getElementById('fc-card-element'); card.classList.remove('flipped', 'swipe-left', 'swipe-right'); const w = studyQueue[studyIndex]; document.getElementById('fc-word').innerText = w.word; document.getElementById('fc-phonetic').innerText = w.phonetic ? `[${w.phonetic}]` : ''; document.getElementById('fc-meaning').innerText = w.meaning; document.getElementById('fc-example').innerText = w.example ? `"${w.example}"` : ''; document.getElementById('fc-progress-text').innerText = `${studyIndex + 1} / ${studyQueue.length}`; }
+        function startAlbumGame(type) { 
+            const album = appData.albums.find(a => a.id === activeAlbumId); 
+            if (!album || album.words.length < 4) return alert("Cần tối thiểu 4 từ vựng trong Album này để kích hoạt Game!"); 
+            studyQueue = [...album.words]; 
+            if (type === 'match') { nav('game-match'); startMatchGame(); } 
+            if (type === 'quiz') { nav('game-quiz'); triggerMascot('quiz-start'); startQuizGame(); } 
+            if (type === 'context') { nav('game-context'); startContextGame(); } 
+        }
+
+        /* 1. FLASHCARD (SMART QUEUE & DEMOTION) */
+        function loadFlashcard() { 
+            if (studyIndex >= studyQueue.length) { confetti(); addXP(30); alert("Hoàn thành session học chuẩn 10:5! (+30 XP)"); return nav('single-album'); } 
+            const card = document.getElementById('fc-card-element'); card.classList.remove('flipped', 'swipe-left', 'swipe-right'); 
+            const w = studyQueue[studyIndex]; 
+            document.getElementById('fc-word').innerText = w.word; 
+            document.getElementById('fc-phonetic').innerText = w.phonetic ? `[${w.phonetic}]` : ''; 
+            document.getElementById('fc-meaning').innerText = w.meaning; 
+            document.getElementById('fc-example').innerText = w.example ? `"${w.example}"` : ''; 
+            document.getElementById('fc-progress-text').innerText = `${studyIndex + 1} / ${studyQueue.length}`; 
+        }
         function flipCard() { document.getElementById('fc-card-element').classList.toggle('flipped'); }
-        function swipeCard(known) { const card = document.getElementById('fc-card-element'); if(card.classList.contains('swipe-left') || card.classList.contains('swipe-right')) return; if(known) { card.classList.add('swipe-right'); addXP(5); } else { card.classList.add('swipe-left'); } const w = studyQueue[studyIndex]; if (known) { w.correctCount = (w.correctCount || 0) + 1; } else { w.wrongCount = (w.wrongCount || 0) + 1; } saveData(); setTimeout(() => { studyIndex++; loadFlashcard(); }, 300); }
-        function setupKeyboardShortcuts() { document.addEventListener('keydown', (e) => { const fcView = document.getElementById('view-study-flashcard'); if (fcView && fcView.classList.contains('active')) { if (e.code === 'Space') { e.preventDefault(); flipCard(); } if (e.code === 'ArrowLeft') { swipeCard(false); } if (e.code === 'ArrowRight') { swipeCard(true); } } const qView = document.getElementById('view-game-quiz'); if(qView && qView.classList.contains('active')) { if(['1','2','3','4'].includes(e.key)) { const btns = document.querySelectorAll('#quiz-options .quiz-tile'); if(btns[parseInt(e.key)-1]) btns[parseInt(e.key)-1].click(); } } }); }
+        function swipeCard(known) { 
+            const card = document.getElementById('fc-card-element'); if(card.classList.contains('swipe-left') || card.classList.contains('swipe-right')) return; 
+            const w = studyQueue[studyIndex]; 
+            
+            if(known) { 
+                card.classList.add('swipe-right'); addXP(5); 
+                w.correctCount = (w.correctCount || 0) + 1; 
+            } else { 
+                card.classList.add('swipe-left'); 
+                // Xử lý giáng cấp (Demotion system): Nếu từ đã Master (>=3) mà bấm Chưa thuộc -> Giáng về 2
+                if ((w.correctCount || 0) >= 3) {
+                    w.correctCount = 2;
+                    triggerMascot('demoted', 'angry');
+                } else {
+                    w.wrongCount = (w.wrongCount || 0) + 1;
+                }
+            } 
+            saveData(); setTimeout(() => { studyIndex++; loadFlashcard(); }, 300); 
+        }
 
-        /* 2. TYPING DOJO */
+        function setupKeyboardShortcuts() { 
+            document.addEventListener('keydown', (e) => { 
+                const fcView = document.getElementById('view-study-flashcard'); 
+                if (fcView && fcView.classList.contains('active')) { 
+                    if (e.code === 'Space') { e.preventDefault(); flipCard(); } 
+                    if (e.code === 'ArrowLeft') { swipeCard(false); } 
+                    if (e.code === 'ArrowRight') { swipeCard(true); } 
+                } 
+                const qView = document.getElementById('view-game-quiz'); 
+                if(qView && qView.classList.contains('active')) { 
+                    if(['1','2','3','4'].includes(e.key)) { 
+                        const btns = document.querySelectorAll('#quiz-options .quiz-tile'); 
+                        if(btns[parseInt(e.key)-1]) btns[parseInt(e.key)-1].click(); 
+                    } 
+                } 
+            }); 
+        }
+
+        /* 2. TYPING DOJO (SMART QUEUE & DEMOTION) */
         let typingCombo = 0;
-        function loadTyping() { if (studyIndex >= studyQueue.length) { confetti(); addXP(30); alert("Hoàn thành session gõ từ! (+30 XP)"); return nav('single-album'); } const w = studyQueue[studyIndex]; document.getElementById('type-meaning').innerText = w.meaning; document.getElementById('type-hint').innerText = w.phonetic ? `Gợi ý: [${w.phonetic}]` : ''; document.getElementById('type-progress-text').innerText = `${studyIndex + 1} / ${studyQueue.length}`; const inp = document.getElementById('type-input'); inp.value = ''; inp.disabled = false; inp.focus(); document.getElementById('type-feedback').innerText = ''; updateFrenzyVisuals(); }
-        function updateFrenzyVisuals() { const wrapper = document.getElementById('typing-container'); const comboTxt = document.getElementById('combo-text'); if(typingCombo > 1) { comboTxt.innerText = `x${typingCombo} COMBO🔥`; comboTxt.classList.add('active'); } else { comboTxt.classList.remove('active'); } if(typingCombo >= 5) { wrapper.classList.add('frenzy-mode'); setMascotMood('cool'); } else { wrapper.classList.remove('frenzy-mode'); } }
-        function handleTypingKey(e) { if (e.key === 'Enter') { const w = studyQueue[studyIndex]; const val = document.getElementById('type-input').value.trim().toLowerCase(); const wrapper = document.getElementById('typing-container'); if (val === w.word.toLowerCase()) { typingCombo++; updateFrenzyVisuals(); addXP(10); const xpEl = document.createElement('div'); xpEl.className = 'floating-xp'; xpEl.innerText = '+10 XP'; xpEl.style.left = '50%'; xpEl.style.top = '20px'; wrapper.appendChild(xpEl); setTimeout(() => xpEl.remove(), 1000); document.getElementById('type-input').disabled = true; setTimeout(() => { studyIndex++; loadTyping(); }, 500); if(typingCombo === 3) triggerMascot("Đỉnh chóp! Giữ phong độ xanh chín như này coi 🔥"); } else { typingCombo = 0; updateFrenzyVisuals(); wrapper.classList.add('error-shake'); setTimeout(() => wrapper.classList.remove('error-shake'), 400); document.getElementById('type-input').value = ''; document.getElementById('type-input').placeholder = `Sai rồi! Đáp án: ${w.word}`; triggerMascot("Ối dồi ôi gõ nhầm kìa má! Đáp án sờ sờ ra kìa, tập trung kéo lại nào!", 'angry'); } } }
+        function loadTyping() { 
+            if (studyIndex >= studyQueue.length) { confetti(); addXP(30); alert("Hoàn thành session Typing chuẩn 10:5! (+30 XP)"); return nav('single-album'); } 
+            const w = studyQueue[studyIndex]; 
+            document.getElementById('type-meaning').innerText = w.meaning; 
+            document.getElementById('type-hint').innerText = w.phonetic ? `Gợi ý: [${w.phonetic}]` : ''; 
+            document.getElementById('type-progress-text').innerText = `${studyIndex + 1} / ${studyQueue.length}`; 
+            const inp = document.getElementById('type-input'); inp.value = ''; inp.disabled = false; inp.focus(); 
+            updateFrenzyVisuals(); 
+        }
+        function updateFrenzyVisuals() { 
+            const wrapper = document.getElementById('typing-container'); const comboTxt = document.getElementById('combo-text'); 
+            if(typingCombo > 1) { comboTxt.innerText = `x${typingCombo} COMBO🔥`; comboTxt.classList.add('active'); } else { comboTxt.classList.remove('active'); } 
+            if(typingCombo >= 5) { wrapper.classList.add('frenzy-mode'); setMascotMood('cool'); } else { wrapper.classList.remove('frenzy-mode'); } 
+        }
+        function handleTypingKey(e) { 
+            if (e.key === 'Enter') { 
+                const w = studyQueue[studyIndex]; const val = document.getElementById('type-input').value.trim().toLowerCase(); const wrapper = document.getElementById('typing-container'); 
+                if (val === w.word.toLowerCase()) { 
+                    typingCombo++; updateFrenzyVisuals(); addXP(10); 
+                    w.correctCount = (w.correctCount || 0) + 1;
+                    
+                    const xpEl = document.createElement('div'); xpEl.className = 'floating-xp'; xpEl.innerText = '+10 XP'; xpEl.style.left = '50%'; xpEl.style.top = '20px'; wrapper.appendChild(xpEl); setTimeout(() => xpEl.remove(), 1000); 
+                    document.getElementById('type-input').disabled = true; setTimeout(() => { studyIndex++; loadTyping(); }, 500); 
+                    if(typingCombo === 3) triggerMascot("Đỉnh chóp! Giữ phong độ xanh chín như này coi 🔥"); 
+                } else { 
+                    typingCombo = 0; updateFrenzyVisuals(); 
+                    wrapper.classList.add('error-shake'); setTimeout(() => wrapper.classList.remove('error-shake'), 400); 
+                    
+                    if ((w.correctCount || 0) >= 3) {
+                        w.correctCount = 2; // Rớt hạng
+                        triggerMascot('demoted', 'angry');
+                    }
+                    saveData();
+
+                    document.getElementById('type-input').value = ''; document.getElementById('type-input').placeholder = `Sai! Đáp án: ${w.word}`; 
+                } 
+            } 
+        }
 
         /* 3. SPEED MATCH */
         let matchSelected = null; let matchFreeze = false;
-        function startMatchGame() { const words = [...studyQueue].sort(() => 0.5 - Math.random()).slice(0, 6); let items = []; words.forEach(w => { items.push({ text: w.word, id: w.word, type: 'w' }); items.push({ text: w.meaning, id: w.word, type: 'm' }); }); items.sort(() => 0.5 - Math.random()); const grid = document.getElementById('match-grid'); if(!grid) return; grid.innerHTML = ''; items.forEach(it => { const tile = document.createElement('div'); tile.className = 'match-tile'; tile.innerText = it.text; tile.onclick = () => { if (matchFreeze || tile.classList.contains('matched-boom') || tile.classList.contains('selected')) return; if (!matchSelected) { matchSelected = { tile, it }; tile.classList.add('selected'); } else { if (matchSelected.it.id === it.id && matchSelected.it.type !== it.type) { matchSelected.tile.classList.add('matched-boom'); tile.classList.add('matched-boom'); addXP(5); if(document.querySelectorAll('#match-grid .match-tile:not(.matched-boom)').length === 0) { matchFreeze = true; setTimeout(() => { matchFreeze = false; confetti({ particleCount: 150, spread: 100 }); addXP(30); setTimeout(() => { alert("🎉 Hoàn thành Speed Match xuất sắc! (+30 XP)"); nav('single-album'); }, 500); }, 300); } } else { matchSelected.tile.classList.remove('selected'); tile.classList.add('error'); matchSelected.tile.classList.add('error'); matchFreeze = true; setTimeout(() => { tile.classList.remove('error'); if(matchSelected) matchSelected.tile.classList.remove('error'); matchFreeze = false; }, 400); triggerMascot("Kéo nhầm rồi ba! Rung màn hình nha 😹", 'angry'); } matchSelected = null; } }; grid.appendChild(tile); }); }
+        function startMatchGame() { const words = [...studyQueue].sort(() => 0.5 - Math.random()).slice(0, 6); let items = []; words.forEach(w => { items.push({ text: w.word, id: w.word, type: 'w' }); items.push({ text: w.meaning, id: w.word, type: 'm' }); }); items.sort(() => 0.5 - Math.random()); const grid = document.getElementById('match-grid'); if(!grid) return; grid.innerHTML = ''; items.forEach(it => { const tile = document.createElement('div'); tile.className = 'match-tile'; tile.innerText = it.text; tile.onclick = () => { if (matchFreeze || tile.classList.contains('matched-boom') || tile.classList.contains('selected')) return; if (!matchSelected) { matchSelected = { tile, it }; tile.classList.add('selected'); } else { if (matchSelected.it.id === it.id && matchSelected.it.type !== it.type) { matchSelected.tile.classList.add('matched-boom'); tile.classList.add('matched-boom'); addXP(5); if(document.querySelectorAll('#match-grid .match-tile:not(.matched-boom)').length === 0) { matchFreeze = true; setTimeout(() => { matchFreeze = false; confetti({ particleCount: 150, spread: 100 }); addXP(30); setTimeout(() => { alert("🎉 Hoàn thành Speed Match xuất sắc! (+30 XP)"); nav('single-album'); }, 500); }, 300); } } else { matchSelected.tile.classList.remove('selected'); tile.classList.add('error'); matchSelected.tile.classList.add('error'); matchFreeze = true; setTimeout(() => { tile.classList.remove('error'); if(matchSelected) matchSelected.tile.classList.remove('error'); matchFreeze = false; }, 400); triggerMascot("Kéo nhầm rồi Bro! Rung màn hình nha 😹", 'angry'); } matchSelected = null; } }; grid.appendChild(tile); }); }
 
         /* 4. SURVIVAL QUIZ */
         let quizTimer = null; let quizScore = 0; let timeLeft = 30;
@@ -1199,7 +1368,7 @@
         let ctxSelectedWord = null; let ctxCompletedCount = 0;
         function startContextGame() { let validWords = studyQueue.filter(w => w.example && w.example.toLowerCase().includes(w.word.toLowerCase())); if (validWords.length < 5) validWords = studyQueue.filter(w => w.example); if (validWords.length < 5) { alert("Album cần ít nhất 5 câu ví dụ để chơi Context Match!"); return nav('single-album'); } let gameWords = [...validWords].sort(() => 0.5 - Math.random()).slice(0, 5); ctxCompletedCount = 0; ctxSelectedWord = null; const board = document.getElementById('context-sentences-board'); const bank = document.getElementById('context-word-bank'); let shuffledWords = [...gameWords].sort(() => 0.5 - Math.random()); let boardHtml = ''; gameWords.forEach((item, idx) => { let sentenceWithBlank = item.example.replace(new RegExp(item.word, 'gi'), `<span class="context-blank" id="ctx-blank-${idx}" onclick="fillContextBlank('${item.word}', ${idx}, this)">Bấm để điền</span>`); boardHtml += `<div class="context-sentence-card" id="ctx-card-${idx}"><span style="font-size:12px; font-weight:800; color:var(--text-muted); text-transform:uppercase;">Câu ${idx + 1} &bull; Nghĩa: ${item.meaning}</span><p style="margin:10px 0 0 0; font-size:18px; font-weight:700; line-height:1.6;">${sentenceWithBlank}</p></div>`; }); board.innerHTML = boardHtml; let bankHtml = ''; shuffledWords.forEach((item, idx) => { bankHtml += `<div class="context-chip" id="ctx-chip-${idx}" onclick="selectContextWord('${item.word}', this)">${item.word}</div>`; }); bank.innerHTML = bankHtml; document.getElementById('context-score').innerText = `0 / 5`; }
         function selectContextWord(word, el) { document.querySelectorAll('.context-chip').forEach(t => t.classList.remove('selected')); el.classList.add('selected'); ctxSelectedWord = { word, el }; }
-        function fillContextBlank(targetWord, blankIdx, blankEl) { if (!ctxSelectedWord) { triggerMascot("Nhớ chọn 1 chữ ở thanh dưới đáy màn hình trước khi điền nha bà!", "angry"); return; } const cardEl = document.getElementById(`ctx-card-${blankIdx}`); if (ctxSelectedWord.word.toLowerCase() === targetWord.toLowerCase()) { blankEl.innerText = ctxSelectedWord.word; blankEl.classList.add('filled'); ctxSelectedWord.el.classList.add('used'); ctxSelectedWord = null; ctxCompletedCount++; document.getElementById('context-score').innerText = `${ctxCompletedCount} / 5`; if (ctxCompletedCount === 5) { confetti({ particleCount: 200, spread: 120 }); addXP(50); setTimeout(() => { alert("🎉 Xuất sắc! (+50 XP)"); nav('single-album'); }, 600); } } else { ctxSelectedWord.el.classList.remove('selected'); ctxSelectedWord = null; cardEl.classList.add('bounce-error'); setTimeout(() => cardEl.classList.remove('bounce-error'), 500); } }
+        function fillContextBlank(targetWord, blankIdx, blankEl) { if (!ctxSelectedWord) { triggerMascot("Nhớ chọn 1 chữ ở thanh dưới đáy màn hình trước khi điền nha Bro!", "angry"); return; } const cardEl = document.getElementById(`ctx-card-${blankIdx}`); if (ctxSelectedWord.word.toLowerCase() === targetWord.toLowerCase()) { blankEl.innerText = ctxSelectedWord.word; blankEl.classList.add('filled'); ctxSelectedWord.el.classList.add('used'); ctxSelectedWord = null; ctxCompletedCount++; document.getElementById('context-score').innerText = `${ctxCompletedCount} / 5`; if (ctxCompletedCount === 5) { confetti({ particleCount: 200, spread: 120 }); addXP(50); setTimeout(() => { alert("🎉 Xuất sắc! (+50 XP)"); nav('single-album'); }, 600); } } else { ctxSelectedWord.el.classList.remove('selected'); ctxSelectedWord = null; cardEl.classList.add('bounce-error'); setTimeout(() => cardEl.classList.remove('bounce-error'), 500); } }
 
         /* DATA MANAGEMENT */
         function exportBackup() { const blob = new Blob([JSON.stringify(appData)], { type: "application/json" }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `PinkVocab_Data.json`; a.click(); }
