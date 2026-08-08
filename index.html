@@ -239,12 +239,19 @@
         .ui-card { background: var(--bg-card); border-radius: var(--radius-lg); border: 1px solid var(--border-light); padding: 28px; box-shadow: var(--shadow-sm); margin-bottom: 24px; transition: var(--transition); }
         .ui-card:hover { border-color: var(--border-strong); box-shadow: var(--shadow-md); }
 
-        /* WORD ROW & INLINE EDITING */
+        /* WORD ROW & INLINE EDITING & MASTERY TAGS */
         .word-card-detailed { background: var(--bg-card); border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 22px 26px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; transition: var(--transition); box-shadow: var(--shadow-sm); }
         .word-card-detailed:hover { border-color: var(--primary); transform: translateX(4px); box-shadow: var(--shadow-md); }
         .word-main-info { flex: 1; width: 100%; }
-        .word-main-info .top-line { display: flex; align-items: baseline; gap: 12px; margin-bottom: 6px; }
+        .word-main-info .top-line { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 6px; }
         .word-main-info h3 { font-size: 20px; font-weight: 900; color: var(--primary); margin: 0; }
+        
+        /* THE MASTERY TAGS */
+        .word-mastery-tag { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 800; padding: 4px 8px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .tag-learning { background: var(--warning); color: white; }
+        .tag-mastered { background: var(--success); color: white; box-shadow: 0 0 10px rgba(16,185,129,0.3); }
+        .tag-new { background: var(--border-strong); color: var(--text-main); }
+
         .word-main-info .phonetic { font-family: 'JetBrains Mono', monospace; font-size: 15px; color: var(--text-muted); font-weight: 700; background: var(--bg-body); padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border-light); }
         .word-main-info .meaning { font-size: 17px; font-weight: 800; margin-bottom: 10px; color: var(--text-main); }
         .word-main-info .example { font-size: 14px; font-style: italic; color: var(--text-muted); background: var(--bg-body); padding: 10px 14px; border-radius: 8px; border-left: 3px solid var(--primary); }
@@ -617,7 +624,6 @@
 
                 <div class="page-header"><h3 style="font-size: 20px; font-weight: 800; margin: 0;">Quản trị Dữ liệu Album</h3></div>
                 
-                <!-- NEW TABS -->
                 <div style="display: flex; gap: 12px; margin-bottom: 24px; flex-wrap:wrap;">
                     <button class="btn btn-outline tab-btn active" id="btn-tab-word-list" style="border-radius: var(--radius-pill);" onclick="switchTab('word-list')"><i class="fa-solid fa-list"></i> Quản lý Từ vựng</button>
                     <button class="btn btn-outline tab-btn" id="btn-tab-manual" style="border-radius: var(--radius-pill);" onclick="switchTab('manual')"><i class="fa-solid fa-pen-nib"></i> Thêm Thủ công</button>
@@ -630,7 +636,6 @@
                     <div class="pagination-bar" id="album-pagination"></div>
                 </div>
 
-                <!-- NEW TAB: THÊM THỦ CÔNG -->
                 <div id="tab-manual" style="display: none;" class="ui-card">
                     <div style="margin-bottom: 24px;">
                         <h3 style="margin:0 0 8px 0; font-size:24px; color:var(--primary);"><i class="fa-solid fa-hammer"></i> Xưởng Chế Tạo Từ Vựng</h3>
@@ -681,7 +686,7 @@
                 </div>
             </section>
 
-            <!-- FLASHCARD (SWIPE PHYSICS) -->
+            <!-- FLASHCARD -->
             <section id="view-study-flashcard" class="view-section">
                 <button class="btn-exit-game" onclick="exitGame()"><i class="fa-solid fa-arrow-left"></i> Rời phòng</button>
                 <div class="game-hud">
@@ -708,7 +713,7 @@
                 </div>
             </section>
 
-            <!-- TYPING (FRENZY MODE) -->
+            <!-- TYPING -->
             <section id="view-study-typing" class="view-section">
                 <button class="btn-exit-game" onclick="exitGame()"><i class="fa-solid fa-arrow-left"></i> Rời phòng</button>
                 <div class="game-hud">
@@ -724,7 +729,7 @@
                 </div>
             </section>
 
-            <!-- GAMIFIED: SPEED MATCH -->
+            <!-- SPEED MATCH -->
             <section id="view-game-match" class="view-section">
                 <button class="btn-exit-game" onclick="exitGame()"><i class="fa-solid fa-arrow-left"></i> Rời phòng</button>
                 <div class="game-hud">
@@ -734,7 +739,7 @@
                 <div class="match-grid" id="match-grid"></div>
             </section>
 
-            <!-- GAMIFIED: SURVIVAL QUIZ -->
+            <!-- SURVIVAL QUIZ -->
             <section id="view-game-quiz" class="view-section">
                 <button class="btn-exit-game" onclick="exitGame()"><i class="fa-solid fa-xmark"></i> Thoát</button>
                 <div class="game-hud">
@@ -754,7 +759,7 @@
                 </div>
             </section>
 
-            <!-- GAMIFIED: CONTEXT MATCH (5+5) -->
+            <!-- CONTEXT MATCH -->
             <section id="view-game-context" class="view-section">
                 <button class="btn-exit-game" onclick="exitGame()"><i class="fa-solid fa-arrow-left"></i> Rời phòng</button>
                 <div class="game-hud">
@@ -792,8 +797,6 @@
         let activeAlbumId = null; let currentPage = 1; const ITEMS_PER_PAGE = 20;
         let studyQueue = []; let studyIndex = 0;
         let isCinematicZooming = false; let isMobile = window.innerWidth <= 768;
-
-        /* INLINE EDITING STATE */
         let editingIndex = -1;
 
         /* MASCOT LOGIC - SMART CONTEXT AWARENESS */
@@ -820,6 +823,12 @@
             "Web tui tự code đó, mượt chưa? Cho xin 1 lời khen nha 💅",
             "Chọc nữa tui thu phí bây giờ (đùa thôi hihi) 😂"
         ];
+
+        // Friday Night Context Check
+        const d = new Date();
+        if (d.getDay() === 5 && d.getHours() >= 19) {
+            mascotTexts['act-1'] = "Tối thứ Sáu không diện đồ oversize đi cháy phố mà ngồi cày từ vựng hả? Chăm zị má 💅";
+        }
 
         function setMascotMood(mood) {
             const avatar = document.getElementById('mascot-avatar-img'); const img = document.getElementById('mascot-face');
@@ -1058,13 +1067,29 @@
                         </div>
                     `;
                 } 
-                // NORMAL DISPLAY MODE
+                // NORMAL DISPLAY MODE WITH MASTERY TAG
                 else {
-                    let phoneticStr = w.phonetic ? `[${w.phonetic}]` : ''; let exampleStr = w.example ? `<div class="example"><i class="fa-solid fa-quote-left" style="margin-right: 6px; color:var(--primary);"></i>${w.example}</div>` : '';
+                    let phoneticStr = w.phonetic ? `[${w.phonetic}]` : ''; 
+                    let exampleStr = w.example ? `<div class="example"><i class="fa-solid fa-quote-left" style="margin-right: 6px; color:var(--primary);"></i>${w.example}</div>` : '';
+                    
+                    let cc = w.correctCount || 0;
+                    let masteryTag = '';
+                    if (cc >= 3) {
+                        masteryTag = `<span class="word-mastery-tag tag-mastered"><i class="fa-solid fa-crown"></i> Master</span>`;
+                    } else if (cc > 0) {
+                        masteryTag = `<span class="word-mastery-tag tag-learning"><i class="fa-solid fa-fire"></i> Đang cày (${cc}/3)</span>`;
+                    } else {
+                        masteryTag = `<span class="word-mastery-tag tag-new">Mới</span>`;
+                    }
+
                     container.innerHTML += `
                         <div class="word-card-detailed">
                             <div class="word-main-info">
-                                <div class="top-line"><h3>${w.word}</h3><span class="phonetic">${phoneticStr}</span></div>
+                                <div class="top-line">
+                                    <h3>${w.word}</h3>
+                                    ${masteryTag}
+                                    <span class="phonetic" style="${!w.phonetic ? 'display:none;' : ''}">${phoneticStr}</span>
+                                </div>
                                 <div class="meaning">${w.meaning}</div>
                                 ${exampleStr}
                             </div>
@@ -1132,7 +1157,7 @@
             
             // Clear inputs for next word
             wordInput.value = ''; phoInput.value = ''; meanInput.value = ''; exInput.value = '';
-            wordInput.focus(); // keep focus for rapid data entry
+            wordInput.focus(); 
             
             saveData();
             document.getElementById('album-total-count').innerHTML = `<i class="fa-solid fa-database"></i> ${album.words.length} từ vựng`;
@@ -1141,8 +1166,8 @@
 
         /* OTHER TABS LOGIC */
         function copyAiPrompt() { const box = document.getElementById('ai-prompt-box'); if (box) { navigator.clipboard.writeText(box.innerText); alert("Đã sao chép Prompt vào clipboard!"); } }
-        function processAIText() { const txt = document.getElementById('ai-input').value.trim(); if (!txt) return; const album = appData.albums.find(a => a.id === activeAlbumId); txt.split('\n').forEach(line => { const p = line.split('|'); if (p.length >= 2) { album.words.push({ word: p[0].trim(), phonetic: p[1]?.trim() || '', meaning: p[2]?.trim() || '', example: p[3]?.trim() || '' }); }}); document.getElementById('ai-input').value = ''; saveData(); switchTab('word-list'); renderSingleAlbum(1); triggerMascot('word-added', 'gold'); }
-        function handleFileUpload(e) { const file = e.target.files[0]; if (!file) return; const album = appData.albums.find(a => a.id === activeAlbumId); const reader = new FileReader(); reader.onload = (ev) => { const wb = XLSX.read(new Uint8Array(ev.target.result), { type: 'array' }); const rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { header: 1 }); rows.forEach(r => { if (r[0]) album.words.push({ word: r[0].toString().trim(), phonetic: r[1] || '', meaning: r[2] || '', example: r[3] || '' }); }); saveData(); switchTab('word-list'); renderSingleAlbum(1); triggerMascot('word-added', 'gold'); }; reader.readAsArrayBuffer(file); }
+        function processAIText() { const txt = document.getElementById('ai-input').value.trim(); if (!txt) return; const album = appData.albums.find(a => a.id === activeAlbumId); txt.split('\n').forEach(line => { const p = line.split('|'); if (p.length >= 2) { album.words.push({ word: p[0].trim(), phonetic: p[1]?.trim() || '', meaning: p[2]?.trim() || '', example: p[3]?.trim() || '', correctCount: 0, wrongCount: 0 }); }}); document.getElementById('ai-input').value = ''; saveData(); switchTab('word-list'); renderSingleAlbum(1); triggerMascot('word-added', 'gold'); }
+        function handleFileUpload(e) { const file = e.target.files[0]; if (!file) return; const album = appData.albums.find(a => a.id === activeAlbumId); const reader = new FileReader(); reader.onload = (ev) => { const wb = XLSX.read(new Uint8Array(ev.target.result), { type: 'array' }); const rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { header: 1 }); rows.forEach(r => { if (r[0]) album.words.push({ word: r[0].toString().trim(), phonetic: r[1] || '', meaning: r[2] || '', example: r[3] || '', correctCount: 0, wrongCount: 0 }); }); saveData(); switchTab('word-list'); renderSingleAlbum(1); triggerMascot('word-added', 'gold'); }; reader.readAsArrayBuffer(file); }
         function speakCurrentWord(e) { if (e) e.stopPropagation(); const word = studyQueue[studyIndex]?.word; if (word && 'speechSynthesis' in window) { const utterance = new SpeechSynthesisUtterance(word); utterance.lang = 'en-US'; speechSynthesis.speak(utterance); } }
 
         /* GAMES LAUNCHERS */
@@ -1155,7 +1180,7 @@
         function swipeCard(known) { const card = document.getElementById('fc-card-element'); if(card.classList.contains('swipe-left') || card.classList.contains('swipe-right')) return; if(known) { card.classList.add('swipe-right'); addXP(5); } else { card.classList.add('swipe-left'); } const w = studyQueue[studyIndex]; if (known) { w.correctCount = (w.correctCount || 0) + 1; } else { w.wrongCount = (w.wrongCount || 0) + 1; } saveData(); setTimeout(() => { studyIndex++; loadFlashcard(); }, 300); }
         function setupKeyboardShortcuts() { document.addEventListener('keydown', (e) => { const fcView = document.getElementById('view-study-flashcard'); if (fcView && fcView.classList.contains('active')) { if (e.code === 'Space') { e.preventDefault(); flipCard(); } if (e.code === 'ArrowLeft') { swipeCard(false); } if (e.code === 'ArrowRight') { swipeCard(true); } } const qView = document.getElementById('view-game-quiz'); if(qView && qView.classList.contains('active')) { if(['1','2','3','4'].includes(e.key)) { const btns = document.querySelectorAll('#quiz-options .quiz-tile'); if(btns[parseInt(e.key)-1]) btns[parseInt(e.key)-1].click(); } } }); }
 
-        /* 2. TYPING DOJO (COMBO & FRENZY) */
+        /* 2. TYPING DOJO */
         let typingCombo = 0;
         function loadTyping() { if (studyIndex >= studyQueue.length) { confetti(); addXP(30); alert("Hoàn thành session gõ từ! (+30 XP)"); return nav('single-album'); } const w = studyQueue[studyIndex]; document.getElementById('type-meaning').innerText = w.meaning; document.getElementById('type-hint').innerText = w.phonetic ? `Gợi ý: [${w.phonetic}]` : ''; document.getElementById('type-progress-text').innerText = `${studyIndex + 1} / ${studyQueue.length}`; const inp = document.getElementById('type-input'); inp.value = ''; inp.disabled = false; inp.focus(); document.getElementById('type-feedback').innerText = ''; updateFrenzyVisuals(); }
         function updateFrenzyVisuals() { const wrapper = document.getElementById('typing-container'); const comboTxt = document.getElementById('combo-text'); if(typingCombo > 1) { comboTxt.innerText = `x${typingCombo} COMBO🔥`; comboTxt.classList.add('active'); } else { comboTxt.classList.remove('active'); } if(typingCombo >= 5) { wrapper.classList.add('frenzy-mode'); setMascotMood('cool'); } else { wrapper.classList.remove('frenzy-mode'); } }
