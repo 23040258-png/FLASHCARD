@@ -45,18 +45,28 @@
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg-body); color: var(--text-main); margin: 0; padding: 0; display: flex; flex-direction: row; height: 100vh; overflow: hidden; transition: background-color 0.6s, color 0.6s; }
+        /* FIX CHÍ MẠNG LỖI SCROLL Ở ĐÂY */
+        html, body { height: 100%; width: 100%; margin: 0; padding: 0; overflow: hidden; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg-body); color: var(--text-main); display: flex; flex-direction: row; transition: background-color 0.6s, color 0.6s; }
         
-        /* FIX SCROLL BUGS HERE: min-height: 0 cho phép scroll trơn tru trong flexbox, bỏ height:100vh */
-        .main-content { flex: 1; min-height: 0; display: flex; flex-direction: column; overflow-y: auto; overflow-x: hidden; scroll-behavior: smooth; position: relative; }
-        .container { padding: 40px 60px; max-width: 1400px; margin: 0 auto; width: 100%; }
+        .main-content { 
+            flex: 1; 
+            height: 100vh; 
+            display: block; /* Trả về block để scroll hoạt động chuẩn */
+            overflow-y: auto; 
+            overflow-x: hidden; 
+            scroll-behavior: smooth; 
+            position: relative; 
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .container { padding: 40px 60px; max-width: 1400px; margin: 0 auto; width: 100%; display: block; }
 
         body.is-landing #sidebar, body.is-landing .mobile-header, body.is-landing .mobile-nav { display: none !important; }
-        body.is-landing .main-content { display: block; }
         body.is-landing .container { padding: 0; max-width: 100%; }
         
         body.zen-mode #sidebar, body.zen-mode .mobile-header, body.zen-mode .mobile-nav { display: none !important; }
-        body.zen-mode .main-content { padding: 0 !important; display: block; }
+        body.zen-mode .container { padding: 0 !important; }
 
         .reveal-up { opacity: 0; transform: translateY(40px); transition: 0.8s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform, opacity; }
         .reveal-up.active { opacity: 1; transform: translateY(0); }
@@ -140,7 +150,7 @@
         @keyframes avatarShake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
 
         /* ================= FIXED SIDEBAR ================= */
-        #sidebar { width: 280px; min-width: 280px; background: var(--bg-sidebar); border-right: 1px solid var(--border-light); display: flex; flex-direction: column; z-index: 90; transition: var(--transition); position: relative; height: 100vh; }
+        #sidebar { width: 280px; min-width: 280px; background: var(--bg-sidebar); border-right: 1px solid var(--border-light); display: flex; flex-direction: column; z-index: 90; transition: var(--transition); position: relative; height: 100vh; flex-shrink: 0; }
         #sidebar.collapsed { width: 84px; min-width: 84px; }
         
         .sidebar-header { padding: 28px 20px 0 20px; position: relative; }
@@ -374,8 +384,10 @@
             .mobile-nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: var(--text-muted); font-size: 11px; font-weight: 700; cursor: pointer; }
             .mobile-nav-item.active { color: var(--primary); }
             
-            .container { padding: 80px 16px 85px 16px; }
-            body.zen-mode .container { padding: 70px 16px 120px 16px !important; }
+            /* FIXED MOBILE SCROLL: Account for header and nav */
+            .main-content { height: calc(100vh - 65px); padding-top: 60px; }
+            .container { padding: 40px 16px 85px 16px; }
+            body.zen-mode .container { padding: 40px 16px 120px 16px !important; }
             
             .hero-title { font-size: 3.2rem; }
             .glitch-text { font-size: 2.2rem; }
@@ -389,10 +401,10 @@
             .context-word-bank { padding: 12px; justify-content: flex-start; }
             .context-chip { font-size: 14px; padding: 10px 16px; white-space: nowrap; box-shadow: 0 4px 0 var(--border-strong); }
             .btn-exit-game { top: 15px; left: 15px; padding: 8px 16px; font-size: 13px; }
-            .mascot-wrapper { bottom: 20px; right: 20px; }
+            .mascot-wrapper { bottom: 80px; right: 20px; } /* Đẩy lên tránh đè thanh nav */
             .mascot-avatar { width: 60px; height: 60px; }
             .mascot-bubble { max-width: 220px; }
-            .landing-nav { flex-direction: column; gap: 10px; align-items: flex-start; }
+            .landing-nav { flex-direction: column; gap: 10px; align-items: flex-start; padding-top: 70px; }
             .word-card-detailed { flex-direction: column; align-items: stretch; }
             .word-card-detailed > div:last-child { justify-content: flex-end; width: 100%; margin-top: 10px; }
         }
@@ -610,9 +622,7 @@
                     </div>
 
                     <!-- ALBUM STATS BOARD -->
-                    <div class="album-stats-board" id="current-album-stats">
-                        <!-- Populated by JS -->
-                    </div>
+                    <div class="album-stats-board" id="current-album-stats"></div>
                     
                     <h4 style="margin:0; color:var(--text-main); font-size:16px; font-weight: 800; display:flex; align-items:center; gap:8px;"><i class="fa-solid fa-crosshairs" style="color:var(--primary);"></i> Chế độ Huấn luyện (Smart Queue 10:5)</h4>
                     
@@ -669,24 +679,11 @@
                         <h3 style="margin:0 0 8px 0; font-size:24px; color:var(--primary);"><i class="fa-solid fa-hammer"></i> Xưởng Chế Tạo Từ Vựng</h3>
                         <p style="margin:0; color:var(--text-muted); font-size:14px;">Gõ tay cẩn thận từng từ sẽ giúp não bộ ghi nhớ sâu hơn 30% đấy!</p>
                     </div>
-                    
                     <div class="manual-input-grid">
-                        <div class="manual-field">
-                            <label>Từ vựng (Bắt buộc)</label>
-                            <input type="text" id="manual-word" class="edit-input word-input" placeholder="VD: Rebellion">
-                        </div>
-                        <div class="manual-field">
-                            <label>Phiên âm</label>
-                            <input type="text" id="manual-phonetic" class="edit-input" placeholder="VD: /rɪˈbel.jən/">
-                        </div>
-                        <div class="manual-field">
-                            <label>Nghĩa của từ (Bắt buộc)</label>
-                            <input type="text" id="manual-meaning" class="edit-input" placeholder="VD: Sự nổi loạn">
-                        </div>
-                        <div class="manual-field">
-                            <label>Ví dụ minh họa (Tốt cho Context Match)</label>
-                            <input type="text" id="manual-example" class="edit-input" placeholder="VD: The pink rebellion has begun.">
-                        </div>
+                        <div class="manual-field"><label>Từ vựng (Bắt buộc)</label><input type="text" id="manual-word" class="edit-input word-input" placeholder="VD: Rebellion"></div>
+                        <div class="manual-field"><label>Phiên âm</label><input type="text" id="manual-phonetic" class="edit-input" placeholder="VD: /rɪˈbel.jən/"></div>
+                        <div class="manual-field"><label>Nghĩa của từ (Bắt buộc)</label><input type="text" id="manual-meaning" class="edit-input" placeholder="VD: Sự nổi loạn"></div>
+                        <div class="manual-field"><label>Ví dụ minh họa (Tốt cho Context Match)</label><input type="text" id="manual-example" class="edit-input" placeholder="VD: The pink rebellion has begun."></div>
                     </div>
                     <button class="btn btn-primary" style="padding: 14px 32px; font-size: 16px; margin-top: 10px;" onclick="addWordManual()"><i class="fa-solid fa-plus"></i> Đưa vào Album</button>
                 </div>
@@ -833,7 +830,7 @@
 
         const mascotTexts = {
             'act-1': "Sáng cuối tuần chill chill Hà Nội mà vẫn chăm chỉ cày từ vựng hả? Đỉnh chóp! Nhớ lướt xem web mượt hông nha 💅",
-            'act-2': "Cay mấy app thu phí đắt vl 💸. Tiền đó quét mã MoMo đi ăn bún chả sướng hơn =)))",
+            'act-2': "Cay mấy app thu phí đắt vl 💸. Tiền đó quét mã đi ăn bún chả sướng hơn =)))",
             'act-3': "Đồ free nhưng bao mượt! Vừa luyện từ, vừa luyện múa phím chuẩn bị mốt làm sếp nha 😎",
             'act-4': "Đến cửa rồi! Bấm cái nút bự chà bá trên kia để khởi động hệ thống nào 🚀",
             'dashboard': "Hi my Bro! Chuỗi streak đang cháy kìa, rớt 1 ngày là tui dỗi đó 💅",
@@ -973,7 +970,13 @@
             document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
             const targetView = document.getElementById(`view-${viewName}`); if (targetView) targetView.classList.add('active');
             const body = document.body; body.classList.remove('is-landing', 'zen-mode', 'is-dark-act');
-            const scrollArea = document.getElementById('main-scroll-area'); if(scrollArea) scrollArea.scrollTop = 0;
+            
+            // Lệnh bảo hiểm (Failsafe) mở khóa scroll
+            const scrollArea = document.getElementById('main-scroll-area'); 
+            if(scrollArea) {
+                scrollArea.scrollTop = 0;
+                scrollArea.style.overflowY = 'auto';
+            }
 
             if (viewName === 'landing') { body.classList.add('is-landing'); } 
             else if (viewName.startsWith('study-') || viewName.startsWith('game-')) { body.classList.add('zen-mode'); } 
