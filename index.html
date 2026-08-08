@@ -57,11 +57,9 @@
         body.zen-mode #sidebar, body.zen-mode .mobile-header, body.zen-mode .mobile-nav { display: none !important; }
         body.zen-mode .main-content { padding: 0 !important; display: block; }
 
-        /* REVEAL ANIMATIONS */
         .reveal-up { opacity: 0; transform: translateY(40px); transition: 0.8s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform, opacity; }
         .reveal-up.active { opacity: 1; transform: translateY(0); }
 
-        /* EXIT BUTTON */
         .btn-exit-game { position: fixed; top: 20px; left: 20px; z-index: 9999; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); border: 2px solid var(--danger); color: var(--danger); padding: 12px 20px; border-radius: var(--radius-pill); font-weight: 800; font-size: 15px; cursor: pointer; box-shadow: 0 10px 25px rgba(239, 68, 68, 0.2); transition: var(--transition); display: flex; align-items: center; gap: 8px; }
         [data-theme="dark"] .btn-exit-game { background: rgba(15, 23, 42, 0.85); }
         .btn-exit-game:hover { background: var(--danger); color: white; transform: scale(1.05); }
@@ -81,7 +79,6 @@
         .story-act { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 6%; text-align: center; position: relative; opacity: 0; transform: translateY(60px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1); z-index: 10; }
         .story-act.is-visible { opacity: 1; transform: translateY(0); }
 
-        /* Act 1 - Redesigned to be FULL and ACADEMIC */
         .hero-layout { display: flex; align-items: center; justify-content: space-between; max-width: 1200px; width: 100%; gap: 40px; text-align: left; }
         .hero-text-side { flex: 1; }
         .hero-title { font-size: clamp(3rem, 6vw, 5.5rem); font-weight: 900; letter-spacing: -2px; line-height: 1.1; margin: 0 0 20px 0; color: var(--text-main); }
@@ -89,8 +86,6 @@
         .hero-desc { font-size: 1.25rem; color: var(--text-muted); font-weight: 600; max-width: 600px; margin: 0 0 40px 0; line-height: 1.6; border-left: 4px solid var(--primary); padding-left: 20px; }
         
         .hero-visual-side { flex: 1; display: flex; justify-content: center; position: relative; }
-        
-        /* Giant Mascot on Landing */
         .giant-mascot-landing { width: 450px; height: 450px; border-radius: var(--radius-xl); background: var(--primary-light); border: 8px solid var(--bg-card); box-shadow: var(--shadow-lg); object-fit: cover; animation: floatMascotHero 6s ease-in-out infinite; position: relative; z-index: 2; }
         .scene-3d-bg { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%; height: 100%; z-index: 1; pointer-events: none; }
         .cube-3d-bg { width: 300px; height: 300px; background: rgba(244, 63, 94, 0.1); border-radius: var(--radius-xl); position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(45deg); border: 2px solid var(--primary); animation: spinBg 20s linear infinite; }
@@ -101,7 +96,6 @@
         .scroll-down { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); font-size: 24px; color: var(--text-muted); animation: bounce 2s infinite; opacity: 0.6; }
         @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); } 40% { transform: translateY(-10px) translateX(-50%); } 60% { transform: translateY(-5px) translateX(-50%); } }
 
-        /* Act 2 */
         body.is-dark-act { background-color: #050505; color: #ffffff; }
         .is-dark-act .text-muted-override { color: #94a3b8 !important; }
         .glitch-text { position: relative; font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 900; letter-spacing: -1.5px; line-height: 1.2; max-width: 900px; margin: 0 auto 30px auto; color: #fff; }
@@ -110,7 +104,6 @@
         .glitch-text::after { left: -3px; text-shadow: -2px 0 #0ea5e9; animation: glitch-anim 3s infinite linear alternate-reverse; }
         @keyframes glitch-anim { 0% { clip-path: inset(20px 0 80px 0); } 20% { clip-path: inset(60px 0 10px 0); } 40% { clip-path: inset(10px 0 50px 0); } 60% { clip-path: inset(80px 0 5px 0); } 80% { clip-path: inset(30px 0 40px 0); } 100% { clip-path: inset(50px 0 30px 0); } }
 
-        /* Act 3 & 4 (unchanged logic, CSS preserved) */
         .bento-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1100px; width: 100%; margin: 60px auto 0 auto; text-align: left; }
         .bento-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 40px; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; min-height: 250px; }
         body:not(.is-dark-act) .bento-card { background: var(--bg-card); border-color: var(--border-strong); box-shadow: var(--shadow-md); }
@@ -123,7 +116,7 @@
         .btn-giant-pulse:hover { transform: scale(1.1); animation: none; box-shadow: 0 0 60px rgba(244, 63, 94, 0.8); }
         @keyframes heartbeat { 0% { transform: scale(1); } 15% { transform: scale(1.05); } 30% { transform: scale(1); } 45% { transform: scale(1.05); } 100% { transform: scale(1); } }
 
-        /* ================= MASCOT "PINK ANH VŨ" (FLOATING WIDGET) ================= */
+        /* ================= MASCOT ================= */
         .mascot-wrapper { position: fixed; bottom: 30px; right: 30px; z-index: 2000; display: flex; align-items: flex-end; gap: 15px; pointer-events: none; transition: opacity 0.5s ease; }
         .mascot-bubble { background: var(--bg-card); border: 2px solid var(--primary); padding: 16px 20px; border-radius: 24px 24px 0 24px; box-shadow: 0 15px 30px rgba(244, 63, 94, 0.15); max-width: 280px; pointer-events: auto; position: relative; transform-origin: bottom right; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .mascot-bubble::after { content: ''; position: absolute; bottom: -2px; right: -12px; width: 20px; height: 20px; background: var(--bg-card); border-bottom: 2px solid var(--primary); border-right: 2px solid var(--primary); border-bottom-right-radius: 16px; transform: skewX(30deg); }
@@ -146,14 +139,12 @@
         @keyframes avatarShake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
 
         /* ================= FIXED SIDEBAR ================= */
-        /* Sửa lỗi bị khuất bằng cách phân lớp cuộn */
         #sidebar { width: 280px; min-width: 280px; background: var(--bg-sidebar); border-right: 1px solid var(--border-light); display: flex; flex-direction: column; z-index: 90; transition: var(--transition); position: relative; height: 100vh; }
         #sidebar.collapsed { width: 84px; min-width: 84px; }
         
         .sidebar-header { padding: 28px 20px 0 20px; position: relative; }
         #sidebar.collapsed .sidebar-header { padding: 28px 14px 0 14px; }
         
-        /* THE FIX: Nút nằm hoàn toàn ngoài khu vực cuộn */
         .sidebar-toggle { position: absolute; right: -14px; top: 32px; width: 28px; height: 28px; border-radius: 50%; background: var(--primary); color: var(--text-inverse); border: 3px solid var(--bg-body); cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-sm); transition: var(--transition); z-index: 100; }
         .sidebar-toggle:hover { transform: scale(1.15); }
         #sidebar.collapsed .sidebar-toggle { transform: rotate(180deg); }
@@ -179,7 +170,7 @@
 
         .mobile-header, .mobile-nav { display: none; }
 
-        /* ================= THE ACADEMIC HUD (DASHBOARD & ALBUMS) ================= */
+        /* ================= THE ACADEMIC HUD ================= */
         .view-section { display: none; animation: slideUpApp 0.4s ease-out forwards; }
         .view-section.active { display: block; }
         @keyframes slideUpApp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
@@ -195,17 +186,14 @@
         .btn-outline { background: var(--bg-card); border: 2px solid var(--border-strong); color: var(--text-main); }
         .btn-outline:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
 
-        /* Jumbo Hero Dashboard */
         .jumbo-card { background: var(--bg-card); border-radius: var(--radius-xl); border: 1px solid var(--border-light); padding: 0; box-shadow: var(--shadow-sm); margin-bottom: 32px; display: flex; overflow: hidden; align-items: center; }
         .jumbo-content { flex: 1; padding: 40px 50px; z-index: 2; }
         .jumbo-content h1 { font-size: 42px; font-weight: 900; margin: 0 0 10px 0; color: var(--text-main); letter-spacing: -1px; }
         .jumbo-content p { font-size: 18px; color: var(--text-muted); font-weight: 500; margin: 0 0 30px 0; line-height: 1.6; }
         .jumbo-visual { width: 350px; background: var(--primary-light); display: flex; justify-content: center; align-items: flex-end; position: relative; height: 100%; min-height: 300px; }
         .jumbo-visual img { width: 90%; height: auto; object-fit: contain; position: absolute; bottom: 0; right: 20px; filter: drop-shadow(-10px 10px 20px rgba(244,63,94,0.2)); }
-        
         .streak-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--game-yellow); color: white; padding: 6px 16px; border-radius: var(--radius-pill); font-weight: 900; font-size: 14px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4); }
 
-        /* Academic Stat Grid */
         .bento-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-bottom: 32px; }
         .stat-box { padding: 30px; border-radius: var(--radius-lg); background: var(--bg-card); border: 1px solid var(--border-light); box-shadow: var(--shadow-sm); display: flex; flex-direction: column; justify-content: space-between; }
         .stat-box .top-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
@@ -213,38 +201,27 @@
         .stat-box i { font-size: 24px; color: var(--primary); opacity: 0.8; }
         .stat-box h2 { font-size: 48px; font-weight: 900; color: var(--text-main); margin: 0; letter-spacing: -2px; }
 
-        /* BREAKTHROUGH ALBUM VAULT */
         .album-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
-        
-        /* Ghost Card for Adding Album */
         .ghost-card { border: 3px dashed var(--border-strong); background: transparent; border-radius: var(--radius-lg); display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 200px; cursor: pointer; transition: var(--transition); color: var(--text-muted); }
         .ghost-card:hover { border-color: var(--primary); background: var(--primary-light); color: var(--primary); transform: translateY(-4px); }
         .ghost-card i { font-size: 40px; margin-bottom: 12px; }
         .ghost-card h3 { font-size: 18px; font-weight: 800; margin: 0; }
 
-        /* 3D Hover Album Card */
         .album-card { background: var(--bg-card); border: 1px solid var(--border-light); border-radius: var(--radius-lg); padding: 30px; box-shadow: var(--shadow-sm); cursor: pointer; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s; display: flex; flex-direction: column; min-height: 200px; position: relative; overflow: hidden; }
         .album-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); border-color: var(--primary-glow); }
-        
         .album-card.gold-album { background: linear-gradient(135deg, var(--gold-light) 0%, var(--bg-card) 100%); border-color: var(--gold); box-shadow: 0 10px 30px var(--gold-glow); }
         [data-theme="dark"] .album-card.gold-album { background: linear-gradient(135deg, #452b03, var(--bg-card)); }
-        
         .album-title-group { flex: 1; z-index: 2; position: relative; }
         .album-card h3 { margin: 0 0 8px 0; color: var(--text-main); font-size: 26px; font-weight: 900; letter-spacing: -0.5px; line-height: 1.2; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         .gold-album h3 { color: var(--gold); }
         .album-card p { margin: 0; font-size: 14px; font-weight: 700; color: var(--text-muted); display: flex; align-items: center; gap: 6px; }
-        
-        /* Master Progress Bar */
         .mastery-track { width: 100%; height: 8px; background: var(--border-light); border-radius: 4px; margin-top: 20px; overflow: hidden; position: relative; z-index: 2; }
         .mastery-fill { height: 100%; background: var(--primary); border-radius: 4px; transition: width 0.5s ease-out; }
         .gold-album .mastery-fill { background: var(--gold); }
-        
-        /* Watermark Icon */
         .album-watermark { position: absolute; right: -20px; bottom: -20px; font-size: 120px; opacity: 0.04; color: var(--text-main); z-index: 1; transform: rotate(-15deg); pointer-events: none; transition: 0.3s; }
         .album-card:hover .album-watermark { transform: rotate(0deg) scale(1.1); opacity: 0.08; color: var(--primary); }
         .gold-album .album-watermark { color: var(--gold); opacity: 0.1; }
 
-        /* LOBBY CARDS (Clear Functions) */
         .lobby-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 24px; }
         .lobby-card { background: var(--bg-card); border: 2px solid var(--border-light); border-radius: var(--radius-lg); padding: 28px 24px; text-align: left; cursor: pointer; transition: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; flex-direction: column; min-height: 200px; box-shadow: var(--shadow-sm); position: relative; overflow: hidden; }
         .lobby-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-md); }
@@ -259,20 +236,31 @@
         .c-quiz:hover { border-color: var(--game-red); } .c-quiz:hover .lobby-card-icon { background: var(--game-red); color: white; } .c-quiz:hover .lobby-action-text { opacity: 1; color: var(--game-red); }
         .c-ctx:hover { border-color: var(--game-yellow); } .c-ctx:hover .lobby-card-icon { background: var(--game-yellow); color: white; } .c-ctx:hover .lobby-action-text { opacity: 1; color: var(--game-yellow); }
 
-        /* WORD ROW */
+        .ui-card { background: var(--bg-card); border-radius: var(--radius-lg); border: 1px solid var(--border-light); padding: 28px; box-shadow: var(--shadow-sm); margin-bottom: 24px; transition: var(--transition); }
+        .ui-card:hover { border-color: var(--border-strong); box-shadow: var(--shadow-md); }
+
+        /* WORD ROW & INLINE EDITING */
         .word-card-detailed { background: var(--bg-card); border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 22px 26px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; transition: var(--transition); box-shadow: var(--shadow-sm); }
         .word-card-detailed:hover { border-color: var(--primary); transform: translateX(4px); box-shadow: var(--shadow-md); }
-        .word-main-info { flex: 1; }
+        .word-main-info { flex: 1; width: 100%; }
         .word-main-info .top-line { display: flex; align-items: baseline; gap: 12px; margin-bottom: 6px; }
         .word-main-info h3 { font-size: 20px; font-weight: 900; color: var(--primary); margin: 0; }
         .word-main-info .phonetic { font-family: 'JetBrains Mono', monospace; font-size: 15px; color: var(--text-muted); font-weight: 700; background: var(--bg-body); padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border-light); }
         .word-main-info .meaning { font-size: 17px; font-weight: 800; margin-bottom: 10px; color: var(--text-main); }
         .word-main-info .example { font-size: 14px; font-style: italic; color: var(--text-muted); background: var(--bg-body); padding: 10px 14px; border-radius: 8px; border-left: 3px solid var(--primary); }
+        
+        .edit-input { width: 100%; padding: 10px 14px; border-radius: 8px; border: 2px solid var(--border-strong); margin-bottom: 8px; font-family: inherit; font-size: 15px; outline: none; background: var(--bg-body); color: var(--text-main); transition: 0.2s; font-weight: 600; }
+        .edit-input:focus { border-color: var(--primary); background: var(--bg-card); box-shadow: 0 0 0 3px var(--primary-glow); }
+        .edit-input.word-input { font-size: 20px; font-weight: 900; color: var(--primary); }
 
         .pagination-bar { display: flex; justify-content: center; align-items: center; gap: 16px; margin-top: 30px; }
         .page-control-btn { padding: 10px 18px; border-radius: 12px; border: 2px solid var(--border-strong); background: var(--bg-card); font-weight: 800; font-size: 14px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: var(--transition); }
         .page-control-btn:hover:not(:disabled) { background: var(--primary-light); border-color: var(--primary); color: var(--primary); }
         .page-control-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+        /* MANUAL INPUT FORM */
+        .manual-input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+        .manual-field label { display: block; font-size: 13px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.5px; }
 
         /* GAME JUICE & VFX */
         .fc-container { max-width: 800px; margin: 0 auto; height: 480px; perspective: 1500px; cursor: pointer; position: relative; }
@@ -280,31 +268,27 @@
         .fc-card.flipped { transform: rotateY(180deg); }
         .fc-card.swipe-left { transform: translateX(-150%) rotate(-15deg); opacity: 0; pointer-events: none; }
         .fc-card.swipe-right { transform: translateX(150%) rotate(15deg); opacity: 0; pointer-events: none; }
-        
         .fc-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; background: var(--bg-card); border-radius: var(--radius-xl); border: 2px solid var(--border-strong); box-shadow: var(--shadow-md); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 48px; text-align: center; overflow: hidden; }
+        .fc-face::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(to bottom right, rgba(255,255,255,0.8), rgba(255,255,255,0)); transform: rotate(30deg) translateY(-50%); pointer-events: none; opacity: 0.5; }
+        [data-theme="dark"] .fc-face::before { background: linear-gradient(to bottom right, rgba(255,255,255,0.1), rgba(255,255,255,0)); }
         .fc-face.back { transform: rotateY(180deg); background: var(--primary-light); border-color: var(--primary); }
         .fc-word { font-size: 64px; font-weight: 900; color: var(--primary); margin: 0 0 12px 0; letter-spacing: -2px; }
         .fc-phonetic { font-family: 'JetBrains Mono', monospace; font-size: 22px; color: var(--text-muted); font-weight: 700; margin-bottom: 16px; }
         .fc-meaning { font-size: 36px; font-weight: 800; margin: 0 0 16px 0; }
         .fc-example { font-size: 18px; font-style: italic; color: var(--text-muted); line-height: 1.6; }
-
         .audio-btn { position: absolute; top: 24px; right: 24px; width: 44px; height: 44px; border-radius: 50%; background: var(--bg-body); color: var(--primary); border: 1px solid var(--border-light); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: var(--transition); }
         .audio-btn:hover { transform: scale(1.15); background: var(--primary); color: var(--text-inverse); border-color: var(--primary); }
 
-        /* Typing Frenzy & Shake */
         .typing-wrapper { max-width: 650px; margin: 0 auto; text-align: center; padding: 50px 40px; border-radius: var(--radius-xl); background: var(--bg-card); border: 1px solid var(--border-light); box-shadow: var(--shadow-sm); transition: 0.3s; position: relative; }
         .typing-wrapper.error-shake { animation: errShake 0.4s cubic-bezier(.36,.07,.19,.97) both; border: 2px solid var(--danger); box-shadow: 0 0 30px rgba(239,68,68,0.3); }
         .typing-wrapper.frenzy-mode { border: 2px solid var(--game-yellow); box-shadow: 0 0 40px var(--gold-glow), inset 0 0 20px var(--gold-glow); animation: pulseFrenzy 1s infinite alternate; }
-        
         .combo-text { position: absolute; top: -30px; right: -20px; font-size: 32px; font-weight: 900; color: var(--game-yellow); transform: rotate(10deg); opacity: 0; text-shadow: 0 4px 10px rgba(245, 158, 11, 0.5); transition: 0.3s; pointer-events: none; }
         .combo-text.active { opacity: 1; transform: rotate(10deg) scale(1.2); }
         .floating-xp { position: absolute; font-size: 24px; font-weight: 900; color: var(--success); pointer-events: none; animation: floatUpXP 1s ease-out forwards; z-index: 100; text-shadow: 0 2px 10px rgba(16,185,129,0.5); }
-        
         @keyframes floatUpXP { 0% { transform: translateY(0) scale(1); opacity: 1; } 100% { transform: translateY(-60px) scale(1.5); opacity: 0; } }
         @keyframes errShake { 10%, 90% { transform: translate3d(-4px, 0, 0); } 20%, 80% { transform: translate3d(6px, 0, 0); } 30%, 50%, 70% { transform: translate3d(-8px, 0, 0); } 40%, 60% { transform: translate3d(8px, 0, 0); } }
         @keyframes pulseFrenzy { from { box-shadow: 0 0 20px var(--gold-glow), inset 0 0 10px var(--gold-glow); } to { box-shadow: 0 0 50px rgba(245, 158, 11, 0.8), inset 0 0 30px rgba(245, 158, 11, 0.5); } }
 
-        /* Match / Quiz / Context UI (Optimized logic kept) */
         .match-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; max-width: 1000px; margin: 0 auto; }
         .match-tile { background: var(--bg-card); border: 2px solid var(--border-strong); border-bottom-width: 8px; border-radius: var(--radius-lg); padding: 24px 16px; text-align: center; font-weight: 900; font-size: 20px; cursor: pointer; transition: 0.15s ease-out; user-select: none; display: flex; align-items: center; justify-content: center; min-height: 120px; color: var(--text-main); position: relative; box-shadow: var(--shadow-sm); }
         .match-tile:active { border-bottom-width: 2px; transform: translateY(6px); box-shadow: none; }
@@ -320,7 +304,6 @@
         .quiz-tile::before { content: attr(data-key); position: absolute; top: 10px; left: 15px; font-size: 14px; opacity: 0.6; font-family: 'JetBrains Mono'; background: rgba(0,0,0,0.3); padding: 2px 8px; border-radius: 6px; }
         .quiz-c1 { background: var(--game-red); } .quiz-c2 { background: var(--game-blue); } .quiz-c3 { background: var(--game-yellow); } .quiz-c4 { background: var(--game-green); }
         .quiz-tile.error { background: var(--danger); animation: errShake 0.4s ease; filter: grayscale(0.8); }
-        
         .timer-track { width: 100%; height: 16px; background: var(--border-strong); border-radius: 8px; margin-bottom: 30px; overflow: hidden; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); }
         .timer-fill { height: 100%; background: var(--success); width: 100%; transition: width 0.1s linear, background-color 0.3s; }
         .timer-fill.danger-blinking { background: var(--game-red); animation: dangerBlink 0.5s infinite alternate; }
@@ -331,7 +314,6 @@
         .context-blank { display: inline-block; min-width: 140px; border-bottom: 3px dashed var(--border-strong); padding: 0 10px; color: transparent; text-align: center; margin: 0 6px; cursor: pointer; transition: 0.2s; border-radius: 8px 8px 0 0; }
         .context-blank.active { border-color: var(--primary); background: var(--primary-light); }
         .context-blank.filled { border: 2px solid var(--success); background: var(--success-light); color: var(--success); font-weight: 900; border-radius: 8px; box-shadow: 0 0 15px rgba(16,185,129,0.3); }
-        
         .context-word-bank { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(15px); padding: 20px; border-top: 1px solid var(--border-light); display: flex; gap: 12px; overflow-x: auto; z-index: 1000; justify-content: center; box-shadow: 0 -10px 40px rgba(0,0,0,0.08); }
         [data-theme="dark"] .context-word-bank { background: rgba(15,23,42,0.95); border-color: var(--border-strong); }
         .context-chip { background: var(--bg-body); border: 2px solid var(--border-strong); padding: 14px 28px; border-radius: var(--radius-pill); font-weight: 900; font-size: 16px; cursor: pointer; transition: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 6px 0 var(--border-strong); }
@@ -340,7 +322,6 @@
         .context-chip.used { opacity: 0; pointer-events: none; transform: scale(0); }
         @keyframes rubberBand { from { transform: scale3d(1, 1, 1); } 30% { transform: scale3d(1.05, 0.95, 1); } 40% { transform: scale3d(0.95, 1.05, 1); } 50% { transform: scale3d(1.02, 0.98, 1); } 65% { transform: scale3d(0.98, 1.02, 1); } 75% { transform: scale3d(1.01, 0.99, 1); } to { transform: scale3d(1, 1, 1); } }
 
-        /* Level Up Overlay */
         .level-up-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.9); z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: 0.5s; backdrop-filter: blur(10px); }
         .level-up-overlay.active { opacity: 1; pointer-events: auto; }
         .level-up-overlay h1 { font-size: 80px; color: var(--gold); font-weight: 900; text-shadow: 0 0 40px var(--gold-glow); margin: 0 0 20px 0; transform: scale(0.5); transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
@@ -359,6 +340,7 @@
             .jumbo-card { flex-direction: column; }
             .jumbo-visual { width: 100%; min-height: 250px; }
             .jumbo-visual img { width: 60%; right: 50%; transform: translateX(50%); }
+            .manual-input-grid { grid-template-columns: 1fr; }
         }
 
         @media (max-width: 768px) {
@@ -368,9 +350,9 @@
             .mobile-nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: var(--text-muted); font-size: 11px; font-weight: 700; cursor: pointer; }
             .mobile-nav-item.active { color: var(--primary); }
             
-            .main-content { padding: 80px 16px 85px 16px; height: calc(100vh - 65px); }
-            .container { padding: 0; }
-            body.zen-mode .main-content { padding: 70px 16px 120px 16px !important; }
+            .main-content { height: calc(100vh - 65px); }
+            .container { padding: 80px 16px 85px 16px; }
+            body.zen-mode .container { padding: 70px 16px 120px 16px !important; }
             
             .hero-title { font-size: 3.2rem; }
             .glitch-text { font-size: 2.2rem; }
@@ -379,18 +361,17 @@
             .fc-container { height: 400px; }
             .fc-word { font-size: 42px; }
             .fc-meaning { font-size: 26px; }
-            
             .quiz-grid { grid-template-columns: 1fr; }
             .quiz-tile::before { display: none; }
-            
             .context-word-bank { padding: 12px; justify-content: flex-start; }
             .context-chip { font-size: 14px; padding: 10px 16px; white-space: nowrap; box-shadow: 0 4px 0 var(--border-strong); }
             .btn-exit-game { top: 15px; left: 15px; padding: 8px 16px; font-size: 13px; }
-
             .mascot-wrapper { bottom: 20px; right: 20px; }
             .mascot-avatar { width: 60px; height: 60px; }
             .mascot-bubble { max-width: 220px; }
             .landing-nav { flex-direction: column; gap: 10px; align-items: flex-start; }
+            .word-card-detailed { flex-direction: column; align-items: stretch; }
+            .word-card-detailed > div:last-child { justify-content: flex-end; width: 100%; margin-top: 10px; }
         }
     </style>
 </head>
@@ -414,13 +395,12 @@
         <div class="mobile-nav-item" onclick="nav('settings')"><i class="fa-solid fa-gear"></i><span>Cài đặt</span></div>
     </div>
 
-    <!-- DESKTOP SIDEBAR (FIXED BUG) -->
+    <!-- DESKTOP SIDEBAR -->
     <aside id="sidebar">
         <div class="sidebar-header">
             <button class="sidebar-toggle" onclick="toggleSidebar()"><i class="fa-solid fa-chevron-left"></i></button>
             <div class="brand-logo"><i class="fa-solid fa-crown"></i><span class="logo-text">PINK VOCAB</span></div>
         </div>
-        
         <div class="sidebar-scroll-area">
             <div class="user-widget">
                 <div class="user-widget-info"><span>Cấp độ hệ thống</span><strong id="user-level-text">Level 1</strong></div>
@@ -440,7 +420,7 @@
     <!-- WORKSPACE -->
     <main class="main-content" id="main-scroll-area">
         
-        <!-- MASCOT: PINK ANH VŨ (OMNIPRESENT) -->
+        <!-- MASCOT -->
         <div class="mascot-wrapper" id="pink-mascot">
             <div class="mascot-bubble" id="mascot-bubble" onclick="openBubble()">
                 <span class="mascot-text" id="mascot-text"></span><span class="typing-cursor">|</span>
@@ -452,15 +432,13 @@
 
         <div class="container">
             
-            <!-- ================= THE PINK REBELLION: LANDING PAGE ================= -->
+            <!-- LANDING PAGE -->
             <section id="view-landing" class="view-section" style="padding:0;">
                 <div class="landing-wrapper" id="landing-wrapper">
-                    
                     <div class="ambient-particles">
                         <div class="particle" style="width:300px; height:300px; background:var(--primary); top:10%; left:20%; animation-duration:12s;"></div>
                         <div class="particle" style="width:400px; height:400px; background:var(--secondary); top:60%; right:10%; animation-duration:18s; animation-delay:-5s;"></div>
                     </div>
-
                     <header class="landing-nav" id="cinematic-nav">
                         <div class="brand-logo" style="margin:0;"><i class="fa-solid fa-crown"></i> PINK VOCAB</div>
                         <div style="display:flex; gap:12px; align-items:center;">
@@ -469,7 +447,6 @@
                         </div>
                     </header>
 
-                    <!-- ACT 1: ACADEMIC HERO -->
                     <div class="story-act act-1" style="padding-top: 120px;">
                         <div class="hero-layout">
                             <div class="hero-text-side">
@@ -484,13 +461,11 @@
                         <div class="scroll-down"><i class="fa-solid fa-chevron-down"></i></div>
                     </div>
 
-                    <!-- ACT 2: PAIN POINT -->
                     <div class="story-act act-2">
                         <h1 class="glitch-text" data-text="Nói thật... Mình tạo ra web này vì cay mấy app ngoài kia thu phí đắt vl 💸">Nói thật... Mình tạo ra web này vì cay mấy app ngoài kia thu phí đắt vl 💸</h1>
-                        <p style="font-size: 20px; font-weight: 600;" class="text-muted-override">Tiền đó quét mã MoMo đi ăn bún chả có phải sướng hơn không =)))</p>
+                        <p style="font-size: 20px; font-weight: 600;" class="text-muted-override">Tiền đó quét mã đi ăn bún chả có phải sướng hơn không =)))</p>
                     </div>
 
-                    <!-- ACT 3: BENTO GRID -->
                     <div class="story-act act-3">
                         <div style="text-align: center;">
                             <h2 style="font-size: 42px; font-weight: 900; margin: 0 0 10px 0;">Thế nên mình code <span style="color:var(--primary);">Trạm Điều Khiển này!</span></h2>
@@ -514,8 +489,8 @@
                             <div class="bento-card">
                                 <div class="bento-card-content">
                                     <i class="fa-solid fa-robot" style="color:var(--game-blue);"></i>
-                                    <h3>AI Nạp Liền Tay</h3>
-                                    <p>Không nhập tay thủ công. Copy form có sẵn, hỏi AI và dán thẳng vào App. Nạp 100 từ vựng trong 3 giây.</p>
+                                    <h3>Nạp Nhanh Chóng</h3>
+                                    <p>Hỗ trợ gõ tay siêu xịn, hoặc dùng AI, file Excel để nạp 100 từ vựng trong 3 giây.</p>
                                 </div>
                             </div>
                             <div class="bento-card">
@@ -528,27 +503,23 @@
                         </div>
                     </div>
 
-                    <!-- ACT 4: PORTAL -->
                     <div class="story-act act-4">
                         <img src="https://api.dicebear.com/7.x/notionists/svg?seed=PinkAnhVuCool&backgroundColor=10b981" style="width: 100px; height: 100px; border-radius:50%; margin-bottom:10px; border:4px solid var(--success); box-shadow: 0 10px 20px var(--success-light);" alt="Pink Anh Vũ Cool">
                         <h2 style="font-size:48px; font-weight:900; margin:0 0 10px 0;">Sẵn sàng bứt phá chưa?</h2>
                         <p style="font-size: 20px; font-weight: 600; color: var(--text-muted); margin:0;">Bấm vô cái nút bự chà bá này để khởi động hệ thống với mình nào 🚀</p>
-                        
                         <button class="btn-giant-pulse" onclick="enterAppCinematic()">
                             VÀO ỨNG DỤNG NGAY <i class="fa-solid fa-rocket"></i>
                         </button>
                     </div>
-
                 </div>
             </section>
 
-            <!-- ================= ACADEMIC DASHBOARD ================= -->
+            <!-- DASHBOARD -->
             <section id="view-dashboard" class="view-section">
-                <!-- Jumbo Banner with Mascot -->
                 <div class="jumbo-card">
                     <div class="jumbo-content">
                         <div class="streak-badge"><i class="fa-solid fa-fire"></i> Chuỗi <span id="streak-banner">1</span> Ngày Liên Tiếp</div>
-                        <h1>Hi my Bro! 👋</h1>
+                        <h1>Chào Hồng Anh! 👋</h1>
                         <p>Trạm điều khiển học thuật đã sẵn sàng. Hôm nay bạn muốn cày từ vựng chủ đề nào?</p>
                         <div style="display:flex; gap:12px; flex-wrap:wrap;">
                             <button class="btn btn-primary" style="font-size: 16px; padding: 14px 28px;" onclick="nav('albums')"><i class="fa-solid fa-bolt"></i> Tiếp tục học ngay</button>
@@ -581,7 +552,7 @@
                 <div class="album-grid" id="dash-recent-albums"></div>
             </section>
 
-            <!-- ALBUMS LIST (THE VAULT) -->
+            <!-- ALBUMS -->
             <section id="view-albums" class="view-section">
                 <div class="page-header">
                     <div>
@@ -592,7 +563,7 @@
                 <div class="album-grid" id="albums-list-container"></div>
             </section>
 
-            <!-- SINGLE ALBUM LOBBY -->
+            <!-- SINGLE ALBUM -->
             <section id="view-single-album" class="view-section">
                 <button class="btn btn-outline" style="margin-bottom: 20px;" onclick="nav('albums')"><i class="fa-solid fa-arrow-left"></i> Quay lại kho</button>
 
@@ -610,7 +581,6 @@
                     
                     <h4 style="margin:0; color:var(--text-main); font-size:16px; font-weight: 800; display:flex; align-items:center; gap:8px;"><i class="fa-solid fa-crosshairs" style="color:var(--primary);"></i> Chế độ Huấn luyện</h4>
                     
-                    <!-- LOBBY CARDS -->
                     <div class="lobby-grid">
                         <div class="lobby-card c-flash" onclick="startStudy('flashcard')">
                             <div class="lobby-card-icon"><i class="fa-solid fa-layer-group"></i></div>
@@ -633,26 +603,60 @@
                         <div class="lobby-card c-quiz" onclick="startAlbumGame('quiz')">
                             <div class="lobby-card-icon"><i class="fa-solid fa-skull"></i></div>
                             <h4>Sinh Tồn Quiz</h4>
-                            <p>Áp lực thời gian đếm ngược đập thình thịch. Chọn đúng hoặc chết!</p>
+                            <p>Áp lực đếm ngược đập thình thịch. Chọn đúng hoặc chết!</p>
                             <div class="lobby-action-text">Bắt đầu <i class="fa-solid fa-arrow-right"></i></div>
                         </div>
                         <div class="lobby-card c-ctx" onclick="startAlbumGame('context')">
                             <div class="lobby-card-icon"><i class="fa-solid fa-puzzle-piece"></i></div>
                             <h4>Context 5+5</h4>
-                            <p>Kéo thả từ vựng vào ngữ cảnh câu ví dụ. Kéo sai sẽ bị bật ngược lại.</p>
+                            <p>Kéo thả từ vựng vào câu ví dụ. Kéo sai sẽ bị bật ngược lại.</p>
                             <div class="lobby-action-text">Bắt đầu <i class="fa-solid fa-arrow-right"></i></div>
                         </div>
                     </div>
                 </div>
 
                 <div class="page-header"><h3 style="font-size: 20px; font-weight: 800; margin: 0;">Quản trị Dữ liệu Album</h3></div>
+                
+                <!-- NEW TABS -->
                 <div style="display: flex; gap: 12px; margin-bottom: 24px; flex-wrap:wrap;">
-                    <button class="btn btn-outline" style="border-radius: var(--radius-pill);" onclick="switchTab('word-list')"><i class="fa-solid fa-list"></i> Danh sách từ</button>
-                    <button class="btn btn-outline" style="border-radius: var(--radius-pill);" onclick="switchTab('ai')"><i class="fa-solid fa-robot"></i> AI Import (Nhanh)</button>
-                    <button class="btn btn-outline" style="border-radius: var(--radius-pill);" onclick="switchTab('import')"><i class="fa-solid fa-file-excel"></i> File Excel/Word</button>
+                    <button class="btn btn-outline tab-btn active" id="btn-tab-word-list" style="border-radius: var(--radius-pill);" onclick="switchTab('word-list')"><i class="fa-solid fa-list"></i> Quản lý Từ vựng</button>
+                    <button class="btn btn-outline tab-btn" id="btn-tab-manual" style="border-radius: var(--radius-pill);" onclick="switchTab('manual')"><i class="fa-solid fa-pen-nib"></i> Thêm Thủ công</button>
+                    <button class="btn btn-outline tab-btn" id="btn-tab-ai" style="border-radius: var(--radius-pill);" onclick="switchTab('ai')"><i class="fa-solid fa-robot"></i> AI Import</button>
+                    <button class="btn btn-outline tab-btn" id="btn-tab-import" style="border-radius: var(--radius-pill);" onclick="switchTab('import')"><i class="fa-solid fa-file-excel"></i> File Excel/Word</button>
                 </div>
 
-                <div id="tab-word-list"><div id="words-playlist-container"></div><div class="pagination-bar" id="album-pagination"></div></div>
+                <div id="tab-word-list">
+                    <div id="words-playlist-container"></div>
+                    <div class="pagination-bar" id="album-pagination"></div>
+                </div>
+
+                <!-- NEW TAB: THÊM THỦ CÔNG -->
+                <div id="tab-manual" style="display: none;" class="ui-card">
+                    <div style="margin-bottom: 24px;">
+                        <h3 style="margin:0 0 8px 0; font-size:24px; color:var(--primary);"><i class="fa-solid fa-hammer"></i> Xưởng Chế Tạo Từ Vựng</h3>
+                        <p style="margin:0; color:var(--text-muted); font-size:14px;">Gõ tay cẩn thận từng từ sẽ giúp não bộ ghi nhớ sâu hơn 30% đấy!</p>
+                    </div>
+                    
+                    <div class="manual-input-grid">
+                        <div class="manual-field">
+                            <label>Từ vựng (Bắt buộc)</label>
+                            <input type="text" id="manual-word" class="edit-input word-input" placeholder="VD: Rebellion">
+                        </div>
+                        <div class="manual-field">
+                            <label>Phiên âm</label>
+                            <input type="text" id="manual-phonetic" class="edit-input" placeholder="VD: /rɪˈbel.jən/">
+                        </div>
+                        <div class="manual-field">
+                            <label>Nghĩa của từ (Bắt buộc)</label>
+                            <input type="text" id="manual-meaning" class="edit-input" placeholder="VD: Sự nổi loạn">
+                        </div>
+                        <div class="manual-field">
+                            <label>Ví dụ minh họa (Tốt cho Context Match)</label>
+                            <input type="text" id="manual-example" class="edit-input" placeholder="VD: The pink rebellion has begun.">
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" style="padding: 14px 32px; font-size: 16px; margin-top: 10px;" onclick="addWordManual()"><i class="fa-solid fa-plus"></i> Đưa vào Album</button>
+                </div>
 
                 <div id="tab-import" style="display: none;" class="ui-card">
                     <div style="border: 2px dashed var(--border-strong); padding: 50px; text-align: center; border-radius: var(--radius-md); cursor: pointer; background: var(--bg-body);" onclick="document.getElementById('file-input').click()">
@@ -732,7 +736,7 @@
 
             <!-- GAMIFIED: SURVIVAL QUIZ -->
             <section id="view-game-quiz" class="view-section">
-                <button class="btn-exit-game" onclick="exitGame()"><i class="fa-solid fa-arrow-left"></i> Rời phòng</button>
+                <button class="btn-exit-game" onclick="exitGame()"><i class="fa-solid fa-xmark"></i> Thoát</button>
                 <div class="game-hud">
                     <h2 class="game-title-text"><i class="fa-solid fa-skull" style="color:var(--game-red);"></i> Sinh Tồn Quiz</h2>
                     <div class="game-score-badge" style="margin-top:10px;"><i class="fa-solid fa-star" style="color:var(--warning);"></i> <span id="quiz-score">0 XP</span></div>
@@ -758,7 +762,6 @@
                     <div class="game-score-badge" style="margin-top:10px;"><i class="fa-solid fa-check" style="color:var(--success);"></i> <span id="context-score">0 / 5</span></div>
                 </div>
                 <div style="max-width: 800px; margin: 0 auto; padding-bottom: 120px;" id="context-sentences-board"></div>
-                
                 <div class="context-word-bank" id="context-word-bank"></div>
             </section>
 
@@ -790,12 +793,15 @@
         let studyQueue = []; let studyIndex = 0;
         let isCinematicZooming = false; let isMobile = window.innerWidth <= 768;
 
+        /* INLINE EDITING STATE */
+        let editingIndex = -1;
+
         /* MASCOT LOGIC - SMART CONTEXT AWARENESS */
         let hasScrolledPastAct1 = false; let skipClickCount = 0;
         let currentSectionId = 'act-1'; let typeInterval; let collapseTimeout;
 
         const mascotTexts = {
-            'act-1': "Hế lô! Mình là Hồng Anh - Pink Anh Vũ ✌️. Chào mừng đến với lãnh địa cày từ vựng của mình!",
+            'act-1': "Sáng cuối tuần chill chill Hà Nội mà vẫn chăm chỉ cày từ vựng hả? Đỉnh chóp! Nhớ lướt xem web mượt hông nha 💅",
             'act-2': "Cay mấy app thu phí đắt vl 💸. Tiền đó quét mã MoMo đi ăn bún chả sướng hơn =)))",
             'act-3': "Đồ free nhưng bao mượt! Vừa luyện từ, vừa luyện múa phím chuẩn bị mốt làm sếp nha 😎",
             'act-4': "Đến cửa rồi! Bấm cái nút bự chà bá trên kia để khởi động hệ thống nào 🚀",
@@ -804,7 +810,10 @@
             'game-lobby': "Giao diện xịn xò chưa? Thích luyện múa phím hay chém thẻ bài chọn đi nha 🎮",
             'flashcard-start': "Lật thẻ đi nào! Vuốt trái vuốt phải dứt khoát vô cho đã tay.",
             'typing-start': "Khởi động ngón tay đi! Gõ sai là tui cho nổ màn hình ráng chịu nha 🔥",
-            'quiz-start': "Game sinh tồn nha! Áp lực thời gian cuống lên là mất điểm ráng chịu 😈"
+            'quiz-start': "Game sinh tồn nha! Áp lực thời gian cuống lên là mất điểm ráng chịu 😈",
+            'manual-start': "Thích tự gõ tay cho nhớ lâu hả? Nhập từ cẩn thận vô form tui đợi nha 💅",
+            'word-added': "Thêm từ thành công! Chăm chỉ zị xứng đáng 10 điểm không có nhưng 💯",
+            'word-edit': "Gõ sai chính tả hả má? Sửa lẹ đi tui làm ngơ cho lần này 😂"
         };
         const easterEggs = [
             "Đang học mà chọc gì đó? Tập trung làm bài đi kìa!",
@@ -812,62 +821,41 @@
             "Chọc nữa tui thu phí bây giờ (đùa thôi hihi) 😂"
         ];
 
-        // Friday Night Context Check
-        const d = new Date();
-        if (d.getDay() === 5 && d.getHours() >= 19) {
-            mascotTexts['act-1'] = "Tối thứ Sáu không diện đồ oversize đi cháy phố mà ngồi cày từ vựng hả? Chăm zị má 💅";
-        }
-
         function setMascotMood(mood) {
-            const avatar = document.getElementById('mascot-avatar-img');
-            const img = document.getElementById('mascot-face');
-            if(!avatar || !img) return;
-            avatar.className = 'mascot-avatar'; 
+            const avatar = document.getElementById('mascot-avatar-img'); const img = document.getElementById('mascot-face');
+            if(!avatar || !img) return; avatar.className = 'mascot-avatar'; 
             if(mood === 'angry') { avatar.classList.add('angry'); img.src = "https://api.dicebear.com/7.x/notionists/svg?seed=PinkAnhVuSad&backgroundColor=ef4444"; }
             else if(mood === 'cool') { avatar.classList.add('cool'); img.src = "https://api.dicebear.com/7.x/notionists/svg?seed=PinkAnhVuCool&backgroundColor=f59e0b"; }
             else if(mood === 'gold') { avatar.classList.add('gold'); img.src = "https://api.dicebear.com/7.x/notionists/svg?seed=PinkAnhVuStar&backgroundColor=f59e0b"; }
             else { img.src = "https://api.dicebear.com/7.x/notionists/svg?seed=PinkAnhVu&backgroundColor=f43f5e"; }
         }
 
-        function triggerMascot(textKey, forceMood = 'normal') {
-            const text = mascotTexts[textKey] || textKey;
-            setMascotMood(forceMood); typeMascotText(text);
-        }
+        function triggerMascot(textKey, forceMood = 'normal') { const text = mascotTexts[textKey] || textKey; setMascotMood(forceMood); typeMascotText(text); }
 
         function typeMascotText(text, autoCollapse = true) {
             const textEl = document.getElementById('mascot-text'); const bubble = document.getElementById('mascot-bubble');
             if(!textEl || !bubble) return;
             clearInterval(typeInterval); clearTimeout(collapseTimeout);
-            bubble.classList.remove('collapsed'); textEl.innerHTML = '';
-            let i = 0;
+            bubble.classList.remove('collapsed'); textEl.innerHTML = ''; let i = 0;
             typeInterval = setInterval(() => {
                 textEl.innerHTML += text.charAt(i); i++;
-                if(i >= text.length) {
-                    clearInterval(typeInterval);
-                    if(autoCollapse) collapseTimeout = setTimeout(() => { bubble.classList.add('collapsed'); }, 3500);
-                }
+                if(i >= text.length) { clearInterval(typeInterval); if(autoCollapse) collapseTimeout = setTimeout(() => { bubble.classList.add('collapsed'); }, 3500); }
             }, 30);
         }
 
         function pokeMascot() {
             const bubble = document.getElementById('mascot-bubble');
             if(bubble.classList.contains('collapsed')) { bubble.classList.remove('collapsed'); typeMascotText(mascotTexts[currentSectionId] || "Học đi má!"); return; }
-            typeMascotText(easterEggs[Math.floor(Math.random() * easterEggs.length)], false);
-            setMascotMood('angry');
+            typeMascotText(easterEggs[Math.floor(Math.random() * easterEggs.length)], false); setMascotMood('angry');
             clearTimeout(collapseTimeout); collapseTimeout = setTimeout(() => { triggerMascot(currentSectionId); }, 4000);
         }
 
-        function openBubble() {
-            const bubble = document.getElementById('mascot-bubble');
-            if(bubble.classList.contains('collapsed')) { bubble.classList.remove('collapsed'); typeMascotText(mascotTexts[currentSectionId] || "Học tiếp thôi!"); }
-        }
+        function openBubble() { const bubble = document.getElementById('mascot-bubble'); if(bubble.classList.contains('collapsed')) { bubble.classList.remove('collapsed'); typeMascotText(mascotTexts[currentSectionId] || "Học tiếp thôi!"); } }
 
         function trySkipToApp() {
             if (hasScrolledPastAct1 || skipClickCount >= 1) { enterAppCinematic(); } 
             else {
-                skipClickCount++;
-                const bubble = document.getElementById('mascot-bubble'); if(bubble) bubble.classList.remove('collapsed');
-                setMascotMood('angry');
+                skipClickCount++; const bubble = document.getElementById('mascot-bubble'); if(bubble) bubble.classList.remove('collapsed'); setMascotMood('angry');
                 typeMascotText("Ê khoan! Tui code mệt xỉu mà chưa thèm lướt đã đòi chuồn à? Kéo xuống xem xíu đi mừ 🥺 (Bấm thêm phát nữa là tui cho vô nha!)", false);
             }
         }
@@ -894,7 +882,6 @@
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('is-visible'); entry.target.classList.add('active'); 
-                        
                         if(entry.target.classList.contains('story-act')) {
                             if (entry.target.classList.contains('act-1')) { currentSectionId = 'act-1'; triggerMascot('act-1'); document.body.classList.remove('is-dark-act'); }
                             else if (entry.target.classList.contains('act-2')) { currentSectionId = 'act-2'; triggerMascot('act-2', 'cool'); document.body.classList.add('is-dark-act'); hasScrolledPastAct1 = true; }
@@ -948,7 +935,7 @@
 
             if (viewName === 'dashboard') { updateDashboard(); currentSectionId = 'dashboard'; triggerMascot('dashboard'); }
             if (viewName === 'albums') { renderAlbumsList(); currentSectionId = 'albums'; triggerMascot('albums'); }
-            if (viewName === 'single-album') { renderSingleAlbum(1); currentSectionId = 'game-lobby'; triggerMascot('game-lobby'); }
+            if (viewName === 'single-album') { editingIndex = -1; renderSingleAlbum(1); currentSectionId = 'game-lobby'; triggerMascot('game-lobby'); }
         }
 
         function exitGame() { clearInterval(quizTimer); if (confirm("Thoát và lưu lại tiến trình?")) nav('single-album'); }
@@ -956,10 +943,8 @@
         function updateLevel(showAnimation = true) {
             const oldLevel = Math.floor(((appData.xp || 0) - (window.lastXPAdded || 0)) / 100) + 1;
             const newLevel = Math.floor((appData.xp || 0) / 100) + 1;
-            
             const lvlText = document.getElementById('user-level-text'); const lvlBar = document.getElementById('level-bar');
             if (lvlText) lvlText.innerText = `Level ${newLevel}`; if (lvlBar) lvlBar.style.width = `${(appData.xp % 100)}%`;
-
             if (showAnimation && newLevel > oldLevel) {
                 document.getElementById('new-level-number').innerText = newLevel; document.getElementById('level-up-screen').classList.add('active');
                 confetti({ particleCount: 300, spread: 160, origin: { y: 0.6 } });
@@ -997,21 +982,10 @@
         /* ALBUM TROPHY ROOM RENDERING */
         function renderAlbumsList() {
             const container = document.getElementById('albums-list-container'); if (!container) return; container.innerHTML = '';
-            
-            // Add the Ghost Card first
-            container.innerHTML = `
-                <div class="ghost-card" onclick="createNewAlbum()">
-                    <i class="fa-solid fa-plus"></i>
-                    <h3>Tạo Album Mới</h3>
-                </div>
-            `;
-            
+            container.innerHTML = `<div class="ghost-card" onclick="createNewAlbum()"><i class="fa-solid fa-plus"></i><h3>Tạo Album Mới</h3></div>`;
             appData.albums.forEach(alb => {
-                const total = alb.words.length;
-                const mastered = alb.words.filter(w => (w.correctCount || 0) >= 3).length;
-                const percent = total === 0 ? 0 : Math.round((mastered / total) * 100);
-                const isGold = percent === 100 && total > 0;
-                
+                const total = alb.words.length; const mastered = alb.words.filter(w => (w.correctCount || 0) >= 3).length;
+                const percent = total === 0 ? 0 : Math.round((mastered / total) * 100); const isGold = percent === 100 && total > 0;
                 container.innerHTML += `
                     <div class="album-card ${isGold ? 'gold-album' : ''}" onclick="openAlbum('${alb.id}')">
                         <div class="album-title-group">
@@ -1023,16 +997,12 @@
                     </div>
                 `;
             });
-
-            // 3D Hover Effect for Album Cards
             if(!isMobile) {
                 document.querySelectorAll('.album-card:not(.ghost-card)').forEach(card => {
                     card.addEventListener('mousemove', e => {
-                        const rect = card.getBoundingClientRect();
-                        const x = e.clientX - rect.left; const y = e.clientY - rect.top;
+                        const rect = card.getBoundingClientRect(); const x = e.clientX - rect.left; const y = e.clientY - rect.top;
                         const centerX = rect.width / 2; const centerY = rect.height / 2;
-                        const rotateX = ((y - centerY) / centerY) * -10; // max 10 deg
-                        const rotateY = ((x - centerX) / centerX) * 10;
+                        const rotateX = ((y - centerY) / centerY) * -10; const rotateY = ((x - centerX) / centerX) * 10;
                         card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
                     });
                     card.addEventListener('mouseleave', () => { card.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)`; });
@@ -1043,7 +1013,6 @@
         function createNewAlbum() { const name = prompt("Nhập tên Album mới:"); if (name && name.trim()) { appData.albums.push({ id: Date.now().toString(), name: name.trim(), words: [] }); saveData(); renderAlbumsList(); } }
         function openAlbum(id) { activeAlbumId = id; nav('single-album'); }
         function deleteCurrentAlbum() { if (confirm("Bạn chắc chắn muốn xóa vĩnh viễn Album này?")) { appData.albums = appData.albums.filter(a => a.id !== activeAlbumId); saveData(); nav('albums'); } }
-
         function removeDuplicates() {
             const album = appData.albums.find(a => a.id === activeAlbumId); if (!album) return;
             const originalLength = album.words.length; const uniqueMap = new Map();
@@ -1053,6 +1022,9 @@
             if (removedCount > 0) alert(`✨ Đã xóa ${removedCount} từ vựng trùng lặp!`); else alert("✨ Album của bạn rất sạch sẽ, không có từ nào bị trùng lặp!");
         }
 
+        /* ---------------------------------
+           ALBUM WORD LIST & INLINE EDITING
+           --------------------------------- */
         function renderSingleAlbum(page = 1) {
             currentPage = page; const album = appData.albums.find(a => a.id === activeAlbumId); if (!album) return;
             const cName = document.getElementById('current-album-name'); const cCnt = document.getElementById('album-total-count');
@@ -1060,22 +1032,117 @@
             
             const container = document.getElementById('words-playlist-container'); const paginationBar = document.getElementById('album-pagination');
             if (!container || !paginationBar) return; container.innerHTML = ''; paginationBar.innerHTML = '';
-            if (album.words.length === 0) { container.innerHTML = `<p style="text-align:center; color:var(--text-muted); padding: 30px;">Album chưa có từ vựng nào. Hãy nạp file hoặc nhập từ AI ở phần quản trị bên dưới.</p>`; return; }
+            if (album.words.length === 0) { container.innerHTML = `<p style="text-align:center; color:var(--text-muted); padding: 30px;">Album chưa có từ vựng nào. Dùng bảng bên dưới để thêm ngay!</p>`; return; }
 
             const totalPages = Math.ceil(album.words.length / ITEMS_PER_PAGE);
             if (currentPage > totalPages) currentPage = totalPages; if (currentPage < 1) currentPage = 1;
             const startIdx = (currentPage - 1) * ITEMS_PER_PAGE; const currentWords = album.words.slice(startIdx, startIdx + ITEMS_PER_PAGE);
 
             currentWords.forEach((w, idx) => {
-                const absoluteIdx = startIdx + idx; let phoneticStr = w.phonetic ? `[${w.phonetic}]` : ''; let exampleStr = w.example ? `<div class="example"><i class="fa-solid fa-quote-left" style="margin-right: 6px; color:var(--primary);"></i>${w.example}</div>` : '';
-                container.innerHTML += `<div class="word-card-detailed"><div class="word-main-info"><div class="top-line"><h3>${w.word}</h3><span class="phonetic">${phoneticStr}</span></div><div class="meaning">${w.meaning}</div>${exampleStr}</div><div style="display:flex; align-items:center; gap:8px;"><button class="btn btn-outline" style="padding: 6px 12px; color: var(--danger); border-color: transparent;" onclick="deleteWord(${absoluteIdx})"><i class="fa-solid fa-trash"></i></button></div></div>`;
+                const absoluteIdx = startIdx + idx;
+                
+                // INLINE EDIT MODE
+                if (editingIndex === absoluteIdx) {
+                    container.innerHTML += `
+                        <div class="word-card-detailed" style="border-color: var(--warning); box-shadow: 0 0 0 2px var(--gold-glow);">
+                            <div class="word-main-info">
+                                <input type="text" id="edit-word-${absoluteIdx}" class="edit-input word-input" value="${w.word.replace(/"/g, '&quot;')}" placeholder="Từ vựng">
+                                <input type="text" id="edit-pho-${absoluteIdx}" class="edit-input" value="${(w.phonetic || '').replace(/"/g, '&quot;')}" placeholder="Phiên âm">
+                                <input type="text" id="edit-mean-${absoluteIdx}" class="edit-input" value="${w.meaning.replace(/"/g, '&quot;')}" placeholder="Nghĩa của từ">
+                                <input type="text" id="edit-ex-${absoluteIdx}" class="edit-input" value="${(w.example || '').replace(/"/g, '&quot;')}" placeholder="Ví dụ minh họa">
+                            </div>
+                            <div style="display:flex; flex-direction:column; gap:8px;">
+                                <button class="btn btn-primary" style="background:var(--success); padding: 10px 16px;" onclick="saveEditWord(${absoluteIdx})"><i class="fa-solid fa-check"></i> Lưu</button>
+                                <button class="btn btn-outline" style="padding: 10px 16px;" onclick="cancelEditWord()"><i class="fa-solid fa-xmark"></i> Hủy</button>
+                            </div>
+                        </div>
+                    `;
+                } 
+                // NORMAL DISPLAY MODE
+                else {
+                    let phoneticStr = w.phonetic ? `[${w.phonetic}]` : ''; let exampleStr = w.example ? `<div class="example"><i class="fa-solid fa-quote-left" style="margin-right: 6px; color:var(--primary);"></i>${w.example}</div>` : '';
+                    container.innerHTML += `
+                        <div class="word-card-detailed">
+                            <div class="word-main-info">
+                                <div class="top-line"><h3>${w.word}</h3><span class="phonetic">${phoneticStr}</span></div>
+                                <div class="meaning">${w.meaning}</div>
+                                ${exampleStr}
+                            </div>
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <button class="btn btn-outline" style="padding: 8px 12px; color: var(--text-main); border-color: transparent;" title="Chỉnh sửa" onclick="editWord(${absoluteIdx})"><i class="fa-solid fa-pen"></i></button>
+                                <button class="btn btn-outline" style="padding: 8px 12px; color: var(--danger); border-color: transparent;" title="Xóa từ này" onclick="deleteWord(${absoluteIdx})"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </div>
+                    `;
+                }
             });
-            if (totalPages > 1) { paginationBar.innerHTML = `<button class="page-control-btn" ${currentPage === 1 ? 'disabled' : ''} onclick="renderSingleAlbum(${currentPage - 1})"><i class="fa-solid fa-chevron-left"></i></button><span class="page-indicator">Trang ${currentPage} / ${totalPages}</span><button class="page-control-btn" ${currentPage === totalPages ? 'disabled' : ''} onclick="renderSingleAlbum(${currentPage + 1})"><i class="fa-solid fa-chevron-right"></i></button>`; }
+            if (totalPages > 1) { paginationBar.innerHTML = `<button class="page-control-btn" ${currentPage === 1 ? 'disabled' : ''} onclick="editingIndex = -1; renderSingleAlbum(${currentPage - 1})"><i class="fa-solid fa-chevron-left"></i></button><span class="page-indicator">Trang ${currentPage} / ${totalPages}</span><button class="page-control-btn" ${currentPage === totalPages ? 'disabled' : ''} onclick="editingIndex = -1; renderSingleAlbum(${currentPage + 1})"><i class="fa-solid fa-chevron-right"></i></button>`; }
         }
 
-        function switchTab(tab) { ['word-list', 'import', 'ai'].forEach(t => { const el = document.getElementById(`tab-${t}`); if(el) el.style.display = 'none'; }); const target = document.getElementById(`tab-${tab}`); if(target) target.style.display = 'block'; if(tab === 'word-list') renderSingleAlbum(currentPage); }
+        function editWord(idx) { editingIndex = idx; renderSingleAlbum(currentPage); triggerMascot('word-edit', 'cool'); }
+        function cancelEditWord() { editingIndex = -1; renderSingleAlbum(currentPage); }
+        function saveEditWord(idx) {
+            const album = appData.albums.find(a => a.id === activeAlbumId);
+            if(!album) return;
+            const newWord = document.getElementById(`edit-word-${idx}`).value.trim();
+            const newMean = document.getElementById(`edit-mean-${idx}`).value.trim();
+            if(!newWord || !newMean) return alert("Từ vựng và Nghĩa không được để trống!");
+            
+            album.words[idx].word = newWord;
+            album.words[idx].phonetic = document.getElementById(`edit-pho-${idx}`).value.trim();
+            album.words[idx].meaning = newMean;
+            album.words[idx].example = document.getElementById(`edit-ex-${idx}`).value.trim();
+            
+            editingIndex = -1; saveData(); renderSingleAlbum(currentPage);
+        }
         function deleteWord(idx) { const album = appData.albums.find(a => a.id === activeAlbumId); album.words.splice(idx, 1); saveData(); renderSingleAlbum(currentPage); }
+
+        function switchTab(tab) { 
+            ['word-list', 'manual', 'import', 'ai'].forEach(t => { 
+                const el = document.getElementById(`tab-${t}`); if(el) el.style.display = 'none'; 
+                const btn = document.getElementById(`btn-tab-${t}`); if(btn) btn.classList.remove('active');
+            }); 
+            const target = document.getElementById(`tab-${tab}`); if(target) target.style.display = 'block'; 
+            const targetBtn = document.getElementById(`btn-tab-${tab}`); if(targetBtn) targetBtn.classList.add('active');
+            if(tab === 'word-list') renderSingleAlbum(currentPage); 
+            if(tab === 'manual') triggerMascot('manual-start');
+        }
+
+        /* ---------------------------------
+           MANUAL WORD INPUT
+           --------------------------------- */
+        function addWordManual() {
+            const wordInput = document.getElementById('manual-word');
+            const phoInput = document.getElementById('manual-phonetic');
+            const meanInput = document.getElementById('manual-meaning');
+            const exInput = document.getElementById('manual-example');
+            
+            const w = wordInput.value.trim();
+            const p = phoInput.value.trim();
+            const m = meanInput.value.trim();
+            const e = exInput.value.trim();
+
+            if(!w || !m) {
+                triggerMascot("Chưa nhập đủ Từ và Nghĩa kìa má! Tập trung xíu đê 😿", 'angry');
+                return;
+            }
+
+            const album = appData.albums.find(a => a.id === activeAlbumId);
+            album.words.push({ word: w, phonetic: p, meaning: m, example: e, correctCount: 0, wrongCount: 0 });
+            
+            // Clear inputs for next word
+            wordInput.value = ''; phoInput.value = ''; meanInput.value = ''; exInput.value = '';
+            wordInput.focus(); // keep focus for rapid data entry
+            
+            saveData();
+            document.getElementById('album-total-count').innerHTML = `<i class="fa-solid fa-database"></i> ${album.words.length} từ vựng`;
+            triggerMascot('word-added', 'gold');
+        }
+
+        /* OTHER TABS LOGIC */
         function copyAiPrompt() { const box = document.getElementById('ai-prompt-box'); if (box) { navigator.clipboard.writeText(box.innerText); alert("Đã sao chép Prompt vào clipboard!"); } }
+        function processAIText() { const txt = document.getElementById('ai-input').value.trim(); if (!txt) return; const album = appData.albums.find(a => a.id === activeAlbumId); txt.split('\n').forEach(line => { const p = line.split('|'); if (p.length >= 2) { album.words.push({ word: p[0].trim(), phonetic: p[1]?.trim() || '', meaning: p[2]?.trim() || '', example: p[3]?.trim() || '' }); }}); document.getElementById('ai-input').value = ''; saveData(); switchTab('word-list'); renderSingleAlbum(1); triggerMascot('word-added', 'gold'); }
+        function handleFileUpload(e) { const file = e.target.files[0]; if (!file) return; const album = appData.albums.find(a => a.id === activeAlbumId); const reader = new FileReader(); reader.onload = (ev) => { const wb = XLSX.read(new Uint8Array(ev.target.result), { type: 'array' }); const rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { header: 1 }); rows.forEach(r => { if (r[0]) album.words.push({ word: r[0].toString().trim(), phonetic: r[1] || '', meaning: r[2] || '', example: r[3] || '' }); }); saveData(); switchTab('word-list'); renderSingleAlbum(1); triggerMascot('word-added', 'gold'); }; reader.readAsArrayBuffer(file); }
         function speakCurrentWord(e) { if (e) e.stopPropagation(); const word = studyQueue[studyIndex]?.word; if (word && 'speechSynthesis' in window) { const utterance = new SpeechSynthesisUtterance(word); utterance.lang = 'en-US'; speechSynthesis.speak(utterance); } }
 
         /* GAMES LAUNCHERS */
@@ -1085,73 +1152,33 @@
         /* 1. FLASHCARD (SWIPE PHYSICS) */
         function loadFlashcard() { if (studyIndex >= studyQueue.length) { confetti(); addXP(30); alert("Hoàn thành session học! (+30 XP)"); return nav('single-album'); } const card = document.getElementById('fc-card-element'); card.classList.remove('flipped', 'swipe-left', 'swipe-right'); const w = studyQueue[studyIndex]; document.getElementById('fc-word').innerText = w.word; document.getElementById('fc-phonetic').innerText = w.phonetic ? `[${w.phonetic}]` : ''; document.getElementById('fc-meaning').innerText = w.meaning; document.getElementById('fc-example').innerText = w.example ? `"${w.example}"` : ''; document.getElementById('fc-progress-text').innerText = `${studyIndex + 1} / ${studyQueue.length}`; }
         function flipCard() { document.getElementById('fc-card-element').classList.toggle('flipped'); }
-        function swipeCard(known) {
-            const card = document.getElementById('fc-card-element'); if(card.classList.contains('swipe-left') || card.classList.contains('swipe-right')) return;
-            if(known) { card.classList.add('swipe-right'); addXP(5); } else { card.classList.add('swipe-left'); }
-            const w = studyQueue[studyIndex]; if (known) { w.correctCount = (w.correctCount || 0) + 1; } else { w.wrongCount = (w.wrongCount || 0) + 1; }
-            saveData(); setTimeout(() => { studyIndex++; loadFlashcard(); }, 300);
-        }
+        function swipeCard(known) { const card = document.getElementById('fc-card-element'); if(card.classList.contains('swipe-left') || card.classList.contains('swipe-right')) return; if(known) { card.classList.add('swipe-right'); addXP(5); } else { card.classList.add('swipe-left'); } const w = studyQueue[studyIndex]; if (known) { w.correctCount = (w.correctCount || 0) + 1; } else { w.wrongCount = (w.wrongCount || 0) + 1; } saveData(); setTimeout(() => { studyIndex++; loadFlashcard(); }, 300); }
         function setupKeyboardShortcuts() { document.addEventListener('keydown', (e) => { const fcView = document.getElementById('view-study-flashcard'); if (fcView && fcView.classList.contains('active')) { if (e.code === 'Space') { e.preventDefault(); flipCard(); } if (e.code === 'ArrowLeft') { swipeCard(false); } if (e.code === 'ArrowRight') { swipeCard(true); } } const qView = document.getElementById('view-game-quiz'); if(qView && qView.classList.contains('active')) { if(['1','2','3','4'].includes(e.key)) { const btns = document.querySelectorAll('#quiz-options .quiz-tile'); if(btns[parseInt(e.key)-1]) btns[parseInt(e.key)-1].click(); } } }); }
 
         /* 2. TYPING DOJO (COMBO & FRENZY) */
         let typingCombo = 0;
-        function loadTyping() { 
-            if (studyIndex >= studyQueue.length) { confetti(); addXP(30); alert("Hoàn thành session gõ từ! (+30 XP)"); return nav('single-album'); } 
-            const w = studyQueue[studyIndex]; document.getElementById('type-meaning').innerText = w.meaning; document.getElementById('type-hint').innerText = w.phonetic ? `Gợi ý: [${w.phonetic}]` : ''; document.getElementById('type-progress-text').innerText = `${studyIndex + 1} / ${studyQueue.length}`; const inp = document.getElementById('type-input'); inp.value = ''; inp.disabled = false; inp.focus(); document.getElementById('type-feedback').innerText = ''; 
-            updateFrenzyVisuals();
-        }
-        function updateFrenzyVisuals() {
-            const wrapper = document.getElementById('typing-container'); const comboTxt = document.getElementById('combo-text');
-            if(typingCombo > 1) { comboTxt.innerText = `x${typingCombo} COMBO🔥`; comboTxt.classList.add('active'); } else { comboTxt.classList.remove('active'); }
-            if(typingCombo >= 5) { wrapper.classList.add('frenzy-mode'); setMascotMood('cool'); } else { wrapper.classList.remove('frenzy-mode'); }
-        }
-        function handleTypingKey(e) { 
-            if (e.key === 'Enter') { 
-                const w = studyQueue[studyIndex]; const val = document.getElementById('type-input').value.trim().toLowerCase(); const wrapper = document.getElementById('typing-container');
-                if (val === w.word.toLowerCase()) { 
-                    typingCombo++; updateFrenzyVisuals(); addXP(10); 
-                    const xpEl = document.createElement('div'); xpEl.className = 'floating-xp'; xpEl.innerText = '+10 XP'; xpEl.style.left = '50%'; xpEl.style.top = '20px'; wrapper.appendChild(xpEl); setTimeout(() => xpEl.remove(), 1000);
-                    document.getElementById('type-input').disabled = true; setTimeout(() => { studyIndex++; loadTyping(); }, 500); 
-                    if(typingCombo === 3) triggerMascot("Đỉnh chóp! Giữ phong độ xanh chín như này coi 🔥");
-                } else { 
-                    typingCombo = 0; updateFrenzyVisuals();
-                    wrapper.classList.add('error-shake'); setTimeout(() => wrapper.classList.remove('error-shake'), 400);
-                    document.getElementById('type-input').value = ''; document.getElementById('type-input').placeholder = `Sai rồi! Đáp án: ${w.word}`;
-                    triggerMascot("Ối dồi ôi gõ nhầm kìa má! Đáp án sờ sờ ra kìa, tập trung kéo lại nào!", 'angry');
-                } 
-            } 
-        }
+        function loadTyping() { if (studyIndex >= studyQueue.length) { confetti(); addXP(30); alert("Hoàn thành session gõ từ! (+30 XP)"); return nav('single-album'); } const w = studyQueue[studyIndex]; document.getElementById('type-meaning').innerText = w.meaning; document.getElementById('type-hint').innerText = w.phonetic ? `Gợi ý: [${w.phonetic}]` : ''; document.getElementById('type-progress-text').innerText = `${studyIndex + 1} / ${studyQueue.length}`; const inp = document.getElementById('type-input'); inp.value = ''; inp.disabled = false; inp.focus(); document.getElementById('type-feedback').innerText = ''; updateFrenzyVisuals(); }
+        function updateFrenzyVisuals() { const wrapper = document.getElementById('typing-container'); const comboTxt = document.getElementById('combo-text'); if(typingCombo > 1) { comboTxt.innerText = `x${typingCombo} COMBO🔥`; comboTxt.classList.add('active'); } else { comboTxt.classList.remove('active'); } if(typingCombo >= 5) { wrapper.classList.add('frenzy-mode'); setMascotMood('cool'); } else { wrapper.classList.remove('frenzy-mode'); } }
+        function handleTypingKey(e) { if (e.key === 'Enter') { const w = studyQueue[studyIndex]; const val = document.getElementById('type-input').value.trim().toLowerCase(); const wrapper = document.getElementById('typing-container'); if (val === w.word.toLowerCase()) { typingCombo++; updateFrenzyVisuals(); addXP(10); const xpEl = document.createElement('div'); xpEl.className = 'floating-xp'; xpEl.innerText = '+10 XP'; xpEl.style.left = '50%'; xpEl.style.top = '20px'; wrapper.appendChild(xpEl); setTimeout(() => xpEl.remove(), 1000); document.getElementById('type-input').disabled = true; setTimeout(() => { studyIndex++; loadTyping(); }, 500); if(typingCombo === 3) triggerMascot("Đỉnh chóp! Giữ phong độ xanh chín như này coi 🔥"); } else { typingCombo = 0; updateFrenzyVisuals(); wrapper.classList.add('error-shake'); setTimeout(() => wrapper.classList.remove('error-shake'), 400); document.getElementById('type-input').value = ''; document.getElementById('type-input').placeholder = `Sai rồi! Đáp án: ${w.word}`; triggerMascot("Ối dồi ôi gõ nhầm kìa má! Đáp án sờ sờ ra kìa, tập trung kéo lại nào!", 'angry'); } } }
 
-        /* 3. SPEED MATCH (HIT PAUSE & BOOM) */
+        /* 3. SPEED MATCH */
         let matchSelected = null; let matchFreeze = false;
         function startMatchGame() { const words = [...studyQueue].sort(() => 0.5 - Math.random()).slice(0, 6); let items = []; words.forEach(w => { items.push({ text: w.word, id: w.word, type: 'w' }); items.push({ text: w.meaning, id: w.word, type: 'm' }); }); items.sort(() => 0.5 - Math.random()); const grid = document.getElementById('match-grid'); if(!grid) return; grid.innerHTML = ''; items.forEach(it => { const tile = document.createElement('div'); tile.className = 'match-tile'; tile.innerText = it.text; tile.onclick = () => { if (matchFreeze || tile.classList.contains('matched-boom') || tile.classList.contains('selected')) return; if (!matchSelected) { matchSelected = { tile, it }; tile.classList.add('selected'); } else { if (matchSelected.it.id === it.id && matchSelected.it.type !== it.type) { matchSelected.tile.classList.add('matched-boom'); tile.classList.add('matched-boom'); addXP(5); if(document.querySelectorAll('#match-grid .match-tile:not(.matched-boom)').length === 0) { matchFreeze = true; setTimeout(() => { matchFreeze = false; confetti({ particleCount: 150, spread: 100 }); addXP(30); setTimeout(() => { alert("🎉 Hoàn thành Speed Match xuất sắc! (+30 XP)"); nav('single-album'); }, 500); }, 300); } } else { matchSelected.tile.classList.remove('selected'); tile.classList.add('error'); matchSelected.tile.classList.add('error'); matchFreeze = true; setTimeout(() => { tile.classList.remove('error'); if(matchSelected) matchSelected.tile.classList.remove('error'); matchFreeze = false; }, 400); triggerMascot("Kéo nhầm rồi ba! Rung màn hình nha 😹", 'angry'); } matchSelected = null; } }; grid.appendChild(tile); }); }
 
-        /* 4. SURVIVAL QUIZ (TENSION TIMER) */
+        /* 4. SURVIVAL QUIZ */
         let quizTimer = null; let quizScore = 0; let timeLeft = 30;
         function startQuizGame() { quizScore = 0; timeLeft = 30; document.getElementById('quiz-score').innerText = '0 XP'; clearInterval(quizTimer); nextQuizQuestion(); document.getElementById('timer-bar').classList.remove('danger-blinking'); quizTimer = setInterval(() => { timeLeft -= 0.1; const bar = document.getElementById('timer-bar'); bar.style.width = (timeLeft / 30 * 100) + '%'; if(timeLeft <= 5 && !bar.classList.contains('danger-blinking')) { bar.classList.add('danger-blinking'); triggerMascot("Á á á sắp hết giờ kìa!! Quẹt bừa đi nhanh lênnn 😱", 'angry'); } else if(timeLeft > 5) { bar.classList.remove('danger-blinking'); } if (timeLeft <= 0) { clearInterval(quizTimer); confetti(); alert(`Hết giờ! Tổng điểm: ${quizScore} XP`); nav('single-album'); } }, 100); }
         function nextQuizQuestion() { const target = studyQueue[Math.floor(Math.random() * studyQueue.length)]; document.getElementById('quiz-target-word').innerText = target.word; let options = [target.meaning]; while (options.length < 4) { let rand = studyQueue[Math.floor(Math.random() * studyQueue.length)].meaning; if (!options.includes(rand)) options.push(rand); } options.sort(() => 0.5 - Math.random()); const grid = document.getElementById('quiz-options'); if(!grid) return; grid.innerHTML = ''; const colors = ['quiz-c1', 'quiz-c2', 'quiz-c3', 'quiz-c4']; options.forEach((opt, idx) => { const btn = document.createElement('div'); btn.className = `quiz-tile ${colors[idx]}`; btn.setAttribute('data-key', `${idx+1}`); btn.innerText = opt; btn.onclick = () => { if (opt === target.meaning) { quizScore += 10; timeLeft = Math.min(30, timeLeft + 2); document.getElementById('quiz-score').innerText = `${quizScore} XP`; nextQuizQuestion(); } else { timeLeft = Math.max(0, timeLeft - 5); btn.classList.add('error'); setTimeout(() => btn.classList.remove('error'), 400); const wrapper = document.getElementById('quiz-card-wrapper'); wrapper.style.borderColor = 'var(--danger)'; wrapper.style.animation = 'errShake 0.3s'; setTimeout(() => { wrapper.style.borderColor = 'transparent'; wrapper.style.animation = 'none'; }, 300); } }; grid.appendChild(btn); }); }
 
-        /* 5. CONTEXT MATCH (RUBBER BAND PHYSICS) */
+        /* 5. CONTEXT MATCH */
         let ctxSelectedWord = null; let ctxCompletedCount = 0;
         function startContextGame() { let validWords = studyQueue.filter(w => w.example && w.example.toLowerCase().includes(w.word.toLowerCase())); if (validWords.length < 5) validWords = studyQueue.filter(w => w.example); if (validWords.length < 5) { alert("Album cần ít nhất 5 câu ví dụ để chơi Context Match!"); return nav('single-album'); } let gameWords = [...validWords].sort(() => 0.5 - Math.random()).slice(0, 5); ctxCompletedCount = 0; ctxSelectedWord = null; const board = document.getElementById('context-sentences-board'); const bank = document.getElementById('context-word-bank'); let shuffledWords = [...gameWords].sort(() => 0.5 - Math.random()); let boardHtml = ''; gameWords.forEach((item, idx) => { let sentenceWithBlank = item.example.replace(new RegExp(item.word, 'gi'), `<span class="context-blank" id="ctx-blank-${idx}" onclick="fillContextBlank('${item.word}', ${idx}, this)">Bấm để điền</span>`); boardHtml += `<div class="context-sentence-card" id="ctx-card-${idx}"><span style="font-size:12px; font-weight:800; color:var(--text-muted); text-transform:uppercase;">Câu ${idx + 1} &bull; Nghĩa: ${item.meaning}</span><p style="margin:10px 0 0 0; font-size:18px; font-weight:700; line-height:1.6;">${sentenceWithBlank}</p></div>`; }); board.innerHTML = boardHtml; let bankHtml = ''; shuffledWords.forEach((item, idx) => { bankHtml += `<div class="context-chip" id="ctx-chip-${idx}" onclick="selectContextWord('${item.word}', this)">${item.word}</div>`; }); bank.innerHTML = bankHtml; document.getElementById('context-score').innerText = `0 / 5`; }
         function selectContextWord(word, el) { document.querySelectorAll('.context-chip').forEach(t => t.classList.remove('selected')); el.classList.add('selected'); ctxSelectedWord = { word, el }; }
-        function fillContextBlank(targetWord, blankIdx, blankEl) { 
-            if (!ctxSelectedWord) { triggerMascot("Nhớ chọn 1 chữ ở thanh dưới đáy màn hình trước khi điền nha bà!", "angry"); return; }
-            const cardEl = document.getElementById(`ctx-card-${blankIdx}`);
-            if (ctxSelectedWord.word.toLowerCase() === targetWord.toLowerCase()) { 
-                blankEl.innerText = ctxSelectedWord.word; blankEl.classList.add('filled'); ctxSelectedWord.el.classList.add('used'); ctxSelectedWord = null; ctxCompletedCount++; document.getElementById('context-score').innerText = `${ctxCompletedCount} / 5`; 
-                if (ctxCompletedCount === 5) { confetti({ particleCount: 200, spread: 120 }); addXP(50); setTimeout(() => { alert("🎉 Xuất sắc! (+50 XP)"); nav('single-album'); }, 600); } 
-            } else { 
-                ctxSelectedWord.el.classList.remove('selected'); ctxSelectedWord = null; 
-                cardEl.classList.add('bounce-error'); setTimeout(() => cardEl.classList.remove('bounce-error'), 500);
-            } 
-        }
+        function fillContextBlank(targetWord, blankIdx, blankEl) { if (!ctxSelectedWord) { triggerMascot("Nhớ chọn 1 chữ ở thanh dưới đáy màn hình trước khi điền nha bà!", "angry"); return; } const cardEl = document.getElementById(`ctx-card-${blankIdx}`); if (ctxSelectedWord.word.toLowerCase() === targetWord.toLowerCase()) { blankEl.innerText = ctxSelectedWord.word; blankEl.classList.add('filled'); ctxSelectedWord.el.classList.add('used'); ctxSelectedWord = null; ctxCompletedCount++; document.getElementById('context-score').innerText = `${ctxCompletedCount} / 5`; if (ctxCompletedCount === 5) { confetti({ particleCount: 200, spread: 120 }); addXP(50); setTimeout(() => { alert("🎉 Xuất sắc! (+50 XP)"); nav('single-album'); }, 600); } } else { ctxSelectedWord.el.classList.remove('selected'); ctxSelectedWord = null; cardEl.classList.add('bounce-error'); setTimeout(() => cardEl.classList.remove('bounce-error'), 500); } }
 
         /* DATA MANAGEMENT */
         function exportBackup() { const blob = new Blob([JSON.stringify(appData)], { type: "application/json" }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `PinkVocab_Data.json`; a.click(); }
         function importBackup(e) { const file = e.target.files[0]; if (!file) return; const reader = new FileReader(); reader.onload = (ev) => { try { appData = JSON.parse(ev.target.result); saveData(); alert("Phục hồi thành công!"); location.reload(); } catch(err) { alert("File lỗi!"); } }; reader.readAsText(file); }
-        function processAIText() { const txt = document.getElementById('ai-input').value.trim(); if (!txt) return; const album = appData.albums.find(a => a.id === activeAlbumId); txt.split('\n').forEach(line => { const p = line.split('|'); if (p.length >= 2) { album.words.push({ word: p[0].trim(), phonetic: p[1]?.trim() || '', meaning: p[2]?.trim() || '', example: p[3]?.trim() || '' }); }}); saveData(); switchTab('word-list'); renderSingleAlbum(1); }
-        function handleFileUpload(e) { const file = e.target.files[0]; if (!file) return; const album = appData.albums.find(a => a.id === activeAlbumId); const reader = new FileReader(); reader.onload = (ev) => { const wb = XLSX.read(new Uint8Array(ev.target.result), { type: 'array' }); const rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { header: 1 }); rows.forEach(r => { if (r[0]) album.words.push({ word: r[0].toString().trim(), phonetic: r[1] || '', meaning: r[2] || '', example: r[3] || '' }); }); saveData(); switchTab('word-list'); renderSingleAlbum(1); }; reader.readAsArrayBuffer(file); }
     </script>
 </body>
 </html>
